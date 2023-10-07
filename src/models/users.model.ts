@@ -1,5 +1,4 @@
 import prisma from '../lib/database';
-import { doesEmailExist } from './helpers/users.model.helper';
 import bcrypt from 'bcrypt';
 import User from '../types/User.type';
 
@@ -8,27 +7,28 @@ class Users {
 	 * @param user {@link User}
 	 * @returns the *id* of the created user.
 	 *  */
-	async signUp(user: User): Promise<number> {
-		if (await doesEmailExist(user.u_email)) throw { message: `Email does exist`, statusCode: 304 };
-
+	static async signUp(user: User): Promise<number> {
 		// Create new account
-		const isertedUser = await prisma.user.create({
-			data: user,
-			select: { u_id: true }
-		});
-		return isertedUser.u_id;
+		try {
+			const isertedUser = await prisma.user.create({
+				data: user,
+				select: { u_id: true }
+			});
+			return isertedUser.u_id;
+		}
+		catch (err: any) {
+			if (err.code === 'P2002') throw { message: `The email already exists`, statusCode: 409 }; // Conflict
+			else throw err;
+		}
 	}
 
 	/**
 	 * @returns The *id* of the user.
 	 */
-	async signIn(email: string, password: string): Promise<number> {
-		const userID = await doesEmailExist(email);
-		if (userID === 0) throw { message: `Email doesn't exist`, statusCode: 404 };
-
+	static async signIn(email: string, password: string): Promise<number> {
 		const user = await prisma.user.findFirst({
-			where: { u_id: userID },
-			select: { u_password: true, u_is_confirmed: true }
+			where: { u_email: email },
+			select: { u_password: true, u_is_confirmed: true, u_id: true }
 		});
 
 		if (!user?.u_is_confirmed) throw { message: `The account is not confirmed`, statusCode: 403 }; // Forbidden
@@ -36,13 +36,13 @@ class Users {
 		if (!bcrypt.compareSync(password, user?.u_password as string))
 			throw { message: `The password is wrong`, statusCode: 403 }; // Forbidden
 
-		return userID;
+		return user.u_id;
 	}
 
 	/** Marks user's account as confirmed.
 	 * @param userID
 	 */
-	async confirm(userID: number): Promise<void> {
+	static async confirm(userID: number): Promise<void> {
 		await prisma.user.update({
 			data: { u_is_confirmed: true },
 			where: { u_id: userID }
