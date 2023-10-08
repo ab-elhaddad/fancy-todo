@@ -8,18 +8,20 @@ A To Do backend server which enables the user to add tasks and mark them as done
 
 ## 💡 Used Tools & Technologies
 
-- Node.js (Runtime Environment)
-- Express.js (Web Application Framework)
-- PostgreSQL (Database)
-- Prisma (ORM)
-- TypeScript (Programming Language)
-- jwt (Authentication)
-- bcrypt (Password Hashing)
-- joi (Data Validation)
-- nodemailer (Email Service)
-- prettier (Code Formatter)
-- editorconfig (Code Formatter)
-- eslint (Code Linter)
+- **Node.js** (Runtime Environment)
+- **Express.js** (Web Application Framework)
+- **PostgreSQL** (Database)
+- **Prisma** (ORM)
+- **TypeScript** (Programming Language)
+- **jwt** (Authentication)
+- **bcrypt** (Password Hashing)
+- **joi** (Data Validation)
+- **jest** (Testing Framework)
+- **supertest** (HTTP Testing)
+- **nodemailer** (Email Service)
+- **prettier** (Code Formatter)
+- **editorconfig** (Code Formatter)
+- **eslint** (Code Linter)
 
 ## 🔧 Pre-requisites
 
