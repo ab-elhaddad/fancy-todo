@@ -45,7 +45,7 @@ GMAIL_PASS // Password of the email address
 - Clone the repository
 
 ```bash
-git clone
+git clone https://github.com/ab-elhaddad/Fancy-ToDo.git
 ```
 
 - Install dependencies
