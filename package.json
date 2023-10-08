@@ -9,6 +9,7 @@
 		"prettier": "npx prettier . --write",
 		"lint": "npx eslint .",
 		"test": "npx jest --runInBand --detectOpenHandles",
+		"test:watch": "npm t -- --watch",
 		"generate": "npx prisma generate"
 	},
 	"author": "",
