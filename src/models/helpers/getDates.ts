@@ -3,7 +3,7 @@
  * - `startDate` [the date and time of the first millisecond of today]
  * - `endDate` [the date and the time of the last millisecond of today]
  */
-export const getDates = () => {
+const getDates = () => {
 	const today = new Date();
 
 	const startDate = new Date(today);
@@ -14,3 +14,5 @@ export const getDates = () => {
 
 	return { startDate, endDate };
 };
+
+export default getDates;

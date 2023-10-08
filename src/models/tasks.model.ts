@@ -1,5 +1,5 @@
 import Task from '../types/Task.type';
-import { getDates } from './helpers/getDates';
+import getDates from './helpers/getDates';
 import prisma from '../lib/database';
 import Subtask from '../types/Subtask.type';
 
