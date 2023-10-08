@@ -30,8 +30,8 @@ class Users {
 			where: { u_email: email },
 			select: { u_password: true, u_is_confirmed: true, u_id: true }
 		});
-
-		if (!user?.u_is_confirmed) throw { message: `The account is not confirmed`, statusCode: 403 }; // Forbidden
+		if (user === null) throw { message: `The email doesn't exist`, statusCode: 404 }; // Not Found
+		if (!user.u_is_confirmed) throw { message: `The account is not confirmed`, statusCode: 403 }; // Forbidden
 
 		if (!bcrypt.compareSync(password, user?.u_password as string))
 			throw { message: `The password is wrong`, statusCode: 403 }; // Forbidden
