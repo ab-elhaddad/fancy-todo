@@ -34,8 +34,8 @@ class Subtasks {
 	static async revStatus(id: number): Promise<void> {
 		const res: Subtask[] = await prisma.$queryRaw`
 		UPDATE public."Subtask"
-		SET s_completed = NOT (
-			SELECT s_completed
+		SET s_status = NOT (
+			SELECT s_status
 			FROM public."Subtask"
 			WHERE s_id = ${id}
 		)
