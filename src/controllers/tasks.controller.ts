@@ -71,7 +71,7 @@ export const revStatus = async (req: Request, res: Response, next: NextFunction)
 
 export const addToMyDay = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const { id: t_id } = req.body;
+		const { t_id } = req.body;
 		await Tasks.addToMyDay(t_id);
 		res.json({ message: 'Task added to my day successfully' });
 	} catch (err) {
