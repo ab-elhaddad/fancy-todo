@@ -125,8 +125,16 @@ describe('Tasks model', () => {
 				t_due_date: new Date(),
 				t_status: false,
 			};
+			const task3: Task = {
+				t_user_id: Number(user.u_id),
+				t_title: 'Test task 2',
+				t_description: 'This is a test task 2',
+				t_due_date: new Date(new Date().setDate(new Date().getDate() + 2)),
+				t_status: false,
+			};
 			await Tasks.create(task1);
 			await Tasks.create(task2);
+			await Tasks.create(task3);
 			const dueTodayTasks = await Tasks.getDueToday(Number(user.u_id));
 			expect(dueTodayTasks.length).toBe(2);
 			expect(dueTodayTasks[0].t_due_date).toEqual(task1.t_due_date);
