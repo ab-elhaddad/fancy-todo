@@ -6,7 +6,6 @@ import bcrypt from 'bcrypt';
 import { config } from '../../configuration/config';
 
 const prisma = new PrismaClient();
-const tasks = new Tasks();
 
 describe('Tasks model', () => {
 	let user: User;
@@ -38,7 +37,7 @@ describe('Tasks model', () => {
 				t_due_date: new Date(),
 				t_status: false,
 			};
-			const createdTask = await tasks.create(task);
+			const createdTask = await Tasks.create(task);
 			expect(createdTask.t_id).toBeDefined();
 			expect(createdTask.t_user_id).toEqual(task.t_user_id);
 			expect(createdTask.t_title).toEqual(task.t_title);
@@ -57,8 +56,8 @@ describe('Tasks model', () => {
 				t_due_date: new Date(),
 				t_status: false,
 			};
-			const createdTask = await tasks.create(task);
-			await tasks.delete(Number(createdTask.t_id));
+			const createdTask = await Tasks.create(task);
+			await Tasks.delete(Number(createdTask.t_id));
 			const deletedTask = await prisma.task.findUnique({
 				where: { t_id: createdTask.t_id },
 			});
@@ -82,9 +81,9 @@ describe('Tasks model', () => {
 				t_due_date: new Date(),
 				t_status: false,
 			};
-			await tasks.create(task1);
-			await tasks.create(task2);
-			const allTasks = await tasks.getAll(Number(user.u_id));
+			await Tasks.create(task1);
+			await Tasks.create(task2);
+			const allTasks = await Tasks.getAll(Number(user.u_id));
 			expect(allTasks.length).toBe(2);
 		});
 
@@ -103,9 +102,9 @@ describe('Tasks model', () => {
 				t_due_date: new Date(),
 				t_status: false,
 			};
-			await tasks.create(task1);
-			await tasks.create(task2);
-			const completedTasks = await tasks.getAll(Number(user.u_id), true);
+			await Tasks.create(task1);
+			await Tasks.create(task2);
+			const completedTasks = await Tasks.getAll(Number(user.u_id), true);
 			expect(completedTasks.length).toBe(1);
 		});
 	});
@@ -126,9 +125,9 @@ describe('Tasks model', () => {
 				t_due_date: new Date(),
 				t_status: false,
 			};
-			await tasks.create(task1);
-			await tasks.create(task2);
-			const dueTodayTasks = await tasks.getDueToday(Number(user.u_id));
+			await Tasks.create(task1);
+			await Tasks.create(task2);
+			const dueTodayTasks = await Tasks.getDueToday(Number(user.u_id));
 			expect(dueTodayTasks.length).toBe(2);
 			expect(dueTodayTasks[0].t_due_date).toEqual(task1.t_due_date);
 			expect(dueTodayTasks[1].t_due_date).toEqual(task2.t_due_date);
@@ -144,13 +143,13 @@ describe('Tasks model', () => {
 				t_due_date: new Date(),
 				t_status: false,
 			};
-			const createdTask = await tasks.create(task);
-			await tasks.revStatus(Number(createdTask.t_id));
+			const createdTask = await Tasks.create(task);
+			await Tasks.revStatus(Number(createdTask.t_id));
 			const updatedTask = await prisma.task.findUnique({
 				where: { t_id: createdTask.t_id },
 			});
 			expect(updatedTask?.t_status).toBe(true);
-			await tasks.revStatus(Number(createdTask.t_id));
+			await Tasks.revStatus(Number(createdTask.t_id));
 			const revertedTask = await prisma.task.findUnique({
 				where: { t_id: createdTask.t_id },
 			});
@@ -167,8 +166,8 @@ describe('Tasks model', () => {
 				t_due_date: new Date(),
 				t_status: false,
 			};
-			const createdTask = await tasks.create(task);
-			await tasks.addToMyDay(Number(createdTask.t_id));
+			const createdTask = await Tasks.create(task);
+			await Tasks.addToMyDay(Number(createdTask.t_id));
 			const updatedTask = await prisma.task.findUnique({
 				where: { t_id: createdTask.t_id },
 			});

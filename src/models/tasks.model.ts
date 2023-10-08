@@ -8,7 +8,7 @@ class Tasks {
 	 * @param task {@link Task}
 	 * @returns an object of {@link Task}.
 	 */
-	async create(task: Task): Promise<Task> {
+	static async create(task: Task): Promise<Task> {
 		const insertedTask: Task = await prisma.task.create({
 			data: task
 		});
@@ -16,7 +16,7 @@ class Tasks {
 	}
 
 	/** Deletes the task with the given id.*/
-	async delete(t_id: number): Promise<void> {
+	static async delete(t_id: number): Promise<void> {
 		await prisma.task.delete({
 			where: { t_id: t_id }
 		});
@@ -28,7 +28,7 @@ class Tasks {
 	 * @param t_status Determines the status of returned tasks. *If not passed all tasks are returned.*
 	 * @returns Tasks assigned by the user.
 	 */
-	async getAll(u_id: number, t_status?: boolean): Promise<Task[]> {
+	static async getAll(u_id: number, t_status?: boolean): Promise<Task[]> {
 		const tasks: Task[] = await prisma.task.findMany({
 			where: {
 				t_user_id: u_id,
@@ -42,7 +42,7 @@ class Tasks {
 		return tasks;
 	}
 
-	async getAll_SQLVersion(u_id: number): Promise<Task[]> {
+	static async getAll_SQLVersion(u_id: number): Promise<Task[]> {
 		const mp = new Map<Partial<Task>, Partial<Subtask>[]>();
 		type joinResult = Task & Subtask & { [key: string]: any };
 		const tasks: joinResult[] = await prisma.$queryRaw`
@@ -84,7 +84,7 @@ class Tasks {
 	}
 
 	/** Gets all the tasks assigned to the passed user id and has due date today. */
-	async getDueToday(u_id: number): Promise<Task[]> {
+	static async getDueToday(u_id: number): Promise<Task[]> {
 		const { startDate, endDate } = getDates();
 		const tasks: Task[] = await prisma.task.findMany({
 			where: {
@@ -99,7 +99,7 @@ class Tasks {
 	}
 
 	/** Reverse the completed aolumn in the task's row. */
-	async revStatus(t_id: number): Promise<void> {
+	static async revStatus(t_id: number): Promise<void> {
 		await prisma.$queryRaw`
         UPDATE public."Task"
         SET t_status = NOT (
@@ -110,7 +110,7 @@ class Tasks {
         WHERE t_id = ${t_id}`;
 	}
 
-	async addToMyDay(t_id: number): Promise<void> {
+	static async addToMyDay(t_id: number): Promise<void> {
 		const now = new Date();
 		await prisma.task.update({
 			where: { t_id: t_id },
