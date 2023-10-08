@@ -62,7 +62,7 @@ export const revStatus = async (req: Request, res: Response, next: NextFunction)
 		const { t_id } = req.body;
 		await Tasks.revStatus(t_id);
 
-		res.json({ message: `Task's completeness reversed successfully.` });
+		res.json({ message: `Task status reversed successfully` });
 	} catch (err) {
 		res.locals.err = err;
 		next();
