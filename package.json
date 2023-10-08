@@ -8,7 +8,7 @@
 		"prettier-check": "npx prettier . --check",
 		"prettier": "npx prettier . --write",
 		"lint": "npx eslint .",
-		"test": "npx jest",
+		"test": "npx jest --runInBand",
 		"generate": "npx prisma generate"
 	},
 	"author": "",
