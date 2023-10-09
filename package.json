@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "ts-node src/index.ts",
 		"dev": "set DEBUG=* & npx nodemon src/index.ts",
-		"prettier-check": "npx prettier . --check ",
+		"prettier:check": "npx prettier . --check ",
 		"prettier": "npx prettier . --write",
 		"lint": "npx eslint .",
 		"test": "npx jest --runInBand --silent=true --coverage",
