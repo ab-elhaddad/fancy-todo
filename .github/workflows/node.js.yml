@@ -28,12 +28,26 @@ jobs:
           cache: 'npm'
 
       - run: npm ci
-
-      - run: npm install eslint prettier --save-dev
-
-      - name: Lint and format code
-        run: |
-          npm run lint
-          npm run prettier-check
-
       # - run: npm test
+
+	lint-and-format:
+		runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+			- run: npm install eslint prettier --save-dev
+
+			- name: Lint and format code
+				run: |
+					npm run lint
+					npm run prettier-check
