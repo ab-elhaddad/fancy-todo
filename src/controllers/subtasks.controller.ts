@@ -6,7 +6,7 @@ export const createSubtask = async (req: Request, res: Response, next: NextFunct
 	try {
 		const sentSubtask: Subtask = req.body;
 		const createdSubtask = await Subtasks.createSubtask(sentSubtask);
-		res.json({ message: 'Sub task created succesfully.', subTask: createdSubtask });
+		res.json({ message: 'Sub task created succesfully.', subtask: createdSubtask });
 	} catch (err) {
 		res.locals.err = err;
 		next();
