@@ -2,8 +2,12 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { Request, Response } from 'express';
 import mainRouter from './routes/mainRouter';
+import { debug } from './lib/debug';
+import requestDebug from './middlewares/requestDebug.middleware';
 
 export const app = express();
+
+app.use(requestDebug);
 
 app.use(bodyParser.json());
 
@@ -18,5 +22,5 @@ app.use((req: Request, res: Response) => {
 });
 
 export const server = app.listen(3000, () => {
-	console.log('Server is running');
+	debug('Server is running');
 });
