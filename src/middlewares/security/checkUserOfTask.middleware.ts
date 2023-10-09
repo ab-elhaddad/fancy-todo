@@ -1,11 +1,10 @@
 import prisma from '../../lib/database';
-import express, { Request, Response, NextFunction } from 'express';
+import express, { Request, Response, NextFunction, Router } from 'express';
 
 /**
- * Checks whether there is a task with the passed task and user id.
- * @type Middleware
+ * Checks whether there is a stored task with the passed task id and user id.
  */
-const checkUserOfTask = express.Router();
+const checkUserOfTask: Router = express.Router();
 checkUserOfTask.use(async (req: Request, res: Response, next: NextFunction) => {
 	const { id: userID } = res.locals.user;
 	const taskID = req.body.t_id | req.body.s_task_id;
