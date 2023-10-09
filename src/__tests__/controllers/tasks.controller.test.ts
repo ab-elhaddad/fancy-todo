@@ -5,26 +5,18 @@ import Task from '../../types/Task.type';
 import { NextFunction, Request, Response } from 'express';
 
 jest.mock('../../models/tasks.model.ts');
-jest.mock(
-	'../../middlewares/authenticate.middleware.ts',
-	() => (req: Request, res: Response, next: NextFunction) => {
-		res.locals.user = { id: 1 };
-		next();
-	}
-);
-jest.mock(
-	'../../middlewares/security/checkUserOfTask.middleware.ts',
-	() => (req: Request, res: Response, next: NextFunction) => {
-		next();
-	}
-);
+jest.mock('../../middlewares/authenticate.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => {
+	res.locals.user = { id: 1 };
+	next();
+});
+jest.mock('../../middlewares/security/checkUserOfTask.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => {
+	next();
+});
 
 // Mock the errorHandler middleware to not print the error in the console
 jest.mock('../../middlewares/errorHandler.middleware.ts', () => (req: Request, res: Response) => {
 	const { err } = res.locals;
-	return res
-		.status(err.statusCode || 500)
-		.json({ message: err.message || err.msg || 'Internal Server Error!' });
+	return res.status(err.statusCode || 500).json({ message: err.message || err.msg || 'Internal Server Error!' });
 });
 
 describe('Tasks Controller', () => {
@@ -146,9 +138,7 @@ describe('Tasks Controller', () => {
 			];
 
 			// Mock the getAll function to return an id
-			jest
-				.mocked(Tasks)
-				.getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Tasks).getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).get('/tasks/get-all');
 
@@ -179,9 +169,7 @@ describe('Tasks Controller', () => {
 			];
 
 			// Mock the getAll function to return an id
-			jest
-				.mocked(Tasks)
-				.getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Tasks).getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).get('/tasks/get-all').query({ t_status: true });
 

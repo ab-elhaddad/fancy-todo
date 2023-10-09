@@ -1,6 +1,7 @@
 import prisma from '../lib/database';
 import bcrypt from 'bcrypt';
 import User from '../types/User.type';
+import { Prisma } from '@prisma/client';
 
 class Users {
 	/** Creates a new user with the provided user's info
@@ -15,10 +16,10 @@ class Users {
 				select: { u_id: true }
 			});
 			return isertedUser.u_id;
-		} catch (err: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
-			if (err.code === 'P2002')
-				throw { message: `The email already exists`, statusCode: 409 }; // Conflict
-			else throw err;
+		} catch (err) {
+			if (err instanceof Prisma.PrismaClientKnownRequestError)
+				if (err?.code === 'P2002') throw { message: `The email already exists`, statusCode: 409 }; // Conflict
+			throw err;
 		}
 	}
 
@@ -33,8 +34,7 @@ class Users {
 		if (user === null) throw { message: `The email doesn't exist`, statusCode: 404 }; // Not Found
 		if (!user.u_is_confirmed) throw { message: `The account is not confirmed`, statusCode: 403 }; // Forbidden
 
-		if (!bcrypt.compareSync(password, user?.u_password as string))
-			throw { message: `The password is wrong`, statusCode: 403 }; // Forbidden
+		if (!bcrypt.compareSync(password, user?.u_password as string)) throw { message: `The password is wrong`, statusCode: 403 }; // Forbidden
 
 		return user.u_id;
 	}

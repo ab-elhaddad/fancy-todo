@@ -8,15 +8,13 @@ import { config } from '../../configuration/config';
 jest.mock('../../models/users.model');
 jest.mock(
 	'../../controllers/helpers/sendConfirmationEmail',
-	() => (userID: number, userEmail: string) => { } // eslint-disable-line @typescript-eslint/no-unused-vars
+	() => (userID: number, userEmail: string) => {} // eslint-disable-line @typescript-eslint/no-unused-vars
 );
 
 // Mock the errorHandler middleware to not print the error in the console
 jest.mock('../../middlewares/errorHandler.middleware.ts', () => (req: Request, res: Response) => {
 	const { err } = res.locals;
-	return res
-		.status(err.statusCode || 500)
-		.json({ message: err.message || err.msg || 'Internal Server Error!' });
+	return res.status(err.statusCode || 500).json({ message: err.message || err.msg || 'Internal Server Error!' });
 });
 
 describe('Users Controller', () => {
@@ -43,9 +41,7 @@ describe('Users Controller', () => {
 			const response = await request(app).post('/users/sign-up').send(user);
 
 			expect(response.status).toBe(200);
-			expect(response.body.message).toBe(
-				'User created successfully. Check your email to confirm your account.'
-			);
+			expect(response.body.message).toBe('User created successfully. Check your email to confirm your account.');
 			expect(Users.signUp).toHaveBeenCalledTimes(1);
 		});
 

@@ -6,27 +6,19 @@ import Subtasks from '../../models/subtasks.model';
 
 jest.mock('../../models/subtasks.model.ts');
 
-jest.mock(
-	'../../middlewares/authenticate.middleware.ts',
-	() => (req: Request, res: Response, next: NextFunction) => {
-		res.locals.user = { id: 1 };
-		next();
-	}
-);
+jest.mock('../../middlewares/authenticate.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => {
+	res.locals.user = { id: 1 };
+	next();
+});
 
-jest.mock(
-	'../../middlewares/security/checkUserOfTask.middleware.ts',
-	() => (req: Request, res: Response, next: NextFunction) => {
-		next();
-	}
-);
+jest.mock('../../middlewares/security/checkUserOfTask.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => {
+	next();
+});
 
 // Mock the errorHandler middleware to not print the error in the console
 jest.mock('../../middlewares/errorHandler.middleware.ts', () => (req: Request, res: Response) => {
 	const { err } = res.locals;
-	return res
-		.status(err.statusCode || 500)
-		.json({ message: err.message || err.msg || 'Internal Server Error!' });
+	return res.status(err.statusCode || 500).json({ message: err.message || err.msg || 'Internal Server Error!' });
 });
 
 describe('Subtasks Controller', () => {
@@ -47,11 +39,7 @@ describe('Subtasks Controller', () => {
 			};
 
 			// Mock the create function to return s subtask object
-			jest
-				.mocked(Subtasks)
-				.createSubtask.mockImplementation((subtask: Subtask) =>
-					Promise.resolve({ ...subtask, s_id: 1, s_status: false })
-				);
+			jest.mocked(Subtasks).createSubtask.mockImplementation((subtask: Subtask) => Promise.resolve({ ...subtask, s_id: 1, s_status: false }));
 
 			const response = await request(app).post('/subtasks/create').send(sentSubtask).expect(200);
 
@@ -70,11 +58,11 @@ describe('Subtasks Controller', () => {
 				s_task_id: 1
 			};
 
-			jest
-				.mocked(Subtasks)
-				.createSubtask.mockImplementation((subtask: Subtask) => // eslint-disable-line @typescript-eslint/no-unused-vars
-					Promise.reject({ message: 'Could not create subtask', stausCode: 500 })
-				);
+			jest.mocked(Subtasks).createSubtask.mockImplementation(
+				(
+					subtask: Subtask // eslint-disable-line @typescript-eslint/no-unused-vars
+				) => Promise.reject({ message: 'Could not create subtask', stausCode: 500 })
+			);
 
 			const response = await request(app).post('/subtasks/create').send(sentSubtask).expect(500);
 
@@ -90,9 +78,7 @@ describe('Subtasks Controller', () => {
 				s_task_id: 1
 			};
 
-			jest
-				.mocked(Subtasks)
-				.deleteSubtask.mockImplementation((subtask: Subtask) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Subtasks).deleteSubtask.mockImplementation((subtask: Subtask) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).delete('/subtasks/delete').send(subtask).expect(200);
 
@@ -108,11 +94,11 @@ describe('Subtasks Controller', () => {
 				s_task_id: 1
 			};
 
-			jest
-				.mocked(Subtasks)
-				.deleteSubtask.mockImplementation((subtask: Subtask) => // eslint-disable-line @typescript-eslint/no-unused-vars
-					Promise.reject({ message: 'Could not delete subtask', statusCode: 500 })
-				);
+			jest.mocked(Subtasks).deleteSubtask.mockImplementation(
+				(
+					subtask: Subtask // eslint-disable-line @typescript-eslint/no-unused-vars
+				) => Promise.reject({ message: 'Could not delete subtask', statusCode: 500 })
+			);
 
 			const response = await request(app).delete('/subtasks/delete').send(subtask).expect(500);
 
@@ -144,11 +130,11 @@ describe('Subtasks Controller', () => {
 				s_task_id: 1
 			};
 
-			jest
-				.mocked(Subtasks)
-				.revStatus.mockImplementation((id: number) => // eslint-disable-line @typescript-eslint/no-unused-vars
-					Promise.reject({ message: 'Could not reverse subtask', statusCode: 500 })
-				);
+			jest.mocked(Subtasks).revStatus.mockImplementation(
+				(
+					id: number // eslint-disable-line @typescript-eslint/no-unused-vars
+				) => Promise.reject({ message: 'Could not reverse subtask', statusCode: 500 })
+			);
 
 			const response = await request(app).put('/subtasks/rev-status').send(subtask).expect(500);
 
