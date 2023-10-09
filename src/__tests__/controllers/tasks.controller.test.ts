@@ -5,11 +5,19 @@ import Task from '../../types/Task.type';
 import { NextFunction, Request, Response } from 'express';
 
 jest.mock('../../models/tasks.model.ts');
-jest.mock('../../middlewares/authenticate.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => {
-	res.locals.user = { id: 1 };
-	next();
-});
-jest.mock('../../middlewares/security/checkUserOfTask.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => { next(); });
+jest.mock(
+	'../../middlewares/authenticate.middleware.ts',
+	() => (req: Request, res: Response, next: NextFunction) => {
+		res.locals.user = { id: 1 };
+		next();
+	}
+);
+jest.mock(
+	'../../middlewares/security/checkUserOfTask.middleware.ts',
+	() => (req: Request, res: Response, next: NextFunction) => {
+		next();
+	}
+);
 
 // Mock the errorHandler middleware to not print the error in the console
 jest.mock('../../middlewares/errorHandler.middleware.ts', () => (req: Request, res: Response) => {
@@ -33,15 +41,13 @@ describe('Tasks Controller', () => {
 		it('should create a new task without due date and return a success message', async () => {
 			const task = {
 				t_title: 'Task 1',
-				t_description: 'Test note',
+				t_description: 'Test note'
 			};
 
 			// Mock the create function to return an id
 			jest.mocked(Tasks).create.mockImplementation((task: Task) => Promise.resolve(task));
 
-			const response = await request(app)
-				.post('/tasks/create')
-				.send(task);
+			const response = await request(app).post('/tasks/create').send(task);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task created successfully');
@@ -58,9 +64,7 @@ describe('Tasks Controller', () => {
 			// Mock the create function to return an id
 			jest.mocked(Tasks).create.mockImplementation((task: Task) => Promise.resolve(task));
 
-			const response = await request(app)
-				.post('/tasks/create')
-				.send(task);
+			const response = await request(app).post('/tasks/create').send(task);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task created successfully');
@@ -72,15 +76,15 @@ describe('Tasks Controller', () => {
 			const task = {
 				t_title: 'Task 1',
 				t_due_date: '2020-01-01',
-				t_description: 'Test note',
+				t_description: 'Test note'
 			};
 
 			// Mock the create function to throw an error
-			jest.mocked(Tasks).create.mockImplementation(() => { throw { message: `Task name is required`, statusCode: 400 }; });
+			jest.mocked(Tasks).create.mockImplementation(() => {
+				throw { message: `Task name is required`, statusCode: 400 };
+			});
 
-			const response = await request(app)
-				.post('/tasks/create')
-				.send(task);
+			const response = await request(app).post('/tasks/create').send(task);
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('Task name is required');
@@ -97,9 +101,7 @@ describe('Tasks Controller', () => {
 			// Mock the delete function to return an id
 			jest.mocked(Tasks).delete.mockImplementation((t_id: number) => Promise.resolve());
 
-			const response = await request(app)
-				.delete('/tasks/delete')
-				.send(task);
+			const response = await request(app).delete('/tasks/delete').send(task);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task deleted successfully');
@@ -110,11 +112,11 @@ describe('Tasks Controller', () => {
 			const task = {};
 
 			// Mock the delete function to throw an error
-			jest.mocked(Tasks).delete.mockImplementation(() => { throw { message: `Task id is required`, statusCode: 400 }; });
+			jest.mocked(Tasks).delete.mockImplementation(() => {
+				throw { message: `Task id is required`, statusCode: 400 };
+			});
 
-			const response = await request(app)
-				.delete('/tasks/delete')
-				.send(task);
+			const response = await request(app).delete('/tasks/delete').send(task);
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('Task id is required');
@@ -144,10 +146,11 @@ describe('Tasks Controller', () => {
 			];
 
 			// Mock the getAll function to return an id
-			jest.mocked(Tasks).getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks));
+			jest
+				.mocked(Tasks)
+				.getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks));
 
-			const response = await request(app)
-				.get('/tasks/get-all');
+			const response = await request(app).get('/tasks/get-all');
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Tasks returned sucessfully.');
@@ -176,11 +179,11 @@ describe('Tasks Controller', () => {
 			];
 
 			// Mock the getAll function to return an id
-			jest.mocked(Tasks).getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks));
+			jest
+				.mocked(Tasks)
+				.getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks));
 
-			const response = await request(app)
-				.get('/tasks/get-all')
-				.query({ t_status: true });
+			const response = await request(app).get('/tasks/get-all').query({ t_status: true });
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Tasks returned sucessfully.');
@@ -190,10 +193,11 @@ describe('Tasks Controller', () => {
 
 		it('should return an error if the user id is not provided', async () => {
 			// Mock the getAll function to throw an error
-			jest.mocked(Tasks).getAll.mockImplementation(() => { throw { message: `User id is required`, statusCode: 400 }; });
+			jest.mocked(Tasks).getAll.mockImplementation(() => {
+				throw { message: `User id is required`, statusCode: 400 };
+			});
 
-			const response = await request(app)
-				.get('/tasks/get-all');
+			const response = await request(app).get('/tasks/get-all');
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('User id is required');
@@ -225,8 +229,7 @@ describe('Tasks Controller', () => {
 			// Mock the getDueToday function to return an id
 			jest.mocked(Tasks).getDueToday.mockImplementation((u_id: number) => Promise.resolve(tasks));
 
-			const response = await request(app)
-				.get('/tasks/get-due-today');
+			const response = await request(app).get('/tasks/get-due-today');
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Tasks returned successfully.');
@@ -236,10 +239,11 @@ describe('Tasks Controller', () => {
 
 		it('should return an error if the user id is not provided', async () => {
 			// Mock the getDueToday function to throw an error
-			jest.mocked(Tasks).getDueToday.mockImplementation(() => { throw { message: `User id is required`, statusCode: 400 }; });
+			jest.mocked(Tasks).getDueToday.mockImplementation(() => {
+				throw { message: `User id is required`, statusCode: 400 };
+			});
 
-			const response = await request(app)
-				.get('/tasks/get-due-today');
+			const response = await request(app).get('/tasks/get-due-today');
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('User id is required');
@@ -256,9 +260,7 @@ describe('Tasks Controller', () => {
 			// Mock the revStatus function to return an id
 			jest.mocked(Tasks).revStatus.mockImplementation((t_id: number) => Promise.resolve());
 
-			const response = await request(app)
-				.put('/tasks/rev-status')
-				.send(task);
+			const response = await request(app).put('/tasks/rev-status').send(task);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task status reversed successfully');
@@ -270,11 +272,11 @@ describe('Tasks Controller', () => {
 			const task = {};
 
 			// Mock the revStatus function to throw an error
-			jest.mocked(Tasks).revStatus.mockImplementation(() => { throw { message: `Task id is required`, statusCode: 400 }; });
+			jest.mocked(Tasks).revStatus.mockImplementation(() => {
+				throw { message: `Task id is required`, statusCode: 400 };
+			});
 
-			const response = await request(app)
-				.put('/tasks/rev-status')
-				.send(task);
+			const response = await request(app).put('/tasks/rev-status').send(task);
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('Task id is required');
@@ -291,9 +293,7 @@ describe('Tasks Controller', () => {
 			// Mock the addToMyDay function to return an id
 			jest.mocked(Tasks).addToMyDay.mockImplementation((t_id: number) => Promise.resolve());
 
-			const response = await request(app)
-				.put('/tasks/add-to-my-day')
-				.send(task);
+			const response = await request(app).put('/tasks/add-to-my-day').send(task);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task added to my day successfully');
@@ -305,11 +305,11 @@ describe('Tasks Controller', () => {
 			const task = {};
 
 			// Mock the addToMyDay function to throw an error
-			jest.mocked(Tasks).addToMyDay.mockImplementation(() => { throw { message: `Task id is required`, statusCode: 400 }; });
+			jest.mocked(Tasks).addToMyDay.mockImplementation(() => {
+				throw { message: `Task id is required`, statusCode: 400 };
+			});
 
-			const response = await request(app)
-				.put('/tasks/add-to-my-day')
-				.send(task);
+			const response = await request(app).put('/tasks/add-to-my-day').send(task);
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('Task id is required');

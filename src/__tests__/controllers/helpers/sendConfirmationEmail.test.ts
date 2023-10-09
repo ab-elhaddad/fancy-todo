@@ -5,8 +5,8 @@ import nodemailerMock from 'nodemailer';
 // Mock the nodemailer createTransport function
 jest.mock('nodemailer', () => ({
 	createTransport: jest.fn().mockReturnValue({
-		sendMail: jest.fn().mockResolvedValueOnce({}),
-	}),
+		sendMail: jest.fn().mockResolvedValueOnce({})
+	})
 }));
 
 afterAll(() => {
@@ -34,8 +34,8 @@ describe('sendConfirmationEmail', () => {
 			secure: true,
 			auth: {
 				user: config.gmailUser,
-				pass: config.gmailPass,
-			},
+				pass: config.gmailPass
+			}
 		});
 
 		// Check that the sendMail function was called with the correct arguments
@@ -43,7 +43,7 @@ describe('sendConfirmationEmail', () => {
 			from: 'Fancy To-Do',
 			to: userEmail,
 			subject: 'Email confirmation',
-			html: expect.stringContaining(`http://localhost:3000/confirm/`),
+			html: expect.stringContaining(`http://localhost:3000/confirm/`)
 		});
 	});
 });

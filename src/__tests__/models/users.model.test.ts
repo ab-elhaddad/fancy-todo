@@ -14,7 +14,7 @@ describe('Users', () => {
 			const user: User = {
 				u_email: 'test@example.com',
 				u_password: 'password',
-				u_name: 'Test',
+				u_name: 'Test'
 			};
 
 			const userId = await Users.signUp(user);
@@ -23,7 +23,7 @@ describe('Users', () => {
 			expect(typeof userId).toBe('number');
 
 			const createdUser = await prisma.user.findUnique({
-				where: { u_id: userId },
+				where: { u_id: userId }
 			});
 
 			expect(createdUser).toBeDefined();
@@ -37,14 +37,14 @@ describe('Users', () => {
 			const user: User = {
 				u_email: 'test@example.com',
 				u_password: bcrypt.hashSync('password', config.saltRounds),
-				u_name: 'Test',
+				u_name: 'Test'
 			};
 
 			await prisma.user.create({ data: user });
 
 			await expect(Users.signUp(user)).rejects.toEqual({
 				message: 'The email already exists',
-				statusCode: 409,
+				statusCode: 409
 			});
 		});
 	});
@@ -69,14 +69,14 @@ describe('Users', () => {
 			const user: User = {
 				u_email: 'test@example.com',
 				u_password: bcrypt.hashSync('password', config.saltRounds),
-				u_name: 'Test',
+				u_name: 'Test'
 			};
 
 			await prisma.user.create({ data: user });
 
 			await expect(Users.signIn(user.u_email, 'password')).rejects.toEqual({
 				message: 'The account is not confirmed',
-				statusCode: 403,
+				statusCode: 403
 			});
 		});
 
@@ -84,7 +84,7 @@ describe('Users', () => {
 			const user: User = {
 				u_email: 'test@example.com',
 				u_password: bcrypt.hashSync('password', config.saltRounds),
-				u_name: 'Test',
+				u_name: 'Test'
 			};
 
 			await expect(await Users.signIn(user.u_email, 'password')).rejects.toEqual({
@@ -98,14 +98,14 @@ describe('Users', () => {
 				u_email: 'test@example.com',
 				u_password: bcrypt.hashSync('password', config.saltRounds),
 				u_name: 'Test',
-				u_is_confirmed: true,
+				u_is_confirmed: true
 			};
 
 			await prisma.user.create({ data: user });
 
 			await expect(Users.signIn(user.u_email, 'wrong password')).rejects.toEqual({
 				message: 'The password is wrong',
-				statusCode: 403,
+				statusCode: 403
 			});
 		});
 	});
@@ -116,7 +116,7 @@ describe('Users', () => {
 				u_email: 'test@example.com',
 				u_password: bcrypt.hashSync('password', config.saltRounds),
 				u_is_confirmed: false,
-				u_name: 'Test',
+				u_name: 'Test'
 			};
 
 			const createdUser = await prisma.user.create({ data: user });

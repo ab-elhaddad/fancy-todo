@@ -1,4 +1,4 @@
-import Task from "./Task.type";
+import Task from './Task.type';
 
 type User = {
 	u_id?: number;

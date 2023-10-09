@@ -51,15 +51,14 @@ class Tasks {
 		LEFT JOIN public."Subtask"
 		ON public."Task".t_id = public."Subtask"."s_task_id"
 		WHERE public."Task"."t_user_id" = ${u_id};
-		`
+		`;
 
 		tasks.forEach((el: joinResult) => {
-			let task: Partial<Task> = {}, subtask: Partial<Subtask> = {};
+			let task: Partial<Task> = {},
+				subtask: Partial<Subtask> = {};
 			for (const key in el) {
-				if (key.startsWith('s_'))
-					subtask[key] = el[key]
-				else
-					task[key] = el[key];
+				if (key.startsWith('s_')) subtask[key] = el[key];
+				else task[key] = el[key];
 			}
 			let found = false;
 			mp.forEach((v, k) => {
@@ -68,8 +67,7 @@ class Tasks {
 					return;
 				}
 			});
-			if (!found)
-				mp.set(task, []);
+			if (!found) mp.set(task, []);
 
 			mp.get(task)?.push(subtask);
 		});
@@ -79,7 +77,7 @@ class Tasks {
 			let el = k;
 			el.t_subtasks = v;
 			returnTasks.push(el);
-		})
+		});
 		return returnTasks;
 	}
 

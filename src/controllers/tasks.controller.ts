@@ -5,8 +5,7 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 	try {
 		const task = req.body;
 		task.t_user_id = res.locals.user.id;
-		if (task.t_due_date)
-			task.t_due_date = new Date(new Date(task.t_due_date).setHours(12));
+		if (task.t_due_date) task.t_due_date = new Date(new Date(task.t_due_date).setHours(12));
 
 		const response = await Tasks.create(task);
 		res.json({
@@ -33,7 +32,7 @@ export const deleteTask = async (req: Request, res: Response, next: NextFunction
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { id: u_id } = res.locals.user;
-		const t_status = req.query.t_status ? (req.query.t_status === 'true') : undefined;
+		const t_status = req.query.t_status ? req.query.t_status === 'true' : undefined;
 
 		const userTasks = await Tasks.getAll(u_id, t_status);
 		res.json({ message: 'Tasks returned sucessfully.', tasks: userTasks });

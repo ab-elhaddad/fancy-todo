@@ -15,9 +15,9 @@ class Users {
 				select: { u_id: true }
 			});
 			return isertedUser.u_id;
-		}
-		catch (err: any) {
-			if (err.code === 'P2002') throw { message: `The email already exists`, statusCode: 409 }; // Conflict
+		} catch (err: any) {
+			if (err.code === 'P2002')
+				throw { message: `The email already exists`, statusCode: 409 }; // Conflict
 			else throw err;
 		}
 	}

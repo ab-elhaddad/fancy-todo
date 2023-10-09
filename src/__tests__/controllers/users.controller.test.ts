@@ -5,9 +5,11 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { config } from '../../configuration/config';
 
-
 jest.mock('../../models/users.model');
-jest.mock('../../controllers/helpers/sendConfirmationEmail', () => (userID: number, userEmail: string) => { });
+jest.mock(
+	'../../controllers/helpers/sendConfirmationEmail',
+	() => (userID: number, userEmail: string) => {}
+);
 
 // Mock the errorHandler middleware to not print the error in the console
 jest.mock('../../middlewares/errorHandler.middleware.ts', () => (req: Request, res: Response) => {
@@ -38,12 +40,12 @@ describe('Users Controller', () => {
 			// Mock the signUp function to return an id
 			jest.mocked(Users).signUp.mockImplementation(() => Promise.resolve(1));
 
-			const response = await request(app)
-				.post('/users/sign-up')
-				.send(user);
+			const response = await request(app).post('/users/sign-up').send(user);
 
 			expect(response.status).toBe(200);
-			expect(response.body.message).toBe('User created successfully. Check your email to confirm your account.');
+			expect(response.body.message).toBe(
+				'User created successfully. Check your email to confirm your account.'
+			);
 			expect(Users.signUp).toHaveBeenCalledTimes(1);
 		});
 
@@ -55,11 +57,11 @@ describe('Users Controller', () => {
 			};
 
 			// Mock the signUp function to throw an error
-			jest.mocked(Users).signUp.mockImplementation(() => { throw { message: `The email already exists`, statusCode: 409 }; });
+			jest.mocked(Users).signUp.mockImplementation(() => {
+				throw { message: `The email already exists`, statusCode: 409 };
+			});
 
-			const response = await request(app)
-				.post('/users/sign-up')
-				.send(user);
+			const response = await request(app).post('/users/sign-up').send(user);
 
 			expect(response.status).toBe(409);
 			expect(response.body.message).toBe('The email already exists');
@@ -77,9 +79,7 @@ describe('Users Controller', () => {
 			// Mock the signIn function to return an id
 			jest.mocked(Users).signIn.mockImplementation(() => Promise.resolve(1));
 
-			const response = await request(app)
-				.post('/users/sign-in')
-				.send(user);
+			const response = await request(app).post('/users/sign-in').send(user);
 
 			expect(response.status).toBe(200);
 			expect(response.body.token).toBeDefined();
@@ -94,11 +94,11 @@ describe('Users Controller', () => {
 			};
 
 			// Mock the signIn function to throw an error
-			jest.mocked(Users).signIn.mockImplementation(() => { throw { message: `Invalid email or password`, statusCode: 401 }; });
+			jest.mocked(Users).signIn.mockImplementation(() => {
+				throw { message: `Invalid email or password`, statusCode: 401 };
+			});
 
-			const response = await request(app)
-				.post('/users/sign-in')
-				.send(user);
+			const response = await request(app).post('/users/sign-in').send(user);
 
 			expect(response.status).toBe(401);
 			expect(response.body.message).toBe('Invalid email or password');

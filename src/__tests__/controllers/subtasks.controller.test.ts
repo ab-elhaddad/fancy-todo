@@ -7,12 +7,20 @@ import exp from 'constants';
 
 jest.mock('../../models/subtasks.model.ts');
 
-jest.mock('../../middlewares/authenticate.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => {
-	res.locals.user = { id: 1 };
-	next();
-});
+jest.mock(
+	'../../middlewares/authenticate.middleware.ts',
+	() => (req: Request, res: Response, next: NextFunction) => {
+		res.locals.user = { id: 1 };
+		next();
+	}
+);
 
-jest.mock('../../middlewares/security/checkUserOfTask.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => { next(); });
+jest.mock(
+	'../../middlewares/security/checkUserOfTask.middleware.ts',
+	() => (req: Request, res: Response, next: NextFunction) => {
+		next();
+	}
+);
 
 // Mock the errorHandler middleware to not print the error in the console
 jest.mock('../../middlewares/errorHandler.middleware.ts', () => (req: Request, res: Response) => {
@@ -25,7 +33,7 @@ jest.mock('../../middlewares/errorHandler.middleware.ts', () => (req: Request, r
 describe('Subtasks Controller', () => {
 	afterAll(async () => {
 		server.close();
-		jest.resetAllMocks();;
+		jest.resetAllMocks();
 	});
 
 	afterEach(async () => {
@@ -40,12 +48,13 @@ describe('Subtasks Controller', () => {
 			};
 
 			// Mock the create function to return s subtask object
-			jest.mocked(Subtasks).createSubtask.mockImplementation((subtask: Subtask) => Promise.resolve({ ...subtask, s_id: 1, s_status: false }));
+			jest
+				.mocked(Subtasks)
+				.createSubtask.mockImplementation((subtask: Subtask) =>
+					Promise.resolve({ ...subtask, s_id: 1, s_status: false })
+				);
 
-			const response = await request(app)
-				.post('/subtasks/create')
-				.send(sentSubtask)
-				.expect(200);
+			const response = await request(app).post('/subtasks/create').send(sentSubtask).expect(200);
 
 			expect(response.body.message).toEqual('Sub task created succesfully.');
 			expect(response.body.subtask.s_title).toEqual(sentSubtask.s_title);
@@ -59,15 +68,16 @@ describe('Subtasks Controller', () => {
 		it('should return an error if the subtask could not be created', async () => {
 			const sentSubtask: Subtask = {
 				s_title: 'Test Subtask',
-				s_task_id: 1,
+				s_task_id: 1
 			};
 
-			jest.mocked(Subtasks).createSubtask.mockImplementation((subtask: Subtask) => Promise.reject({ message: 'Could not create subtask', stausCode: 500 }));
+			jest
+				.mocked(Subtasks)
+				.createSubtask.mockImplementation((subtask: Subtask) =>
+					Promise.reject({ message: 'Could not create subtask', stausCode: 500 })
+				);
 
-			const response = await request(app)
-				.post('/subtasks/create')
-				.send(sentSubtask)
-				.expect(500);
+			const response = await request(app).post('/subtasks/create').send(sentSubtask).expect(500);
 
 			expect(response.body.message).toEqual('Could not create subtask');
 		});
@@ -78,15 +88,14 @@ describe('Subtasks Controller', () => {
 			const subtask: Subtask = {
 				s_id: 1,
 				s_title: 'Test Subtask',
-				s_task_id: 1,
+				s_task_id: 1
 			};
 
-			jest.mocked(Subtasks).deleteSubtask.mockImplementation((subtask: Subtask) => Promise.resolve());
+			jest
+				.mocked(Subtasks)
+				.deleteSubtask.mockImplementation((subtask: Subtask) => Promise.resolve());
 
-			const response = await request(app)
-				.delete('/subtasks/delete')
-				.send(subtask)
-				.expect(200);
+			const response = await request(app).delete('/subtasks/delete').send(subtask).expect(200);
 
 			expect(response.body.message).toEqual('Subtask deleted successfully');
 			expect(Subtasks.deleteSubtask).toHaveBeenCalledTimes(1);
@@ -97,15 +106,16 @@ describe('Subtasks Controller', () => {
 			const subtask: Subtask = {
 				s_id: 1,
 				s_title: 'Test Subtask',
-				s_task_id: 1,
+				s_task_id: 1
 			};
 
-			jest.mocked(Subtasks).deleteSubtask.mockImplementation((subtask: Subtask) => Promise.reject({ message: 'Could not delete subtask', statusCode: 500 }));
+			jest
+				.mocked(Subtasks)
+				.deleteSubtask.mockImplementation((subtask: Subtask) =>
+					Promise.reject({ message: 'Could not delete subtask', statusCode: 500 })
+				);
 
-			const response = await request(app)
-				.delete('/subtasks/delete')
-				.send(subtask)
-				.expect(500);
+			const response = await request(app).delete('/subtasks/delete').send(subtask).expect(500);
 
 			expect(response.body.message).toEqual('Could not delete subtask');
 		});
@@ -116,15 +126,12 @@ describe('Subtasks Controller', () => {
 			const subtask: Subtask = {
 				s_id: 1,
 				s_title: 'Test Subtask',
-				s_task_id: 1,
+				s_task_id: 1
 			};
 
 			jest.mocked(Subtasks).revStatus.mockImplementation((id: number) => Promise.resolve());
 
-			const response = await request(app)
-				.put('/subtasks/rev-status')
-				.send(subtask)
-				.expect(200);
+			const response = await request(app).put('/subtasks/rev-status').send(subtask).expect(200);
 
 			expect(response.body.message).toEqual('Sub task reversed successfully');
 			expect(Subtasks.revStatus).toHaveBeenCalledTimes(1);
@@ -135,15 +142,16 @@ describe('Subtasks Controller', () => {
 			const subtask: Subtask = {
 				s_id: 1,
 				s_title: 'Test Subtask',
-				s_task_id: 1,
+				s_task_id: 1
 			};
 
-			jest.mocked(Subtasks).revStatus.mockImplementation((id: number) => Promise.reject({ message: 'Could not reverse subtask', statusCode: 500 }));
+			jest
+				.mocked(Subtasks)
+				.revStatus.mockImplementation((id: number) =>
+					Promise.reject({ message: 'Could not reverse subtask', statusCode: 500 })
+				);
 
-			const response = await request(app)
-				.put('/subtasks/rev-status')
-				.send(subtask)
-				.expect(500);
+			const response = await request(app).put('/subtasks/rev-status').send(subtask).expect(500);
 
 			expect(response.body.message).toEqual('Could not reverse subtask');
 		});

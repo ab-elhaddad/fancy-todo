@@ -42,7 +42,8 @@ class Subtasks {
 		WHERE s_id = ${id}
 		RETURNING s_id
 		`;
-		if (res.length === 0) // There is no task with the provided task and subtask id
+		if (res.length === 0)
+			// There is no task with the provided task and subtask id
 			throw { message: 'Not Allowed', statusCode: 403 };
 	}
 }

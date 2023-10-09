@@ -15,7 +15,7 @@ describe('Tasks model', () => {
 			data: {
 				u_email: 'test_tasks@example.com',
 				u_name: 'Test',
-				u_password: bcrypt.hashSync('password', config.saltRounds),
+				u_password: bcrypt.hashSync('password', config.saltRounds)
 			}
 		});
 	});
@@ -35,7 +35,7 @@ describe('Tasks model', () => {
 				t_title: 'Test task',
 				t_description: 'This is a test task',
 				t_due_date: new Date(),
-				t_status: false,
+				t_status: false
 			};
 			const createdTask = await Tasks.create(task);
 			expect(createdTask.t_id).toBeDefined();
@@ -54,12 +54,12 @@ describe('Tasks model', () => {
 				t_title: 'Test task',
 				t_description: 'This is a test task',
 				t_due_date: new Date(),
-				t_status: false,
+				t_status: false
 			};
 			const createdTask = await Tasks.create(task);
 			await Tasks.delete(Number(createdTask.t_id));
 			const deletedTask = await prisma.task.findUnique({
-				where: { t_id: createdTask.t_id },
+				where: { t_id: createdTask.t_id }
 			});
 			expect(deletedTask).toBeNull();
 		});
@@ -72,14 +72,14 @@ describe('Tasks model', () => {
 				t_title: 'Test task 1',
 				t_description: 'This is a test task 1',
 				t_due_date: new Date(),
-				t_status: false,
+				t_status: false
 			};
 			const task2: Task = {
 				t_user_id: Number(user.u_id),
 				t_title: 'Test task 2',
 				t_description: 'This is a test task 2',
 				t_due_date: new Date(),
-				t_status: false,
+				t_status: false
 			};
 			await Tasks.create(task1);
 			await Tasks.create(task2);
@@ -93,14 +93,14 @@ describe('Tasks model', () => {
 				t_title: 'Test task 1',
 				t_description: 'This is a test task 1',
 				t_due_date: new Date(),
-				t_status: true,
+				t_status: true
 			};
 			const task2: Task = {
 				t_user_id: Number(user.u_id),
 				t_title: 'Test task 2',
 				t_description: 'This is a test task 2',
 				t_due_date: new Date(),
-				t_status: false,
+				t_status: false
 			};
 			await Tasks.create(task1);
 			await Tasks.create(task2);
@@ -116,21 +116,21 @@ describe('Tasks model', () => {
 				t_title: 'Test task 1',
 				t_description: 'This is a test task 1',
 				t_due_date: new Date(),
-				t_status: false,
+				t_status: false
 			};
 			const task2: Task = {
 				t_user_id: Number(user.u_id),
 				t_title: 'Test task 2',
 				t_description: 'This is a test task 2',
 				t_due_date: new Date(),
-				t_status: false,
+				t_status: false
 			};
 			const task3: Task = {
 				t_user_id: Number(user.u_id),
 				t_title: 'Test task 2',
 				t_description: 'This is a test task 2',
 				t_due_date: new Date(new Date().setDate(new Date().getDate() + 2)),
-				t_status: false,
+				t_status: false
 			};
 			await Tasks.create(task1);
 			await Tasks.create(task2);
@@ -149,17 +149,17 @@ describe('Tasks model', () => {
 				t_title: 'Test task',
 				t_description: 'This is a test task',
 				t_due_date: new Date(),
-				t_status: false,
+				t_status: false
 			};
 			const createdTask = await Tasks.create(task);
 			await Tasks.revStatus(Number(createdTask.t_id));
 			const updatedTask = await prisma.task.findUnique({
-				where: { t_id: createdTask.t_id },
+				where: { t_id: createdTask.t_id }
 			});
 			expect(updatedTask?.t_status).toBe(true);
 			await Tasks.revStatus(Number(createdTask.t_id));
 			const revertedTask = await prisma.task.findUnique({
-				where: { t_id: createdTask.t_id },
+				where: { t_id: createdTask.t_id }
 			});
 			expect(revertedTask?.t_status).toBe(false);
 		});
@@ -172,12 +172,12 @@ describe('Tasks model', () => {
 				t_title: 'Test task',
 				t_description: 'This is a test task',
 				t_due_date: new Date(),
-				t_status: false,
+				t_status: false
 			};
 			const createdTask = await Tasks.create(task);
 			await Tasks.addToMyDay(Number(createdTask.t_id));
 			const updatedTask = await prisma.task.findUnique({
-				where: { t_id: createdTask.t_id },
+				where: { t_id: createdTask.t_id }
 			});
 			expect(updatedTask?.t_due_date).toBeDefined();
 		});

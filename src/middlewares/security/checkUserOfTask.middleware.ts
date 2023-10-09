@@ -1,5 +1,5 @@
-import prisma from "../../lib/database";
-import express, { Request, Response, NextFunction } from 'express'
+import prisma from '../../lib/database';
+import express, { Request, Response, NextFunction } from 'express';
 
 /**
  * Checks whether there is a task with the passed task and user id.
