@@ -5,6 +5,7 @@ import Subtask from '../../types/Subtask.type';
 import User from '../../types/User.type';
 import Task from '../../types/Task.type';
 import { config } from '../../configuration/config';
+import exp from 'constants';
 
 describe('Subtasks', () => {
 	let user: User;
@@ -37,13 +38,20 @@ describe('Subtasks', () => {
 	});
 
 	describe('createSubtask', () => {
-		it('should create a new subtask', async () => {
+		it('should create a new subtask', async () => { // TODO: Add more assertions
 			const newSubtask: Subtask = {
 				s_task_id: Number(task.t_id),
 				s_title: 'Subtask 2',
 			};
-			const createdSubtask = await Subtasks.createSubtask(newSubtask);
-			expect(createdSubtask).toMatchObject(newSubtask);
+
+			const returnedSubtask: Subtask = {
+				...newSubtask,
+				s_status: false,
+			}
+			const actualCreatedSubtask = await Subtasks.createSubtask(newSubtask);
+			expect(actualCreatedSubtask).toMatchObject(returnedSubtask);
+			expect(actualCreatedSubtask.s_id).toBeDefined();
+			expect(actualCreatedSubtask.s_created_at).toBeDefined();
 		});
 	});
 
