@@ -5,3 +5,4 @@ package.json
 .todo
 tsconfig.json
 spec
+*.md
