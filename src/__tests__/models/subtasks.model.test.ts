@@ -38,7 +38,7 @@ describe('Subtasks', () => {
 	});
 
 	describe('createSubtask', () => {
-		it('should create a new subtask', async () => { // TODO: Add more assertions
+		it('should create a new subtask', async () => {
 			const newSubtask: Subtask = {
 				s_task_id: Number(task.t_id),
 				s_title: 'Subtask 2',
