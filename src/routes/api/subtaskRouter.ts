@@ -7,7 +7,7 @@ import checkUserOfTask from '../../middlewares/security/checkUserOfTask.middlewa
 const subtaskRouter = (app: Application) => {
 	app.post('/subtasks/create', authenticate, createSubtask, errorHandler);
 	app.delete('/subtasks/delete', authenticate, checkUserOfTask, deleteSubtask, errorHandler);
-	app.put('/subtasks/rev-complete', authenticate, checkUserOfTask, revStatus, errorHandler);
+	app.put('/subtasks/rev-status', authenticate, checkUserOfTask, revStatus, errorHandler);
 };
 
 export default subtaskRouter;
