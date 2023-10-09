@@ -15,7 +15,7 @@ class Users {
 				select: { u_id: true }
 			});
 			return isertedUser.u_id;
-		} catch (err: any) {
+		} catch (err: any) { // eslint-disable-line @typescript-eslint/no-explicit-any
 			if (err.code === 'P2002')
 				throw { message: `The email already exists`, statusCode: 409 }; // Conflict
 			else throw err;

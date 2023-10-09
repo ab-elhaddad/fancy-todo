@@ -44,7 +44,7 @@ class Tasks {
 
 	static async getAll_SQLVersion(u_id: number): Promise<Task[]> {
 		const mp = new Map<Partial<Task>, Partial<Subtask>[]>();
-		type joinResult = Task & Subtask & { [key: string]: any };
+		type joinResult = Task & Subtask & { [key: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
 		const tasks: joinResult[] = await prisma.$queryRaw`
 		SELECT *
 		FROM public."Task"
@@ -54,7 +54,7 @@ class Tasks {
 		`;
 
 		tasks.forEach((el: joinResult) => {
-			let task: Partial<Task> = {},
+			const task: Partial<Task> = {},
 				subtask: Partial<Subtask> = {};
 			for (const key in el) {
 				if (key.startsWith('s_')) subtask[key] = el[key];
@@ -72,9 +72,9 @@ class Tasks {
 			mp.get(task)?.push(subtask);
 		});
 		console.log(mp);
-		let returnTasks: any = [];
+		const returnTasks: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
 		mp.forEach((v, k) => {
-			let el = k;
+			const el = k;
 			el.t_subtasks = v;
 			returnTasks.push(el);
 		});

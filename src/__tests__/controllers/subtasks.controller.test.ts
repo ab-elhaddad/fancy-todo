@@ -3,7 +3,6 @@ import { app, server } from '../../index';
 import { Request, Response, NextFunction } from 'express';
 import Subtask from '../../types/Subtask.type';
 import Subtasks from '../../models/subtasks.model';
-import exp from 'constants';
 
 jest.mock('../../models/subtasks.model.ts');
 
@@ -73,7 +72,7 @@ describe('Subtasks Controller', () => {
 
 			jest
 				.mocked(Subtasks)
-				.createSubtask.mockImplementation((subtask: Subtask) =>
+				.createSubtask.mockImplementation((subtask: Subtask) => // eslint-disable-line @typescript-eslint/no-unused-vars
 					Promise.reject({ message: 'Could not create subtask', stausCode: 500 })
 				);
 
@@ -93,7 +92,7 @@ describe('Subtasks Controller', () => {
 
 			jest
 				.mocked(Subtasks)
-				.deleteSubtask.mockImplementation((subtask: Subtask) => Promise.resolve());
+				.deleteSubtask.mockImplementation((subtask: Subtask) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).delete('/subtasks/delete').send(subtask).expect(200);
 
@@ -111,7 +110,7 @@ describe('Subtasks Controller', () => {
 
 			jest
 				.mocked(Subtasks)
-				.deleteSubtask.mockImplementation((subtask: Subtask) =>
+				.deleteSubtask.mockImplementation((subtask: Subtask) => // eslint-disable-line @typescript-eslint/no-unused-vars
 					Promise.reject({ message: 'Could not delete subtask', statusCode: 500 })
 				);
 
@@ -129,7 +128,7 @@ describe('Subtasks Controller', () => {
 				s_task_id: 1
 			};
 
-			jest.mocked(Subtasks).revStatus.mockImplementation((id: number) => Promise.resolve());
+			jest.mocked(Subtasks).revStatus.mockImplementation((id: number) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).put('/subtasks/rev-status').send(subtask).expect(200);
 
@@ -147,7 +146,7 @@ describe('Subtasks Controller', () => {
 
 			jest
 				.mocked(Subtasks)
-				.revStatus.mockImplementation((id: number) =>
+				.revStatus.mockImplementation((id: number) => // eslint-disable-line @typescript-eslint/no-unused-vars
 					Promise.reject({ message: 'Could not reverse subtask', statusCode: 500 })
 				);
 

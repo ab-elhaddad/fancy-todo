@@ -5,7 +5,6 @@ import Subtask from '../../types/Subtask.type';
 import User from '../../types/User.type';
 import Task from '../../types/Task.type';
 import { config } from '../../configuration/config';
-import exp from 'constants';
 
 describe('Subtasks', () => {
 	let user: User;

@@ -1,5 +1,3 @@
-import Task from './Task.type';
-
 type User = {
 	u_id?: number;
 	u_email: string;

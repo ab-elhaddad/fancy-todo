@@ -1,4 +1,4 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient({
 	datasources: {
@@ -8,11 +8,11 @@ const prisma = new PrismaClient({
 	}
 });
 
-beforeAll(async () => {
+beforeAll(async () => { // eslint-disable-line no-undef
 	await prisma.$connect();
 });
 
-afterAll(async () => {
+afterAll(async () => { // eslint-disable-line no-undef
 	await prisma.$disconnect();
 });
 

@@ -99,7 +99,7 @@ describe('Tasks Controller', () => {
 			};
 
 			// Mock the delete function to return an id
-			jest.mocked(Tasks).delete.mockImplementation((t_id: number) => Promise.resolve());
+			jest.mocked(Tasks).delete.mockImplementation((t_id: number) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).delete('/tasks/delete').send(task);
 
@@ -148,7 +148,7 @@ describe('Tasks Controller', () => {
 			// Mock the getAll function to return an id
 			jest
 				.mocked(Tasks)
-				.getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks));
+				.getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).get('/tasks/get-all');
 
@@ -181,7 +181,7 @@ describe('Tasks Controller', () => {
 			// Mock the getAll function to return an id
 			jest
 				.mocked(Tasks)
-				.getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks));
+				.getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).get('/tasks/get-all').query({ t_status: true });
 
@@ -227,7 +227,7 @@ describe('Tasks Controller', () => {
 			];
 
 			// Mock the getDueToday function to return an id
-			jest.mocked(Tasks).getDueToday.mockImplementation((u_id: number) => Promise.resolve(tasks));
+			jest.mocked(Tasks).getDueToday.mockImplementation((u_id: number) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).get('/tasks/get-due-today');
 
@@ -258,7 +258,7 @@ describe('Tasks Controller', () => {
 			};
 
 			// Mock the revStatus function to return an id
-			jest.mocked(Tasks).revStatus.mockImplementation((t_id: number) => Promise.resolve());
+			jest.mocked(Tasks).revStatus.mockImplementation((t_id: number) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).put('/tasks/rev-status').send(task);
 
@@ -291,7 +291,7 @@ describe('Tasks Controller', () => {
 			};
 
 			// Mock the addToMyDay function to return an id
-			jest.mocked(Tasks).addToMyDay.mockImplementation((t_id: number) => Promise.resolve());
+			jest.mocked(Tasks).addToMyDay.mockImplementation((t_id: number) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
 
 			const response = await request(app).put('/tasks/add-to-my-day').send(task);
 
