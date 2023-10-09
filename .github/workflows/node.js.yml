@@ -30,8 +30,8 @@ jobs:
       - run: npm ci
       # - run: npm test
 
-	lint-and-format:
-		runs-on: ubuntu-latest
+  lint-and-format:
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
@@ -45,9 +45,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-			- run: npm install eslint prettier --save-dev
 
-			- name: Lint and format code
-				run: |
-					npm run lint
-					npm run prettier-check
+      - run: npm install eslint prettier --save-dev
+
+      - name: Lint and format code
+        run: |
+          npm run lint
+          npm run prettier-check
