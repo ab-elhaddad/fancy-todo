@@ -1,5 +1,5 @@
 import { Application } from 'express';
-import { addToMyDay, create, deleteTask, getAll, getDueToday, revStatus } from '../../controllers/tasks.controller';
+import { addToMyDay, create, deleteTask, getAll, getDueToday, revStatus, searchTasks } from '../../controllers/tasks.controller';
 import authenticate from '../../middlewares/authenticate.middleware';
 import { createTaskValidator, deleteTaskValidator } from '../../middlewares/validators/tasks.validator';
 import errorHandler from '../../middlewares/errorHandler.middleware';
@@ -12,6 +12,7 @@ const taskRouter = (app: Application) => {
 	app.get('/tasks/get-due-today', authenticate, getDueToday, errorHandler);
 	app.put('/tasks/rev-status', authenticate, checkUserOfTask, revStatus, errorHandler);
 	app.put('/tasks/add-to-my-day', authenticate, checkUserOfTask, addToMyDay, errorHandler);
+	app.get('/tasks/search', authenticate, searchTasks, errorHandler);
 };
 
 export default taskRouter;

@@ -78,3 +78,15 @@ export const addToMyDay = async (req: Request, res: Response, next: NextFunction
 		next();
 	}
 };
+
+export const searchTasks = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const { id: u_id } = res.locals.user;
+		const { search } = req.query;
+		const tasks = await Tasks.searchTasks(u_id, String(search || ""));
+		res.json({ message: 'Tasks returned successfully.', tasks });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+};

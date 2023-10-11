@@ -115,6 +115,19 @@ class Tasks {
 			data: { t_due_date: now }
 		});
 	}
+
+	static async searchTasks(u_id: number, search: string): Promise<Task[]> {
+		const tasks: Task[] = await prisma.task.findMany({
+			where: {
+				t_user_id: u_id,
+				t_title: {
+					contains: search,
+					mode: 'insensitive'
+				}
+			}
+		});
+		return tasks;
+	}
 }
 
 export default Tasks;
