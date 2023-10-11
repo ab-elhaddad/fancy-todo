@@ -8,7 +8,7 @@ createTaskValidator.use((req: Request, res: Response, next: NextFunction) => {
 		t_title: joi.string(),
 		t_description: joi.string(),
 		t_due_date: joi.date(),
-		t_priority: joi.string().valid('low', 'medium', 'high'),
+		t_priority: joi.string().valid('low', 'medium', 'high')
 	});
 
 	const { error } = schema.validate(req.body);

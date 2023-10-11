@@ -1,4 +1,4 @@
-import Task from "../../types/Task.type";
+import Task from '../../types/Task.type';
 
 const setTaskPriority = (task: Task) => {
 	if (task.t_priority) {
@@ -6,6 +6,6 @@ const setTaskPriority = (task: Task) => {
 		else if (task.t_priority === 'medium') task.t_priority = 2;
 		else if (task.t_priority === 'high') task.t_priority = 3;
 	}
-}
+};
 
 export default setTaskPriority;
