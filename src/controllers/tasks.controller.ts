@@ -83,7 +83,7 @@ export const searchTasks = async (req: Request, res: Response, next: NextFunctio
 	try {
 		const { id: u_id } = res.locals.user;
 		const { search } = req.query;
-		const tasks = await Tasks.searchTasks(u_id, String(search || ""));
+		const tasks = await Tasks.searchTasks(u_id, String(search || ''));
 		res.json({ message: 'Tasks returned successfully.', tasks });
 	} catch (err) {
 		res.locals.err = err;

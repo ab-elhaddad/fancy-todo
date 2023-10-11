@@ -187,11 +187,11 @@ describe('Tasks model', () => {
 		it('should return tasks containing the search string', async () => {
 			const task1: Task = {
 				t_title: 'Buying lunch groceries',
-				t_user_id: Number(user.u_id),
+				t_user_id: Number(user.u_id)
 			};
 			const task2: Task = {
 				t_title: 'Meetig with the team',
-				t_user_id: Number(user.u_id),
+				t_user_id: Number(user.u_id)
 			};
 			const task3: Task = {
 				t_title: 'Making lunch',
@@ -215,11 +215,11 @@ describe('Tasks model', () => {
 		it('should return an empty array if no tasks are found', async () => {
 			const task1: Task = {
 				t_title: 'Buying lunch groceries',
-				t_user_id: Number(user.u_id),
+				t_user_id: Number(user.u_id)
 			};
 			const task2: Task = {
 				t_title: 'Meetig with the team',
-				t_user_id: Number(user.u_id),
+				t_user_id: Number(user.u_id)
 			};
 
 			await Tasks.create(task1);
@@ -233,11 +233,11 @@ describe('Tasks model', () => {
 		it('should return all tasks if search string is empty', async () => {
 			const task1: Task = {
 				t_title: 'Buying lunch groceries',
-				t_user_id: Number(user.u_id),
+				t_user_id: Number(user.u_id)
 			};
 			const task2: Task = {
 				t_title: 'Meetig with the team',
-				t_user_id: Number(user.u_id),
+				t_user_id: Number(user.u_id)
 			};
 
 			await Tasks.create(task1);
