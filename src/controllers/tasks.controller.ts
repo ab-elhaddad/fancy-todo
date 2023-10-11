@@ -1,11 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
 import Tasks from '../models/tasks.model';
+import setTaskPriority from './helpers/setTaskPriority';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const task = req.body;
 		task.t_user_id = res.locals.user.id;
+
+		// Setting due date to today 12:00 PM if not set
 		if (task.t_due_date) task.t_due_date = new Date(new Date(task.t_due_date).setHours(12));
+
+		// Replacing string priority with number
+		setTaskPriority(task);
 
 		const response = await Tasks.create(task);
 		res.json({

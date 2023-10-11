@@ -82,6 +82,24 @@ describe('Tasks Controller', () => {
 			expect(response.body.message).toBe('Task name is required');
 			expect(Tasks.create).toHaveBeenCalledTimes(1);
 		});
+
+		it('should create a task with a strig priority and return a success message', async () => {
+			const task = {
+				t_title: 'Task 1',
+				t_description: 'Test note',
+				t_priority: 'low'
+			};
+
+			// Mock the create function to return an id
+			jest.mocked(Tasks).create.mockImplementation((task: Task) => Promise.resolve(task));
+
+			const response = await request(app).post('/tasks/create').send(task);
+
+			expect(response.status).toBe(200);
+			expect(response.body.message).toBe('Task created successfully');
+			expect(response.body.task.t_priority).toEqual(1);
+			expect(Tasks.create).toHaveBeenCalledTimes(1);
+		});
 	});
 
 	describe('DELETE /tasks/delete', () => {
