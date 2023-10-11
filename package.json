@@ -9,7 +9,7 @@
 		"prettier:check": "npx prettier . --check ",
 		"prettier": "npx prettier . --write",
 		"lint": "npx eslint .",
-		"test": "npx jest --runInBand --silent=true --coverage",
+		"test": "set ENV=test&npx jest --runInBand --silent=true --coverage",
 		"test:watch": "npm t -- --watch",
 		"generate": "npx prisma generate",
 		"migrate": "npx prisma migrate dev"
