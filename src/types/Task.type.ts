@@ -6,6 +6,7 @@ type Task = {
 	t_due_date?: Date | string;
 	t_created_at?: Date;
 	t_user_id: number;
+	t_priority?: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 } & { [key: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 export default Task;
