@@ -1,11 +1,9 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '../../lib/database';
 import Task from '../../types/Task.type';
 import Tasks from '../../models/tasks.model';
 import User from '../../types/User.type';
 import bcrypt from 'bcrypt';
 import { config } from '../../configuration/config';
-
-const prisma = new PrismaClient();
 
 describe('Tasks model', () => {
 	let user: User;
