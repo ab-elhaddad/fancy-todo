@@ -182,4 +182,72 @@ describe('Tasks model', () => {
 			expect(updatedTask?.t_due_date).toBeDefined();
 		});
 	});
+
+	describe('searchTasks', () => {
+		it('should return tasks containing the search string', async () => {
+			const task1: Task = {
+				t_title: 'Buying lunch groceries',
+				t_user_id: Number(user.u_id),
+			};
+			const task2: Task = {
+				t_title: 'Meetig with the team',
+				t_user_id: Number(user.u_id),
+			};
+			const task3: Task = {
+				t_title: 'Making lunch',
+				t_user_id: Number(user.u_id)
+			};
+
+			await Tasks.create(task1);
+			await Tasks.create(task2);
+			await Tasks.create(task3);
+
+			const actual1 = await Tasks.searchTasks(Number(user.u_id), 'lunch');
+			expect(actual1).toHaveLength(2);
+			expect(actual1.at(0)?.t_title).toEqual(task1.t_title);
+			expect(actual1.at(1)?.t_title).toEqual(task3.t_title);
+
+			const actual2 = await Tasks.searchTasks(Number(user.u_id), 'team');
+			expect(actual2).toHaveLength(1);
+			expect(actual2.at(0)?.t_title).toEqual(task2.t_title);
+		});
+
+		it('should return an empty array if no tasks are found', async () => {
+			const task1: Task = {
+				t_title: 'Buying lunch groceries',
+				t_user_id: Number(user.u_id),
+			};
+			const task2: Task = {
+				t_title: 'Meetig with the team',
+				t_user_id: Number(user.u_id),
+			};
+
+			await Tasks.create(task1);
+			await Tasks.create(task2);
+
+			const actual = await Tasks.searchTasks(Number(user.u_id), 'cinema');
+
+			expect(actual).toHaveLength(0);
+		});
+
+		it('should return all tasks if search string is empty', async () => {
+			const task1: Task = {
+				t_title: 'Buying lunch groceries',
+				t_user_id: Number(user.u_id),
+			};
+			const task2: Task = {
+				t_title: 'Meetig with the team',
+				t_user_id: Number(user.u_id),
+			};
+
+			await Tasks.create(task1);
+			await Tasks.create(task2);
+
+			const actual = await Tasks.searchTasks(Number(user.u_id), '');
+
+			expect(actual).toHaveLength(2);
+			expect(actual.at(0)?.t_title).toEqual(task1.t_title);
+			expect(actual.at(1)?.t_title).toEqual(task2.t_title);
+		});
+	});
 });

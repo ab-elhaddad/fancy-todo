@@ -304,4 +304,51 @@ describe('Tasks Controller', () => {
 			expect(Tasks.addToMyDay).toHaveBeenCalledTimes(1);
 		});
 	});
+
+	describe('GET /tasks/search', () => {
+		it('should return all the tasks containing the search string', async () => {
+			const tasks: Task[] = [
+				{
+					t_id: 1,
+					t_title: 'Task 1',
+					t_description: 'Test note',
+					t_user_id: 1,
+					t_status: false,
+					t_due_date: String(new Date())
+				},
+				{
+					t_id: 2,
+					t_title: 'Task 2',
+					t_description: 'Test note',
+					t_user_id: 1,
+					t_status: false,
+					t_due_date: String(new Date())
+				}
+			];
+
+			// Mock the searchTasks function to return an id
+			jest.mocked(Tasks).searchTasks.mockImplementation((u_id: number, search: string) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
+
+			const response = await request(app).get('/tasks/search').query({ search: 'test' });
+
+			expect(response.status).toBe(200);
+			expect(response.body.message).toBe('Tasks returned successfully.');
+			expect(response.body.tasks).toEqual(tasks);
+			expect(Tasks.searchTasks).toHaveBeenCalledTimes(1);
+			expect(Tasks.searchTasks).toHaveBeenCalledWith(1, 'test');
+		});
+		it('should return an error if the user id is not provided', async () => {
+			// Mock the searchTasks function to throw an error
+			jest.mocked(Tasks).searchTasks.mockImplementation(() => {
+				throw { message: `User id is required`, statusCode: 400 };
+			});
+
+			const response = await request(app).get('/tasks/search').query({ search: 'test' });
+
+			expect(response.status).toBe(400);
+			expect(response.body.message).toBe('User id is required');
+			expect(Tasks.searchTasks).toHaveBeenCalledTimes(1);
+			expect(Tasks.searchTasks).toHaveBeenCalledWith(1, 'test');
+		});
+	});
 });
