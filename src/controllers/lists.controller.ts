@@ -40,7 +40,6 @@ export const deleteList = async (req: Request, res: Response, next: NextFunction
 	}
 };
 
-
 export const addTask = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { l_id, t_id } = req.body;
