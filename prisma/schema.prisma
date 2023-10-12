@@ -30,7 +30,7 @@ model Task {
   t_due_date    DateTime    @default(now())
   t_created_at  DateTime    @default(now())
   t_priority    Int         @default(2)
-  User          User        @relation(fields: [t_user_id], references: [u_id])
+  User          User        @relation(fields: [t_user_id], references: [u_id], onDelete: Cascade)
   t_user_id     Int
   t_subtasks    Subtask[]
   Task_List     Task_List[]
@@ -41,7 +41,7 @@ model Subtask {
   s_title      String
   s_status     Boolean  @default(false)
   s_created_at DateTime @default(now())
-  Task         Task     @relation(fields: [s_task_id], references: [t_id])
+  Task         Task     @relation(fields: [s_task_id], references: [t_id], onDelete: Cascade)
   s_task_id    Int
 }
 
@@ -50,7 +50,7 @@ model List {
   l_title      String
   l_created_at DateTime    @default(now())
   l_user_id    Int
-  User         User        @relation(fields: [l_user_id], references: [u_id])
+  User         User        @relation(fields: [l_user_id], references: [u_id], onDelete: Cascade)
   Task_List    Task_List[]
 }
 
@@ -58,6 +58,6 @@ model Task_List {
   tl_id      Int  @id @default(autoincrement())
   tl_task_id Int
   tl_list_id Int
-  Task       Task @relation(fields: [tl_task_id], references: [t_id])
-  List       List @relation(fields: [tl_list_id], references: [l_id])
+  Task       Task @relation(fields: [tl_task_id], references: [t_id], onDelete: Cascade)
+  List       List @relation(fields: [tl_list_id], references: [l_id], onDelete: Cascade)
 }
