@@ -29,6 +29,18 @@ export const getLists = async (req: Request, res: Response, next: NextFunction) 
 	}
 };
 
+export const getList = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const { l_id } = req.params;
+		const list = await Lists.getList(Number(l_id));
+
+		res.json({ message: 'List fetched successfully', list });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+}
+
 export const deleteList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { l_id } = req.body;

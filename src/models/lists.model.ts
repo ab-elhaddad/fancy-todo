@@ -25,6 +25,22 @@ class Lists {
 		return lists;
 	}
 
+	static async getList(l_id: number) {
+		const list = await prisma.list.findFirst({
+			where: {
+				l_id: l_id
+			},
+			include: {
+				Task_List: {
+					select: {
+						Task: true
+					}
+				}
+			}
+		});
+		return list;
+	}
+
 	static async deleteList(l_id: number): Promise<void> {
 		await prisma.list.delete({
 			where: {
