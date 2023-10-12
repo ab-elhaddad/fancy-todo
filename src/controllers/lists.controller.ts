@@ -39,7 +39,7 @@ export const getList = async (req: Request, res: Response, next: NextFunction) =
 		res.locals.err = err;
 		next();
 	}
-}
+};
 
 export const deleteList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -64,7 +64,7 @@ export const shareList = async (req: Request, res: Response, next: NextFunction)
 		res.locals.err = err;
 		next();
 	}
-}
+};
 
 export const viewsharedList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -78,7 +78,7 @@ export const viewsharedList = async (req: Request, res: Response, next: NextFunc
 		res.locals.err = err;
 		next();
 	}
-}
+};
 
 export const addTask = async (req: Request, res: Response, next: NextFunction) => {
 	try {
