@@ -25,4 +25,4 @@ export const getLists = async (req: Request, res: Response, next: NextFunction) 
 		res.locals.err = err;
 		next();
 	}
-}
+};

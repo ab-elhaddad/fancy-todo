@@ -1,5 +1,5 @@
-import List from "../types/List.type";
-import prisma from "../lib/database";
+import List from '../types/List.type';
+import prisma from '../lib/database';
 
 class Lists {
 	static async createList(list: List) {
