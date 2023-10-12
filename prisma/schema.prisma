@@ -17,7 +17,7 @@ model User {
   u_password     String
   u_created_at   DateTime @default(now())
   u_updated_at   DateTime @updatedAt
-  u_user_tasks   Task[]
+  u_tasks        Task[]
   u_lists        List[]
   u_is_confirmed Boolean  @default(false)
 }
