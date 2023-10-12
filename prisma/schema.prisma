@@ -18,6 +18,7 @@ model User {
   u_created_at   DateTime @default(now())
   u_updated_at   DateTime @updatedAt
   u_user_tasks   Task[]
+  u_lists        List[]
   u_is_confirmed Boolean  @default(false)
 }
 
@@ -32,6 +33,8 @@ model Task {
   User          User      @relation(fields: [t_user_id], references: [u_id])
   t_user_id     Int
   t_subtasks    Subtask[]
+  List          List?     @relation(fields: [listL_id], references: [l_id])
+  listL_id      Int?
 }
 
 model Subtask {
@@ -41,4 +44,13 @@ model Subtask {
   s_created_at DateTime @default(now())
   Task         Task     @relation(fields: [s_task_id], references: [t_id])
   s_task_id    Int
+}
+
+model List {
+  l_id         Int      @id @default(autoincrement())
+  l_title      String
+  l_created_at DateTime @default(now())
+  l_user_id    Int
+  User         User     @relation(fields: [l_user_id], references: [u_id])
+  l_tasks      Task[]
 }
