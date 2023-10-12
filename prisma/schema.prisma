@@ -23,18 +23,17 @@ model User {
 }
 
 model Task {
-  t_id          Int       @id @default(autoincrement())
+  t_id          Int         @id @default(autoincrement())
   t_title       String
-  t_status      Boolean   @default(false)
-  t_description String    @default("")
-  t_due_date    DateTime  @default(now())
-  t_created_at  DateTime  @default(now())
-  t_priority    Int       @default(2)
-  User          User      @relation(fields: [t_user_id], references: [u_id])
+  t_status      Boolean     @default(false)
+  t_description String      @default("")
+  t_due_date    DateTime    @default(now())
+  t_created_at  DateTime    @default(now())
+  t_priority    Int         @default(2)
+  User          User        @relation(fields: [t_user_id], references: [u_id])
   t_user_id     Int
   t_subtasks    Subtask[]
-  List          List?     @relation(fields: [listL_id], references: [l_id])
-  listL_id      Int?
+  Task_List     Task_List[]
 }
 
 model Subtask {
@@ -47,10 +46,18 @@ model Subtask {
 }
 
 model List {
-  l_id         Int      @id @default(autoincrement())
+  l_id         Int         @id @default(autoincrement())
   l_title      String
-  l_created_at DateTime @default(now())
+  l_created_at DateTime    @default(now())
   l_user_id    Int
-  User         User     @relation(fields: [l_user_id], references: [u_id])
-  l_tasks      Task[]
+  User         User        @relation(fields: [l_user_id], references: [u_id])
+  Task_List    Task_List[]
+}
+
+model Task_List {
+  tl_id      Int  @id @default(autoincrement())
+  tl_task_id Int
+  tl_list_id Int
+  Task       Task @relation(fields: [tl_task_id], references: [t_id])
+  List       List @relation(fields: [tl_list_id], references: [l_id])
 }
