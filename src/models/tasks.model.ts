@@ -126,7 +126,7 @@ class Tasks {
 		});
 	}
 
-	static async searchTasks(u_id: number, search: string): Promise<Task[]> {
+	static async searchTasks(u_id: number, search: string, sort?: string): Promise<Task[]> {
 		const tasks: Task[] = await prisma.task.findMany({
 			where: {
 				t_user_id: u_id,
@@ -134,6 +134,11 @@ class Tasks {
 					contains: search,
 					mode: 'insensitive'
 				}
+			},
+			orderBy: {
+				t_due_date: sort === 'due' ? 'asc' : undefined,
+				t_created_at: sort === 'created' || sort === undefined ? 'desc' : undefined, // Sort by created date by default
+				t_priority: sort === 'priority' ? 'desc' : undefined
 			}
 		});
 		return tasks;
