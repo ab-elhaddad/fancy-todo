@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import Lists from '../models/lists.model';
 import List from '../types/List.type';
+import generateListURL from './helpers/generateListURL';
+import jwt from 'jsonwebtoken';
 
 export const createList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -39,6 +41,32 @@ export const deleteList = async (req: Request, res: Response, next: NextFunction
 		next();
 	}
 };
+
+export const shareList = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const { l_id } = req.params;
+
+		const url = generateListURL(Number(l_id));
+		res.json({ message: 'URL generated successfully.', url });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+}
+
+export const viewsharedList = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const { token } = req.params;
+		const l_id = Number(jwt.decode(String(token)));
+
+		const list = await Lists.getList(l_id);
+
+		res.json({ message: 'List fetched successfully', list });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+}
 
 export const addTask = async (req: Request, res: Response, next: NextFunction) => {
 	try {
