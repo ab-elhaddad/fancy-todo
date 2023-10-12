@@ -26,3 +26,30 @@ export const getLists = async (req: Request, res: Response, next: NextFunction) 
 		next();
 	}
 };
+
+
+export const addTask = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const { l_id, t_id } = req.body;
+
+		await Lists.addTask(l_id, t_id);
+
+		res.json({ message: 'Task added to list successfully' });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+};
+
+export const removeTask = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const { l_id, t_id } = req.body;
+
+		await Lists.removeTask(l_id, t_id);
+
+		res.json({ message: 'Task removed from list successfully' });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+};

@@ -10,8 +10,37 @@ class Lists {
 	}
 
 	static async getLists(l_user_id: number) {
-		const lists = await prisma.list.findMany({ where: { l_user_id: l_user_id } });
+		const lists = await prisma.list.findMany({
+			where: {
+				l_user_id: l_user_id
+			},
+			include: {
+				Task_List: {
+					select: {
+						Task: true
+					}
+				}
+			}
+		});
 		return lists;
+	}
+
+	static async addTask(l_id: number, t_id: number) {
+		await prisma.task_List.create({
+			data: {
+				tl_list_id: l_id,
+				tl_task_id: t_id
+			}
+		});
+	}
+
+	static async removeTask(l_id: number, t_id: number) {
+		await prisma.task_List.deleteMany({
+			where: {
+				tl_list_id: l_id,
+				tl_task_id: t_id
+			}
+		});
 	}
 }
 
