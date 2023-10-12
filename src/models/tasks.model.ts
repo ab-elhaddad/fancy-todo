@@ -38,9 +38,9 @@ class Tasks {
 				t_subtasks: true
 			},
 			orderBy: {
-				t_due_date: (sort === 'due' ? 'asc' : undefined),
-				t_created_at: (sort === 'created' || sort === undefined ? 'desc' : undefined), // Sort by created date by default
-				t_priority: (sort === 'priority' ? 'desc' : undefined)
+				t_due_date: sort === 'due' ? 'asc' : undefined,
+				t_created_at: sort === 'created' || sort === undefined ? 'desc' : undefined, // Sort by created date by default
+				t_priority: sort === 'priority' ? 'desc' : undefined
 			}
 		});
 
