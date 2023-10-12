@@ -39,8 +39,9 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 	try {
 		const { id: u_id } = res.locals.user;
 		const t_status = req.query.t_status ? req.query.t_status === 'true' : undefined;
+		const sort = req.query.sort?.toString();
 
-		const userTasks = await Tasks.getAll(u_id, t_status);
+		const userTasks = await Tasks.getAll(u_id, t_status, sort);
 		res.json({ message: 'Tasks returned sucessfully.', tasks: userTasks });
 	} catch (err) {
 		res.locals.err = err;

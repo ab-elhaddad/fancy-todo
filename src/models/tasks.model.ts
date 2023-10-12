@@ -28,7 +28,7 @@ class Tasks {
 	 * @param t_status Determines the status of returned tasks. *If not passed all tasks are returned.*
 	 * @returns Tasks assigned by the user.
 	 */
-	static async getAll(u_id: number, t_status?: boolean): Promise<Task[]> {
+	static async getAll(u_id: number, t_status?: boolean, sort?: string): Promise<Task[]> {
 		const tasks: Task[] = await prisma.task.findMany({
 			where: {
 				t_user_id: u_id,
@@ -36,6 +36,11 @@ class Tasks {
 			},
 			include: {
 				t_subtasks: true
+			},
+			orderBy: {
+				t_due_date: (sort === 'due' ? 'asc' : undefined),
+				t_created_at: (sort === 'created' || sort === undefined ? 'desc' : undefined), // Sort by created date by default
+				t_priority: (sort === 'priority' ? 'desc' : undefined)
 			}
 		});
 
