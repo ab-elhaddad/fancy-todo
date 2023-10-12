@@ -27,6 +27,19 @@ export const getLists = async (req: Request, res: Response, next: NextFunction) 
 	}
 };
 
+export const deleteList = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const { l_id } = req.body;
+
+		await Lists.deleteList(l_id);
+
+		res.json({ message: 'List deleted successfully' });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+};
+
 
 export const addTask = async (req: Request, res: Response, next: NextFunction) => {
 	try {

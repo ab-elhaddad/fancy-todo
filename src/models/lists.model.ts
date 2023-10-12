@@ -25,6 +25,14 @@ class Lists {
 		return lists;
 	}
 
+	static async deleteList(l_id: number): Promise<void> {
+		await prisma.list.delete({
+			where: {
+				l_id: l_id
+			}
+		});
+	}
+
 	static async addTask(l_id: number, t_id: number) {
 		await prisma.task_List.create({
 			data: {
