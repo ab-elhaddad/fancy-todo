@@ -52,7 +52,8 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
 export const getDueToday = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { id: u_id } = res.locals.user;
-		const dueTodayTasks = await Tasks.getDueToday(u_id);
+		const sort = req.query.sort?.toString();
+		const dueTodayTasks = await Tasks.getDueToday(u_id, sort);
 		res.json({
 			message: 'Tasks returned successfully.',
 			tasks: dueTodayTasks

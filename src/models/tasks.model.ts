@@ -87,7 +87,7 @@ class Tasks {
 	}
 
 	/** Gets all the tasks assigned to the passed user id and has due date today. */
-	static async getDueToday(u_id: number): Promise<Task[]> {
+	static async getDueToday(u_id: number, sort?: string): Promise<Task[]> {
 		const { startDate, endDate } = getDates();
 		const tasks: Task[] = await prisma.task.findMany({
 			where: {
@@ -96,6 +96,11 @@ class Tasks {
 					gte: startDate,
 					lte: endDate
 				}
+			},
+			orderBy: {
+				t_due_date: sort === 'due' ? 'asc' : undefined,
+				t_created_at: sort === 'created' ? 'desc' : undefined,
+				t_priority: sort === 'priority' || sort === undefined ? 'desc' : undefined // Sort by priority date by default
 			}
 		});
 		return tasks;
