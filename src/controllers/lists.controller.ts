@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import Lists from '../models/lists.model';
 import List from '../types/List.type';
-import generateListURL from './helpers/generateListURL';
+import generateListURL from '../helpers/generateListURL';
 import jwt from 'jsonwebtoken';
 
 export const createList = async (req: Request, res: Response, next: NextFunction) => {
