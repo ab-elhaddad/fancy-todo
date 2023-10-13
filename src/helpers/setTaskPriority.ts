@@ -1,5 +1,7 @@
 import Task from './../types/Task.type';
-
+/**
+ * Sets the priority of the task from string to a number.
+ */
 const setTaskPriority = (task: Task) => {
 	if (task.t_priority) {
 		if (task.t_priority === 'low') task.t_priority = 1;
