@@ -1,4 +1,4 @@
-import Task from '../../types/Task.type';
+import Task from './../types/Task.type';
 
 const setTaskPriority = (task: Task) => {
 	if (task.t_priority) {

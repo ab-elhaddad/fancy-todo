@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { config } from '../../configuration/config';
+import { config } from './../configuration/config';
 
 const shareList = (l_id: number): string => {
 	const token = jwt.sign(String(l_id), config.jwtSecretKey);

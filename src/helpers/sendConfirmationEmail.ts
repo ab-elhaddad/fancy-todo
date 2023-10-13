@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import { Transporter } from 'nodemailer';
-import { config } from '../../configuration/config';
+import { config } from './../configuration/config';
 import jwt from 'jsonwebtoken';
 
 let transporter: Transporter | null = null;
