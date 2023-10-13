@@ -5,6 +5,6 @@ import errorHandler from '../../middlewares/errorHandler.middleware';
 
 const insightsRouter = (app: Application) => {
 	app.get('/insights/tasks', authenticate, getTasksInsights, errorHandler);
-}
+};
 
 export default insightsRouter;

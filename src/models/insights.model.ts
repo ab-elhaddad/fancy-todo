@@ -1,4 +1,4 @@
-import prisma from "../lib/database";
+import prisma from '../lib/database';
 
 class insights {
 	/**
@@ -15,7 +15,7 @@ class insights {
 			highPriorityTasks: await prisma.task.count({ where: { t_user_id: u_id, t_priority: 3 } }),
 			mediumPriorityTasks: await prisma.task.count({ where: { t_user_id: u_id, t_priority: 2 } }),
 			lowPriorityTasks: await prisma.task.count({ where: { t_user_id: u_id, t_priority: 1 } })
-		}
+		};
 		insights.incompleteTasks = insights.allTasks - insights.completedTasks;
 		return insights;
 	}
