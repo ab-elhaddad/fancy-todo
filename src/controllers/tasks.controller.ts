@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import Tasks from '../models/tasks.model';
-import setTaskPriority from './helpers/setTaskPriority';
+import setTaskPriority from '../helpers/setTaskPriority';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {

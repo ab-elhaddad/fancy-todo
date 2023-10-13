@@ -3,7 +3,7 @@ import { NextFunction, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { config } from '../configuration/config';
 import jwt from 'jsonwebtoken';
-import sendConfirmationEmail from './helpers/sendConfirmationEmail';
+import sendConfirmationEmail from '../helpers/sendConfirmationEmail';
 import User from '../types/User.type';
 
 export const signUp = async (req: Request, res: Response, next: NextFunction) => {
