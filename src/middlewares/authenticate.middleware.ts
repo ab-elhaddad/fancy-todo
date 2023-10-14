@@ -8,20 +8,20 @@ const authenticate = express.Router();
 
 authenticate.use(async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const token = String(req.headers.authorization);
-		if (!token)
-			// verifying that there is a token attatched
+		const token: string | undefined = req.headers.authorization?.split(' ')[1] ||
+			req.headers.cookie?.slice(6);
+
+		if (token === undefined)
 			return res.status(401).json({ message: 'You have to enter a token!' }); // Unauthorized
-		const rawToken = token.split(' ')[1];
 
 		try {
 			// verifying that the token's schema is valid
-			jwt.verify(rawToken, config.jwtSecretKey);
+			jwt.verify(token, config.jwtSecretKey);
 		} catch (e) {
 			return res.status(401).json({ message: 'Invalid Token!' }); // Unauthorized
 		}
 
-		const user = jwt.decode(rawToken) as JwtPayload;
+		const user = jwt.decode(token) as JwtPayload;
 
 		if (!(await doesExist(user.id, user.email)))
 			// verifying that there is a user matched with the token
@@ -40,12 +40,13 @@ export default authenticate;
 const doesExist = async (id: number, email: string): Promise<boolean> => {
 	const storedUser = await prisma.user.findFirst({
 		where: {
-			u_id: id
+			u_id: id,
+			u_email: email
 		},
 		select: {
 			u_id: true,
 			u_email: true
 		}
 	});
-	return storedUser != undefined && storedUser.u_email === email;
+	return storedUser !== null;
 };
