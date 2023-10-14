@@ -34,6 +34,15 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
 	}
 };
 
+export const signOut = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		res.clearCookie('token').json({ message: 'User logged out successfully' });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+};
+
 export const confirm = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { token } = req.params;
