@@ -7,9 +7,9 @@ import requestDebug from './middlewares/requestDebug.middleware';
 export const app = express();
 
 app.use(requestDebug);
-
-//app.use(bodyParser.json());
 app.use(express.json());
+app.use(express.urlencoded());
+app.set('view engine', 'ejs');
 
 app.get('/', (req: Request, res: Response) => {
 	res.send('Welcome to the Fancy To-Do App');
