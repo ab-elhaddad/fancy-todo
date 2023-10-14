@@ -22,5 +22,5 @@ app.use((req: Request, res: Response) => {
 });
 
 export const server = app.listen(3000, () => {
-	debug('Server is running');
+	debug('🚀 Server is running');
 });
