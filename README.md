@@ -13,6 +13,7 @@ A To Do backend server which enables the user to add tasks and mark them as done
 - **PostgreSQL** (Database)
 - **Prisma** (ORM)
 - **TypeScript** (Programming Language)
+- **ejs** (Templating Engine)
 - **jwt** (Authentication)
 - **bcrypt** (Password Hashing)
 - **joi** (Data Validation)
@@ -22,6 +23,7 @@ A To Do backend server which enables the user to add tasks and mark them as done
 - **prettier** (Code Formatter)
 - **editorconfig** (Code Formatter)
 - **eslint** (Code Linter)
+- **GitHub Actions** (CI/CD)
 
 ## 🔧 Pre-requisites
 
