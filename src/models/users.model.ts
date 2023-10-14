@@ -39,6 +39,33 @@ class Users {
 		return user.u_id;
 	}
 
+	/**
+	 * @returns The *id* of the user.
+	 */
+	static async getId(email: string): Promise<number> {
+		const user = await prisma.user.findFirst({
+			where: { u_email: email },
+			select: { u_id: true }
+		});
+		if (user === null) throw { message: `The email doesn't exist`, statusCode: 404 }; // Not Found
+		return user.u_id;
+	}
+
+	static async get(userID: number): Promise<User> {
+		const user = await prisma.user.findFirst({
+			where: { u_id: userID }
+		});
+		if (user === null) throw { message: `The user doesn't exist`, statusCode: 404 }; // Not Found
+		return user;
+	}
+
+	static async updatePassword(userID: number, newPassword: string): Promise<void> {
+		await prisma.user.update({
+			where: { u_id: userID },
+			data: { u_password: newPassword }
+		});
+	}
+
 	/** Marks user's account as confirmed.
 	 * @param userID
 	 */
