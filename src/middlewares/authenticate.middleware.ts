@@ -8,11 +8,9 @@ const authenticate = express.Router();
 
 authenticate.use(async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const token: string | undefined = req.headers.authorization?.split(' ')[1] ||
-			req.headers.cookie?.slice(6);
+		const token: string | undefined = req.headers.authorization?.split(' ')[1] || req.headers.cookie?.slice(6);
 
-		if (token === undefined)
-			return res.status(401).json({ message: 'You have to enter a token!' }); // Unauthorized
+		if (token === undefined) return res.status(401).json({ message: 'You have to enter a token!' }); // Unauthorized
 
 		try {
 			// verifying that the token's schema is valid

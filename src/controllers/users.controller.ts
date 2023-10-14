@@ -26,8 +26,7 @@ export const signIn = async (req: Request, res: Response, next: NextFunction) =>
 	try {
 		const { u_email, u_password } = req.body;
 		const userID = await Users.signIn(u_email, u_password);
-		res.cookie('token', jwt.sign({ id: userID, email: u_email }, config.jwtSecretKey)).
-			json({ message: `User logged in successfully` });
+		res.cookie('token', jwt.sign({ id: userID, email: u_email }, config.jwtSecretKey)).json({ message: `User logged in successfully` });
 	} catch (err) {
 		res.locals.err = err;
 		next();
