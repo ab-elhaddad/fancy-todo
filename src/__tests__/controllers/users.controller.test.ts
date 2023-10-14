@@ -7,7 +7,7 @@ import { config } from '../../configuration/config';
 
 jest.mock('../../models/users.model');
 jest.mock(
-	'../../controllers/helpers/sendConfirmationEmail',
+	'../../helpers/sendConfirmationEmail',
 	() => (userID: number, userEmail: string) => {} // eslint-disable-line @typescript-eslint/no-unused-vars
 );
 

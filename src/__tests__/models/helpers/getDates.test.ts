@@ -1,4 +1,4 @@
-import getDates from '../../../models/helpers/getDates';
+import getDates from '../../../helpers/getDates';
 describe('getDates', () => {
 	it('should return an object with startDate and endDate properties', () => {
 		const { startDate, endDate } = getDates();

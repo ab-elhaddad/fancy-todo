@@ -1,5 +1,5 @@
 import { config } from '../../../configuration/config';
-import sendConfirmationEmail from '../../../controllers/helpers/sendConfirmationEmail';
+import sendConfirmationEmail from '../../../helpers/sendConfirmationEmail';
 import nodemailerMock from 'nodemailer';
 
 // Mock the nodemailer createTransport function
