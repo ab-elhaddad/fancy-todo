@@ -15,10 +15,10 @@ export const create = async (req: Request, res: Response, next: NextFunction) =>
 		// Replacing string priority with number
 		setTaskPriority(task);
 
-		if (task.t_recurring) // If task is recurring, insert the task multipe times
+		if (task.t_recurring)
+			// If task is recurring, insert the task multipe times
 			await Tasks.createMany(getRecurringTasks(task));
-		else
-			await Tasks.create(task);
+		else await Tasks.create(task);
 
 		res.json({
 			message: 'Task created successfully'

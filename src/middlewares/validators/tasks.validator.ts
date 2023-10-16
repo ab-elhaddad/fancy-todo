@@ -14,10 +14,9 @@ createTaskValidator.use((req: Request, res: Response, next: NextFunction) => {
 			day:
 				req.body.t_recurring?.type === 'monthly'
 					? joi.number()
-					: (req.body.t_recurring?.type === 'weekly'
-						? joi.string().valid('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')
-						: joi.forbidden()
-					),
+					: req.body.t_recurring?.type === 'weekly'
+					? joi.string().valid('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')
+					: joi.forbidden(),
 			end_date: [joi.date(), joi.string()]
 		})
 	});

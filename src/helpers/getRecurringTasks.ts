@@ -1,4 +1,4 @@
-import Task from "../types/Task.type"
+import Task from '../types/Task.type';
 
 const getRecurringTasks = (task: Task): Task[] => {
 	let result;
@@ -17,7 +17,7 @@ const getRecurringTasks = (task: Task): Task[] => {
 	}
 
 	return result;
-}
+};
 
 export default getRecurringTasks;
 
@@ -44,14 +44,14 @@ const getDailyTasks = (task: Task): Task[] => {
 	}
 
 	return tasks;
-}
+};
 
 const getWeeklyTasks = (task: Task): Task[] => {
 	const { t_recurring } = task;
 	// @ts-ignore
 	const { end_date } = t_recurring;
 
-	const weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+	const weekday = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
 	const endDate = new Date(end_date);
 	const startDate = new Date();
@@ -70,7 +70,7 @@ const getWeeklyTasks = (task: Task): Task[] => {
 	}
 
 	return tasks;
-}
+};
 
 const getMonthlyTasks = (task: Task): Task[] => {
 	const { t_recurring } = task;
@@ -78,8 +78,7 @@ const getMonthlyTasks = (task: Task): Task[] => {
 	const { end_date } = t_recurring;
 
 	const startDate = new Date();
-	while (startDate.getDate() !== t_recurring?.day)
-		startDate.setDate(startDate.getDate() + 1);
+	while (startDate.getDate() !== t_recurring?.day) startDate.setDate(startDate.getDate() + 1);
 	const endDate = new Date(end_date);
 
 	delete task.t_recurring;
@@ -92,4 +91,4 @@ const getMonthlyTasks = (task: Task): Task[] => {
 	}
 
 	return tasks;
-}
+};
