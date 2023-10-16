@@ -24,6 +24,7 @@ A To Do backend server which enables the user to add tasks and mark them as done
 - **editorconfig** (Code Formatter)
 - **eslint** (Code Linter)
 - **GitHub Actions** (CI/CD)
+- **OpenWeatherMap API** (Weather API)
 
 ## 🔧 Pre-requisites
 
