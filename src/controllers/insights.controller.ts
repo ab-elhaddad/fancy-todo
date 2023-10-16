@@ -20,35 +20,37 @@ export const getWeather = async (req: Request, res: Response, next: NextFunction
 		const { lat, lon } = req.query;
 		let result;
 		if (city) {
-			result = (await axios.get(
-				`https://api.openweathermap.org/data/2.5/weather?
+			result = (
+				await axios.get(
+					`https://api.openweathermap.org/data/2.5/weather?
 					units=metric&
 					q=${city}&
 					appid=${config.weatherApiKey}`
-			)).data;
-		}
-		else if (lat && lon) {
-			result = (await axios.get(
-				`https://api.openweathermap.org/data/2.5/weather?
+				)
+			).data;
+		} else if (lat && lon) {
+			result = (
+				await axios.get(
+					`https://api.openweathermap.org/data/2.5/weather?
 					units=metric&
 					lat=${lat}&
 					lon=${lon}&
 					appid=${config.weatherApiKey}`
-			)).data;
-		}
-		else
-			throw { status: 400, message: 'Invalid request.' };
+				)
+			).data;
+		} else throw { status: 400, message: 'Invalid request.' };
 
 		res.json({
-			message: 'Weather retrieved successfully.', weather: {
+			message: 'Weather retrieved successfully.',
+			weather: {
 				main: result.weather[0].main,
 				description: result.weather[0].description,
 				temp: result.main.temp + ' C',
-				humidity: result.main.humidity,
+				humidity: result.main.humidity
 			}
 		});
 	} catch (err) {
 		res.locals.error = err;
 		next();
 	}
-}
+};

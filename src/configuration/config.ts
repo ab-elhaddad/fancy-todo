@@ -10,5 +10,5 @@ export const config = {
 	env: String(process.env.ENV),
 	db: String(process.env.DATABASE_URL),
 	testDb: String(process.env.TEST_DATABASE_URL),
-	weatherApiKey: String(process.env.WEATHER_API_KEY),
+	weatherApiKey: String(process.env.WEATHER_API_KEY)
 };
