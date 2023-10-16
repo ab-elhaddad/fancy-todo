@@ -8,7 +8,18 @@ createTaskValidator.use((req: Request, res: Response, next: NextFunction) => {
 		t_title: joi.string(),
 		t_description: joi.string(),
 		t_due_date: joi.date(),
-		t_priority: joi.string().valid('low', 'medium', 'high')
+		t_priority: joi.string().valid('low', 'medium', 'high'),
+		t_recurring: joi.object({
+			type: joi.string().valid('daily', 'weekly', 'monthly'),
+			day:
+				req.body.t_recurring?.type === 'monthly'
+					? joi.number()
+					: (req.body.t_recurring?.type === 'weekly'
+						? joi.string().valid('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')
+						: joi.forbidden()
+					),
+			end_date: [joi.date(), joi.string()]
+		})
 	});
 
 	const { error } = schema.validate(req.body);

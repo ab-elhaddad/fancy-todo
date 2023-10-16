@@ -1,22 +1,27 @@
 import { NextFunction, Request, Response } from 'express';
 import Tasks from '../models/tasks.model';
 import setTaskPriority from '../helpers/setTaskPriority';
+import getRecurringTasks from '../helpers/getRecurringTasks';
+import setDates from '../helpers/setDates';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const task = req.body;
 		task.t_user_id = res.locals.user.id;
 
-		// Setting due date to today 12:00 PM if not set
-		if (task.t_due_date) task.t_due_date = new Date(new Date(task.t_due_date).setHours(12));
+		// Convert date string to Date object
+		setDates(task);
 
 		// Replacing string priority with number
 		setTaskPriority(task);
 
-		const response = await Tasks.create(task);
+		if (task.t_recurring) // If task is recurring, insert the task multipe times
+			await Tasks.createMany(getRecurringTasks(task));
+		else
+			await Tasks.create(task);
+
 		res.json({
-			message: 'Task created successfully',
-			task: response
+			message: 'Task created successfully'
 		});
 	} catch (err) {
 		res.locals.err = err;

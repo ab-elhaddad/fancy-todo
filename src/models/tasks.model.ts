@@ -15,6 +15,13 @@ class Tasks {
 		return insertedTask;
 	}
 
+	static async createMany(tasks: Task[]): Promise<number> {
+		const response = await prisma.task.createMany({
+			data: tasks
+		});
+		return response.count;
+	}
+
 	/** Deletes the task with the given id.*/
 	static async delete(t_id: number): Promise<void> {
 		await prisma.task.delete({
