@@ -7,7 +7,8 @@ signUpValidator.use((req: Request, res: Response, next: NextFunction) => {
 	const schema = joi.object({
 		u_email: joi.string().email(),
 		u_name: joi.string(),
-		u_password: joi.string().min(8)
+		u_password: joi.string().min(8),
+		u_password_confirm: joi.equal(joi.ref('u_password')).optional()
 	});
 
 	const { error } = schema.validate(req.body);

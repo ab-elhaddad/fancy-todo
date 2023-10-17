@@ -1,0 +1,22 @@
+* {
+	color: rgb(44, 44, 44);
+	font-family: sans-serif;
+}
+
+.field {
+	height: 40px;
+	width: 350px;
+}
+
+.field input {
+	height: 70%;
+	width: 60%;
+	margin-left: 3%;
+}
+
+.button {
+	height: 40px;
+	width: 250px;
+	font-size: larger;
+	font-weight: 600;
+}

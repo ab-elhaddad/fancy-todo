@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Sign Up</title>
+	<link rel="stylesheet" type="text/css" href="../css/sign-up.css">
+	<script src="../js/sign-up.js"></script>
+</head>
+
+<body>
+	<div class="sign-up">
+		<form method="post" onsubmit="return matchPassword()">
+			<h1>Sign Up <sub>✨</sub></h1>
+			<br>
+			<div class="field">
+				<label for="u_name"> <b> Name </b> </label>
+				<input type="text" name="u_name" placeholder="Name">
+			</div>
+			<div class="field">
+				<label for="u_email"> <b> Email </b> </label>
+				<input type="email" name="u_email" id="u_email" placeholder="Email">
+			</div>
+			<div class="field">
+				<label for="u_password"> <b> Password </b> </label>
+				<input type="password" name="u_password" id="u_password" placeholder="Passsword">
+			</div>
+			<div class="field">
+				<label for="u_password_confirm"> <b> Confirm Password </b> </label>
+				<input type="password" name="u_password_confirm" id="u_password_confirm"
+					placeholder="Confirm Passsword">
+			</div>
+			<input type="submit" value="Sign up" class="button">
+		</form>
+	</div>
+</body>
+
+</html>

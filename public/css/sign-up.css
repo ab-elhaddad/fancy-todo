@@ -1,0 +1,59 @@
+* {
+	color: rgb(23, 23, 23);
+	font-family: sans-serif;
+}
+
+.sign-up {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 5%;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.sign-up h1 {
+	font-size: 50px;
+	font-weight: 600;
+	margin-bottom: 40px;
+	margin-right: auto;
+}
+
+.field {
+	height: 40px;
+	width: 500px;
+}
+
+.field input {
+	height: 70%;
+	width: 50%;
+	margin-left: 3%;
+	float: right;
+	border-radius: 5px;
+	border: 1px solid rgb(23, 23, 23);
+	padding-left: 10px;
+	background-color: rgb(245, 245, 245);
+	font-family: Times
+}
+
+.button {
+	height: 40px;
+	width: 200px;
+	font-size: larger;
+	font-weight: 600;
+	margin-top: 50px;
+	border: 1px solid rgb(23, 23, 23);
+	border-radius: 10px;
+	transition: 0.2s;
+}
+
+.button:hover {
+	background-color: rgb(23, 23, 23);
+	color: rgb(245, 245, 245);
+	cursor: pointer;
+}

@@ -10,9 +10,14 @@ app.use(requestDebug);
 app.use(express.json());
 app.use(express.urlencoded());
 app.set('view engine', 'ejs');
+const path = __dirname.split('/');
+path.pop();
+path.join('/');
+app.use(express.static(path + 'public'));
 
 app.get('/', (req: Request, res: Response) => {
-	res.send('Welcome to the Fancy To-Do App');
+	//res.send('Welcome to the Fancy To-Do App');
+	res.render('index');
 });
 
 mainRouter(app);
