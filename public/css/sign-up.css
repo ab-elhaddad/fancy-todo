@@ -1,13 +1,21 @@
 * {
-	color: rgb(23, 23, 23);
+	color: #1C1C1C;
 	font-family: sans-serif;
 }
+
+/*
+	#1C1C1C
+	#3B3B3B
+	#FFE002
+	#FFB606
+	#B28228
+*/
 
 .sign-up {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-top: 5%;
+	margin-top: 8%;
 }
 
 form {
@@ -15,6 +23,12 @@ form {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	padding-right: 7%;
+	padding-left: 7%;
+	padding-bottom: 2%;
+	border-radius: 5%;
+	background-color: #fffcf5;
+	box-shadow: 15px 15px 35px rgb(199, 199, 199);
 }
 
 .sign-up h1 {
@@ -26,7 +40,12 @@ form {
 
 .field {
 	height: 40px;
-	width: 500px;
+	width: 450px;
+}
+
+.field label {
+	font-weight: 600;
+	font-size: 20px;
 }
 
 .field input {
@@ -42,18 +61,21 @@ form {
 }
 
 .button {
+	background-color: #3B3B3B;
+	color: #fffcf5;
 	height: 40px;
 	width: 200px;
 	font-size: larger;
 	font-weight: 600;
-	margin-top: 50px;
-	border: 1px solid rgb(23, 23, 23);
+	margin-top: 40px;
+	border: none;
 	border-radius: 10px;
-	transition: 0.2s;
+	transition: 0.6s;
 }
 
 .button:hover {
-	background-color: rgb(23, 23, 23);
-	color: rgb(245, 245, 245);
+	background-color: #1C1C1C;
+	color: #FFE002;
 	cursor: pointer;
+	letter-spacing: 4px;
 }

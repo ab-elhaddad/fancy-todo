@@ -9,19 +9,22 @@
 </head>
 
 <body>
-	<form method="post">
-		<h1>Sign In</h1>
-		<div class="field">
-			<label for="email"> <b> Email </b> </label>
-			<input type="email" name="u_email" id="email" placeholder="Email">
-		</div>
-		<div class="field">
-			<label for="password"> <b> Password </b> </label>
-			<input type="password" name="u_password" id="password" placeholder="Passsword" class="pass">
-		</div>
-		<input type="submit" value="Sign in" class="button">
-	</form>
-	<p><a href="/users/forgot-password">Forgot password?</a></p>
+	<div class="sign-in">
+		<form method="post">
+			<h1>Sign In <sub>✨</sub></h1>
+			<br>
+			<div class="field">
+				<label for="email"> Email </label>
+				<input type="email" name="u_email" id="email" placeholder="Email">
+			</div>
+			<div class="field">
+				<label for="password"> Password </label>
+				<input type="password" name="u_password" id="password" placeholder="Passsword" class="pass">
+			</div>
+			<input type="submit" value="Sign in" class="button">
+			<p><a href="/users/forgot-password">Forgot password?</a></p>
+		</form>
+	</div>
 </body>
 
 </html>
