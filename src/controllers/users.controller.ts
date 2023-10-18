@@ -10,8 +10,8 @@ export const signUp = {
 	post: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const user: User = req.body;
-			user.u_password = bcrypt.hashSync(user.u_password, config.saltRounds);
-			const userID = await Users.signUp(user);
+			user.u_password = bcrypt.hashSync(user.u_password as string, config.saltRounds);
+			const userID = await Users.createUser(user);
 
 			sendEmail.confirmation(userID, user.u_email);
 			res.json({
@@ -74,7 +74,7 @@ export const forgotPassword = {
 	post: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { email: u_email } = req.body;
-			const u_id = await Users.getId(u_email);
+			const u_id = await Users.getIdByEmail(u_email);
 			sendEmail.resetPassword(u_id, u_email);
 			res.send('<h1>Check your email to reset your password</h1>');
 		} catch (err) {
@@ -124,3 +124,43 @@ export const confirm = async (req: Request, res: Response, next: NextFunction) =
 		next();
 	}
 };
+
+export const profile = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const { id } = res.locals.user;
+		const user: User = await Users.getById(id);
+
+		res.json({ message: 'User retrieved successfully.', user: { u_name: user.u_name, u_email: user.u_email } });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+}
+
+export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const user: User = req.body;
+		user.u_id ||= res.locals.user.id;
+		await Users.updateUser(user);
+		res.json({ message: 'User updated successfully' });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+}
+
+export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		await Users.deleteUserById(res.locals.user.id);
+		res.json({ message: 'User deleted successfully' });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+}
+
+/*
+	- update account
+	- delete account
+	- see account (profile)
+*/

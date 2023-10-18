@@ -1,5 +1,5 @@
 import { Application } from 'express';
-import { confirm, forgotPassword, resetPassword, signIn, signOut, signUp } from '../../controllers/users.controller';
+import { confirm, deleteUser, forgotPassword, profile, resetPassword, signIn, signOut, signUp, updateUser } from '../../controllers/users.controller';
 import { signInValidator, signUpValidator } from '../../middlewares/validators/users.validator';
 import errorHandler from '../../middlewares/errorHandler.middleware';
 import authenticate from '../../middlewares/authenticate.middleware';
@@ -15,6 +15,9 @@ const userRouter = (app: Application) => {
 	app.get('/users/reset-password/:token', resetPassword.get, errorHandler);
 	app.post('/users/reset-password/:token', resetPassword.post, errorHandler);
 	app.get('/confirm/:token', confirm, errorHandler);
+	app.get('/users/profile', authenticate, profile, errorHandler);
+	app.put('/users/profile', authenticate, updateUser, errorHandler);
+	app.delete('/users/profile', authenticate, deleteUser, errorHandler);
 };
 
 export default userRouter;

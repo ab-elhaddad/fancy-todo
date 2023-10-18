@@ -8,7 +8,7 @@ class Users {
 	 * @param user {@link User}
 	 * @returns the *id* of the created user.
 	 *  */
-	static async signUp(user: User): Promise<number> {
+	static async createUser(user: User): Promise<number> {
 		// Create new account
 		try {
 			const isertedUser = await prisma.user.create({
@@ -21,6 +21,26 @@ class Users {
 				if (err?.code === 'P2002') throw { message: `The email already exists`, statusCode: 409 }; // Conflict
 			throw err;
 		}
+	}
+
+	/**
+ * @returns The *id* of the user.
+ */
+	static async getIdByEmail(email: string): Promise<number> {
+		const user = await prisma.user.findFirst({
+			where: { u_email: email },
+			select: { u_id: true }
+		});
+		if (user === null) throw { message: `The email doesn't exist`, statusCode: 404 }; // Not Found
+		return user.u_id;
+	}
+
+	static async getById(userID: number): Promise<User> {
+		const user = await prisma.user.findFirst({
+			where: { u_id: userID }
+		});
+		if (user === null) throw { message: `The user doesn't exist`, statusCode: 404 }; // Not Found
+		return user;
 	}
 
 	/**
@@ -39,26 +59,6 @@ class Users {
 		return user.u_id;
 	}
 
-	/**
-	 * @returns The *id* of the user.
-	 */
-	static async getId(email: string): Promise<number> {
-		const user = await prisma.user.findFirst({
-			where: { u_email: email },
-			select: { u_id: true }
-		});
-		if (user === null) throw { message: `The email doesn't exist`, statusCode: 404 }; // Not Found
-		return user.u_id;
-	}
-
-	static async get(userID: number): Promise<User> {
-		const user = await prisma.user.findFirst({
-			where: { u_id: userID }
-		});
-		if (user === null) throw { message: `The user doesn't exist`, statusCode: 404 }; // Not Found
-		return user;
-	}
-
 	static async updatePassword(userID: number, newPassword: string): Promise<void> {
 		await prisma.user.update({
 			where: { u_id: userID },
@@ -73,6 +73,27 @@ class Users {
 		await prisma.user.update({
 			data: { u_is_confirmed: true },
 			where: { u_id: userID }
+		});
+	}
+
+	/**
+* Updates one or more users.
+* @param users The user(s) to update.
+*/
+	static async updateUser(users: User): Promise<void> {
+		await prisma.user.update({
+			where: { u_id: users.u_id },
+			data: users
+		});
+	}
+
+	/**
+	 * Deletes one or more users.
+	 * @param users The user(s) to delete.
+	 */
+	static async deleteUserById(u_id: number): Promise<void> {
+		await prisma.user.delete({
+			where: { u_id: u_id }
 		});
 	}
 }
