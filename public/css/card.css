@@ -3,19 +3,11 @@
 	font-family: sans-serif;
 }
 
-/*
-	#1C1C1C
-	#3B3B3B
-	#FFE002
-	#FFB606
-	#B28228
-*/
-
-.sign-up {
+.container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin-top: 8%;
+	margin-top: 7%;
 }
 
 form {
@@ -31,7 +23,7 @@ form {
 	box-shadow: 15px 15px 35px rgb(199, 199, 199);
 }
 
-.sign-up h1 {
+.container h1 {
 	font-size: 50px;
 	font-weight: 600;
 	margin-bottom: 40px;
@@ -57,7 +49,6 @@ form {
 	border: 1px solid rgb(23, 23, 23);
 	padding-left: 10px;
 	background-color: rgb(245, 245, 245);
-	font-family: Times
 }
 
 .button {
