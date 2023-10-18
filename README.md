@@ -1,3 +1,11 @@
+<p align="center">
+  <br>
+  <img width="800" src="https://github.com/ab-elhaddad/Fancy-ToDo/assets/113056556/bfeb7458-2791-418d-bdad-c9b238885ac6">
+  <br>
+  <br>
+</p>
+
+
 # Fancy To Do App
 
 ## A To Do backend server with fancy Features! ✨
