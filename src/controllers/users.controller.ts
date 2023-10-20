@@ -11,7 +11,7 @@ export const signUp = {
 		try {
 			const user: User = req.body;
 			user.u_password = bcrypt.hashSync(user.u_password as string, config.saltRounds);
-			const userID = await Users.createUser(user);
+			const userID = await Users.create(user);
 
 			sendEmail.confirmation(userID, user.u_email);
 			res.json({
@@ -141,7 +141,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 	try {
 		const user: User = req.body;
 		user.u_id ||= res.locals.user.id;
-		await Users.updateUser(user);
+		await Users.update(user);
 		res.json({ message: 'User updated successfully' });
 	} catch (err) {
 		res.locals.err = err;
@@ -151,16 +151,10 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		await Users.deleteUserById(res.locals.user.id);
+		await Users.deleteById(res.locals.user.id);
 		res.json({ message: 'User deleted successfully' });
 	} catch (err) {
 		res.locals.err = err;
 		next();
 	}
 }
-
-/*
-	- update account
-	- delete account
-	- see account (profile)
-*/

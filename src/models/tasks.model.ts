@@ -140,7 +140,7 @@ class Tasks {
 		});
 	}
 
-	static async searchTasks(u_id: number, search: string, sort?: string): Promise<Task[]> {
+	static async search(u_id: number, search: string, sort?: string): Promise<Task[]> {
 		const tasks: Task[] = await prisma.task.findMany({
 			where: {
 				t_user_id: u_id,

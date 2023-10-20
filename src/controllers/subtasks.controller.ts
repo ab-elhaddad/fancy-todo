@@ -5,7 +5,7 @@ import Subtask from '../types/Subtask.type';
 export const createSubtask = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const sentSubtask: Subtask = req.body;
-		const createdSubtask = await Subtasks.createSubtask(sentSubtask);
+		const createdSubtask = await Subtasks.create(sentSubtask);
 		res.json({ message: 'Sub task created succesfully.', subtask: createdSubtask });
 	} catch (err) {
 		res.locals.err = err;
@@ -16,7 +16,7 @@ export const createSubtask = async (req: Request, res: Response, next: NextFunct
 export const deleteSubtask = async (req: Request, res: Response, next: NextFunction) => {
 	const subtask: Subtask = req.body;
 	try {
-		await Subtasks.deleteSubtask(subtask);
+		await Subtasks.delete(subtask);
 		res.json({ message: 'Subtask deleted successfully' });
 	} catch (err) {
 		res.locals.err = err;

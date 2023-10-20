@@ -6,7 +6,7 @@ class Subtasks {
 	 * @param subtask
 	 * @returns the created sub task
 	 */
-	static async createSubtask(subtask: Subtask): Promise<Subtask> {
+	static async create(subtask: Subtask): Promise<Subtask> {
 		const insertedSubtask = await prisma.subtask.create({
 			data: subtask
 		});
@@ -17,7 +17,7 @@ class Subtasks {
 	 * Deletes the sub task with the passed id.
 	 * @param id
 	 */
-	static async deleteSubtask(subtask: Subtask): Promise<void> {
+	static async delete(subtask: Subtask): Promise<void> {
 		// Throws an exception if the record isn't found
 		await prisma.subtask.delete({
 			where: {

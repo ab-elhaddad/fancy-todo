@@ -8,7 +8,7 @@ class Users {
 	 * @param user {@link User}
 	 * @returns the *id* of the created user.
 	 *  */
-	static async createUser(user: User): Promise<number> {
+	static async create(user: User): Promise<number> {
 		// Create new account
 		try {
 			const isertedUser = await prisma.user.create({
@@ -80,7 +80,7 @@ class Users {
 * Updates one or more users.
 * @param users The user(s) to update.
 */
-	static async updateUser(users: User): Promise<void> {
+	static async update(users: User): Promise<void> {
 		await prisma.user.update({
 			where: { u_id: users.u_id },
 			data: users
@@ -91,7 +91,7 @@ class Users {
 	 * Deletes one or more users.
 	 * @param users The user(s) to delete.
 	 */
-	static async deleteUserById(u_id: number): Promise<void> {
+	static async deleteById(u_id: number): Promise<void> {
 		await prisma.user.delete({
 			where: { u_id: u_id }
 		});

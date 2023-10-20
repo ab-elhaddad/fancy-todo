@@ -9,7 +9,7 @@ export const createList = async (req: Request, res: Response, next: NextFunction
 		const list: List = req.body;
 		list.l_user_id = res.locals.user.id;
 
-		const createdList = await Lists.createList(list);
+		const createdList = await Lists.create(list);
 
 		res.json({ message: 'List created successfully', list: createdList });
 	} catch (err) {
@@ -20,7 +20,7 @@ export const createList = async (req: Request, res: Response, next: NextFunction
 
 export const getLists = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		const lists = await Lists.getLists(res.locals.user.id);
+		const lists = await Lists.getAll(res.locals.user.id);
 
 		res.json({ message: 'Lists fetched successfully', lists });
 	} catch (err) {
@@ -32,7 +32,7 @@ export const getLists = async (req: Request, res: Response, next: NextFunction) 
 export const getList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { l_id } = req.params;
-		const list = await Lists.getList(Number(l_id));
+		const list = await Lists.get(Number(l_id));
 
 		res.json({ message: 'List fetched successfully', list });
 	} catch (err) {
@@ -45,7 +45,7 @@ export const deleteList = async (req: Request, res: Response, next: NextFunction
 	try {
 		const { l_id } = req.body;
 
-		await Lists.deleteList(l_id);
+		await Lists.delete(l_id);
 
 		res.json({ message: 'List deleted successfully' });
 	} catch (err) {
@@ -84,7 +84,7 @@ export const viewsharedList = async (req: Request, res: Response, next: NextFunc
 		const { token } = req.params;
 		const l_id = Number(jwt.decode(String(token)));
 
-		const list = await Lists.getList(l_id);
+		const list = await Lists.get(l_id);
 
 		res.json({ message: 'List fetched successfully', list });
 	} catch (err) {

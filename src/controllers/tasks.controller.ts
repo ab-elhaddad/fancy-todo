@@ -110,7 +110,7 @@ export const searchTasks = async (req: Request, res: Response, next: NextFunctio
 		const { search } = req.query;
 		const sort = req.query.sort?.toString();
 
-		const tasks = await Tasks.searchTasks(u_id, String(search || ''), sort);
+		const tasks = await Tasks.search(u_id, String(search || ''), sort);
 		res.json({ message: 'Tasks returned successfully.', tasks });
 	} catch (err) {
 		res.locals.err = err;

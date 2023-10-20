@@ -2,15 +2,19 @@ import List from '../types/List.type';
 import prisma from '../lib/database';
 
 class Lists {
-	static async createList(list: List) {
-		const createdList = await prisma.list.create({
+	static async create(list: List): Promise<List> {
+		const createdList: List = await prisma.list.create({
 			data: list
 		});
 		return createdList;
 	}
 
-	static async getLists(l_user_id: number) {
-		const lists = await prisma.list.findMany({
+	/**
+ * @param l_id Id of the user to return their lists.
+ * @returns An array of Lists.
+ */
+	static async getAll(l_user_id: number): Promise<List[]> {
+		const lists: List[] = await prisma.list.findMany({
 			where: {
 				l_user_id: l_user_id
 			},
@@ -25,8 +29,12 @@ class Lists {
 		return lists;
 	}
 
-	static async getList(l_id: number) {
-		const list = await prisma.list.findFirst({
+	/**
+	 * @param l_id The list Id.
+	 * @returns A single list which has the passed id.
+	 */
+	static async get(l_id: number): Promise<List | null> {
+		const list: List | null = await prisma.list.findFirst({
 			where: {
 				l_id: l_id
 			},
@@ -41,7 +49,7 @@ class Lists {
 		return list;
 	}
 
-	static async deleteList(l_id: number): Promise<void> {
+	static async delete(l_id: number): Promise<void> {
 		await prisma.list.delete({
 			where: {
 				l_id: l_id
