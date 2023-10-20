@@ -5,14 +5,13 @@
   <br>
 </p>
 
-
 # Fancy To Do App
 
 ## A To Do backend server with fancy Features! ✨
 
 ## 🔍 Description
 
-A To Do backend server which enables the user to add tasks and mark them as done when completed. The user can also add tags to the tasks and filter them based on the tags. The user can also sort the tasks based on the due date and the priority of the task. The user can also search for a particular task based on the title of the task. the user can also split the tasks into subtasks and mark them as done when completed.
+This is a To Do app backend server built with Node.js and Express.js. It uses PostgreSQL as a database and Prisma as an ORM. It also uses JWT for authentication and authorization. It has a lot of fancy features like weather forecast, email notifications, and more!
 
 ## 💡 Used Tools & Technologies
 
