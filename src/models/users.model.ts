@@ -24,8 +24,8 @@ class Users {
 	}
 
 	/**
- * @returns The *id* of the user.
- */
+	 * @returns The *id* of the user.
+	 */
 	static async getIdByEmail(email: string): Promise<number> {
 		const user = await prisma.user.findFirst({
 			where: { u_email: email },
@@ -77,9 +77,9 @@ class Users {
 	}
 
 	/**
-* Updates one or more users.
-* @param users The user(s) to update.
-*/
+	 * Updates one or more users.
+	 * @param users The user(s) to update.
+	 */
 	static async update(users: User): Promise<void> {
 		await prisma.user.update({
 			where: { u_id: users.u_id },

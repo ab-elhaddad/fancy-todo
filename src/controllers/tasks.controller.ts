@@ -50,7 +50,7 @@ export const updateTask = async (req: Request, res: Response, next: NextFunction
 		res.locals.err = err;
 		next();
 	}
-}
+};
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {

@@ -65,7 +65,7 @@ export const updateList = async (req: Request, res: Response, next: NextFunction
 		res.locals.err = err;
 		next();
 	}
-}
+};
 
 export const shareList = async (req: Request, res: Response, next: NextFunction) => {
 	try {

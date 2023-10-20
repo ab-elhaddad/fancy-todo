@@ -1,5 +1,5 @@
 * {
-	color: #1C1C1C;
+	color: #1c1c1c;
 	font-family: sans-serif;
 }
 
@@ -52,7 +52,7 @@ form {
 }
 
 .button {
-	background-color: #3B3B3B;
+	background-color: #3b3b3b;
 	color: #fffcf5;
 	height: 40px;
 	width: 200px;
@@ -65,8 +65,8 @@ form {
 }
 
 .button:hover {
-	background-color: #1C1C1C;
-	color: #FFE002;
+	background-color: #1c1c1c;
+	color: #ffe002;
 	cursor: pointer;
 	letter-spacing: 4px;
 }

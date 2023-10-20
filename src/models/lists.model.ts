@@ -10,9 +10,9 @@ class Lists {
 	}
 
 	/**
- * @param l_id Id of the user to return their lists.
- * @returns An array of Lists.
- */
+	 * @param l_id Id of the user to return their lists.
+	 * @returns An array of Lists.
+	 */
 	static async getAll(l_user_id: number): Promise<List[]> {
 		const lists: List[] = await prisma.list.findMany({
 			where: {

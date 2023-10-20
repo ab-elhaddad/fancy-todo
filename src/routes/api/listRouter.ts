@@ -1,6 +1,16 @@
 import { Application } from 'express';
 import authenticate from '../../middlewares/authenticate.middleware';
-import { addTask, createList, deleteList, getList, getLists, removeTask, shareList, updateList, viewsharedList } from '../../controllers/lists.controller';
+import {
+	addTask,
+	createList,
+	deleteList,
+	getList,
+	getLists,
+	removeTask,
+	shareList,
+	updateList,
+	viewsharedList
+} from '../../controllers/lists.controller';
 import errorHandler from '../../middlewares/errorHandler.middleware';
 import checkUserOfList from '../../middlewares/security/checkUserOfList.middleware';
 import checkUserOfTask from '../../middlewares/security/checkUserOfTask.middleware';

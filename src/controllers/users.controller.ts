@@ -30,7 +30,7 @@ export const signUp = {
 			next();
 		}
 	}
-}
+};
 
 export const signIn = {
 	post: async (req: Request, res: Response, next: NextFunction) => {
@@ -51,7 +51,7 @@ export const signIn = {
 			next();
 		}
 	}
-}
+};
 
 export const signOut = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -135,7 +135,7 @@ export const profile = async (req: Request, res: Response, next: NextFunction) =
 		res.locals.err = err;
 		next();
 	}
-}
+};
 
 export const updateUser = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -147,7 +147,7 @@ export const updateUser = async (req: Request, res: Response, next: NextFunction
 		res.locals.err = err;
 		next();
 	}
-}
+};
 
 export const deleteUser = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -157,4 +157,4 @@ export const deleteUser = async (req: Request, res: Response, next: NextFunction
 		res.locals.err = err;
 		next();
 	}
-}
+};
