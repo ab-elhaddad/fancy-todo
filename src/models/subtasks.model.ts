@@ -27,6 +27,15 @@ class Subtasks {
 		});
 	}
 
+	static async update(subTask: Subtask): Promise<void> {
+		await prisma.subtask.update({
+			where: {
+				s_id: subTask.s_id
+			},
+			data: subTask
+		});
+	}
+
 	/**
 	 * Reverses the completed column in the sub task's row.
 	 * @param id

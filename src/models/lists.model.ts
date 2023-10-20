@@ -49,6 +49,15 @@ class Lists {
 		});
 	}
 
+	static async update(list: List) {
+		await prisma.list.update({
+			where: {
+				l_id: list.l_id
+			},
+			data: list
+		});
+	}
+
 	static async addTask(l_id: number, t_id: number) {
 		await prisma.task_List.create({
 			data: {

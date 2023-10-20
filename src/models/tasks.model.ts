@@ -29,6 +29,13 @@ class Tasks {
 		});
 	}
 
+	static async update(task: Task): Promise<void> {
+		await prisma.task.update({
+			where: { t_id: task.t_id },
+			data: task
+		});
+	}
+
 	/**
 	 * Gets all the tasks assigned by the user based on the status.
 	 * @param u_id

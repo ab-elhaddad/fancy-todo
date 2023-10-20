@@ -3,6 +3,7 @@ import Tasks from '../models/tasks.model';
 import setTaskPriority from '../helpers/setTaskPriority';
 import getRecurringTasks from '../helpers/getRecurringTasks';
 import setDates from '../helpers/setDates';
+import Task from '../types/Task.type';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
@@ -39,6 +40,17 @@ export const deleteTask = async (req: Request, res: Response, next: NextFunction
 		next();
 	}
 };
+
+export const updateTask = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const task: Task = req.body;
+		await Tasks.update(task);
+		res.json({ message: 'Task updated successfully' });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+}
 
 export const getAll = async (req: Request, res: Response, next: NextFunction) => {
 	try {

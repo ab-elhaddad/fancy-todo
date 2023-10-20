@@ -24,6 +24,17 @@ export const deleteSubtask = async (req: Request, res: Response, next: NextFunct
 	}
 };
 
+export const updateSubtask = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const subtask: Subtask = req.body;
+		await Subtasks.update(subtask);
+		res.json({ message: 'Subtask updated successfully' });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+};
+
 export const revStatus = async (req: Request, res: Response, next: NextFunction) => {
 	const subtask: Subtask = req.body;
 	try {

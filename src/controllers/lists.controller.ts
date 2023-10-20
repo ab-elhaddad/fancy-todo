@@ -54,6 +54,19 @@ export const deleteList = async (req: Request, res: Response, next: NextFunction
 	}
 };
 
+export const updateList = async (req: Request, res: Response, next: NextFunction) => {
+	try {
+		const list: List = req.body;
+
+		await Lists.update(list);
+
+		res.json({ message: 'List updated successfully' });
+	} catch (err) {
+		res.locals.err = err;
+		next();
+	}
+}
+
 export const shareList = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const { l_id } = req.params;
