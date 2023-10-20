@@ -5,8 +5,8 @@ import { createSubtask, deleteSubtask, revStatus, updateSubtask } from '../../co
 import checkUserOfTask from '../../middlewares/security/checkUserOfTask.middleware';
 
 const subtaskRouter = (app: Application) => {
-	app.post('/subtasks/create', authenticate, createSubtask, errorHandler);
-	app.delete('/subtasks/delete', authenticate, checkUserOfTask, deleteSubtask, errorHandler);
+	app.post('/subtasks', authenticate, createSubtask, errorHandler);
+	app.delete('/subtasks', authenticate, checkUserOfTask, deleteSubtask, errorHandler);
 	app.put('/subtasks', authenticate, updateSubtask, errorHandler);
 	app.put('/subtasks/rev-status', authenticate, checkUserOfTask, revStatus, errorHandler);
 };
