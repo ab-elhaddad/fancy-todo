@@ -32,6 +32,8 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 - **eslint** (Code Linter)
 - **GitHub Actions** (CI/CD)
 - **OpenWeatherMap API** (Weather API)
+- **Multer** (File Upload)
+- **Azure Blob Storage** (File Storage)
 
 ## 🔧 Pre-requisites
 
