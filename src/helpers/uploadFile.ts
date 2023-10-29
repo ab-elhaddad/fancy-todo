@@ -14,7 +14,9 @@ async function uploadFile(path: string, name?: string) {
 	if (!result.success)
 		throw { message: result.message };
 
-	fs.unlink(path, () => { });
+	fs.unlink(path, (err) => {
+		if (err) console.error(err);
+	});
 	return result.data?.url;
 }
 
