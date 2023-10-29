@@ -12,6 +12,7 @@ type Task = {
 		day?: string | number;
 		end_date: Date | string;
 	};
+	t_attachment?: string;
 } & { [key: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 export default Task;

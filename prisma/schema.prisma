@@ -30,6 +30,7 @@ model Task {
   t_due_date    DateTime    @default(now())
   t_created_at  DateTime    @default(now())
   t_priority    Int         @default(2)
+  t_attachment  String      @default("")
   User          User        @relation(fields: [t_user_id], references: [u_id], onDelete: Cascade)
   t_user_id     Int
   t_subtasks    Subtask[]
