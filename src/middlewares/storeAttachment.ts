@@ -10,6 +10,6 @@ export const fileStorage = multer.diskStorage({
 	}
 });
 
-const storeAttatchment = multer({ storage: fileStorage }).single('attachment');
+const storeAttachment = multer({ storage: fileStorage }).single('t_attachment');
 
-export default storeAttatchment;
+export default storeAttachment;
