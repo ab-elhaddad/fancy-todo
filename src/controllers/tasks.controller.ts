@@ -4,11 +4,14 @@ import setTaskPriority from '../helpers/setTaskPriority';
 import getRecurringTasks from '../helpers/getRecurringTasks';
 import setDates from '../helpers/setDates';
 import Task from '../types/Task.type';
+import uploadFile from '../helpers/uploadFile';
 
 export const create = async (req: Request, res: Response, next: NextFunction) => {
 	try {
 		const task = req.body;
 		task.t_user_id = res.locals.user.id;
+
+		if (req.file) task.t_attachment = await uploadFile(req.file.path);
 
 		// Convert date string to Date object
 		setDates(task);

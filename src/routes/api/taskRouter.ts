@@ -4,9 +4,10 @@ import authenticate from '../../middlewares/authenticate.middleware';
 import { createTaskValidator, deleteTaskValidator } from '../../middlewares/validators/tasks.validator';
 import errorHandler from '../../middlewares/errorHandler.middleware';
 import checkUserOfTask from '../../middlewares/security/checkUserOfTask.middleware';
+import storeAttachment from '../../middlewares/storeAttachment';
 
 const taskRouter = (app: Application) => {
-	app.post('/tasks', createTaskValidator, authenticate, create, errorHandler);
+	app.post('/tasks', storeAttachment, createTaskValidator, authenticate, create, errorHandler);
 	app.delete('/tasks', deleteTaskValidator, authenticate, checkUserOfTask, deleteTask, errorHandler);
 	app.put('/tasks', authenticate, checkUserOfTask, updateTask, errorHandler);
 	app.get('/tasks', authenticate, getAll, errorHandler);
