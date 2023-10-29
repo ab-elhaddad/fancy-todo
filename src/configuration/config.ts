@@ -10,5 +10,14 @@ export const config = {
 	env: String(process.env.ENV),
 	db: String(process.env.DATABASE_URL),
 	testDb: String(process.env.TEST_DATABASE_URL),
-	weatherApiKey: String(process.env.WEATHER_API_KEY)
+	weatherApiKey: String(process.env.WEATHER_API_KEY),
+	storage: {
+		accountName: String(process.env.STORAGE_ACCOUNT_NAME),
+		containerName: String(process.env.STORAGE_CONTAINER_NAME),
+		sasToken: String(process.env.STORAGE_SAS_TOKEN),
+		connectionString: String(process.env.ACCOUNT_CONNECTION_STRING),
+		blob: {
+			sasToken: String(process.env.BLOB_SAS_TOKEN),
+		}
+	}
 };
