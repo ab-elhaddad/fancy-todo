@@ -22,7 +22,7 @@ const mainRouter = (app: Application) => {
 			res.redirect('/');
 		else {
 			const user = jwt?.decode(token) as jwt.JwtPayload;
-			res.render('welcome', { name: user.email });
+			res.render('welcome', { name: user.name });
 		}
 	});
 	userRouter(app);

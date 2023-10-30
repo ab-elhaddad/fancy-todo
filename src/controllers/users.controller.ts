@@ -35,8 +35,8 @@ export const signIn = {
 	post: async (req: Request, res: Response, next: NextFunction) => {
 		try {
 			const { u_email, u_password } = req.body;
-			const userID = await Users.signIn(u_email, u_password);
-			res.cookie('token', jwt.sign({ id: userID, email: u_email }, config.jwtSecretKey)).redirect('/welcome');
+			const { u_id, u_name } = await Users.signIn(u_email, u_password);
+			res.cookie('token', jwt.sign({ id: u_id, email: u_email, name: u_name }, config.jwtSecretKey)).redirect('/welcome');
 		} catch (err) {
 			res.locals.err = err;
 			next();

@@ -46,17 +46,17 @@ class Users {
 	/**
 	 * @returns The *id* of the user.
 	 */
-	static async signIn(email: string, password: string): Promise<number> {
+	static async signIn(email: string, password: string): Promise<{ u_id: number; u_name: string; }> {
 		const user = await prisma.user.findFirst({
 			where: { u_email: email },
-			select: { u_password: true, u_is_confirmed: true, u_id: true }
+			select: { u_password: true, u_is_confirmed: true, u_id: true, u_name: true }
 		});
 		if (user === null) throw { message: `Wrong Email or Password!`, statusCode: 403 };
 		if (!user.u_is_confirmed) throw { message: `Wrong Email or Password!`, statusCode: 403 }; // Forbidden
 
 		if (!bcrypt.compareSync(password, user?.u_password as string)) throw { message: `Wrong Email or Password!`, statusCode: 403 }; // Forbidden
 
-		return user.u_id;
+		return { u_id: user.u_id, u_name: user.u_name };
 	}
 
 	static async updatePassword(userID: number, newPassword: string): Promise<void> {
