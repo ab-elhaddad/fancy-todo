@@ -9,14 +9,13 @@ import sendEmail from '../helpers/sendEmail';
 export const signUp = {
 	post: async (req: Request, res: Response, next: NextFunction) => {
 		try {
+			delete req.body.u_password_confirm;
 			const user: User = req.body;
 			user.u_password = bcrypt.hashSync(user.u_password as string, config.saltRounds);
 			const userID = await Users.create(user);
 
 			sendEmail.confirmation(userID, user.u_email);
-			res.json({
-				message: 'User created successfully. Check your email to confirm your account.'
-			});
+			res.render('created-successfully');
 		} catch (err) {
 			res.locals.err = err;
 			next();
@@ -37,7 +36,7 @@ export const signIn = {
 		try {
 			const { u_email, u_password } = req.body;
 			const userID = await Users.signIn(u_email, u_password);
-			res.cookie('token', jwt.sign({ id: userID, email: u_email }, config.jwtSecretKey)).json({ message: `User logged in successfully` });
+			res.cookie('token', jwt.sign({ id: userID, email: u_email }, config.jwtSecretKey)).redirect('/welcome');
 		} catch (err) {
 			res.locals.err = err;
 			next();
@@ -55,7 +54,7 @@ export const signIn = {
 
 export const signOut = async (req: Request, res: Response, next: NextFunction) => {
 	try {
-		res.clearCookie('token').json({ message: 'User logged out successfully' });
+		res.clearCookie('token').redirect('/');
 	} catch (err) {
 		res.locals.err = err;
 		next();
@@ -76,7 +75,7 @@ export const forgotPassword = {
 			const { email: u_email } = req.body;
 			const u_id = await Users.getIdByEmail(u_email);
 			sendEmail.resetPassword(u_id, u_email);
-			res.send('<h1>Check your email to reset your password</h1>');
+			res.render('check-email');
 		} catch (err) {
 			res.locals.err = err;
 			next();

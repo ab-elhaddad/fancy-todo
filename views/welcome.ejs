@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Index</title>
 	<link rel="stylesheet" type="text/css" href="css/index.css">
+	<link rel="stylesheet" type="text/css" href="css/welcome.css">
 </head>
 
 <body>
@@ -13,9 +14,13 @@
 		<div class="header">
 			<div class="small_header">Welcome to</div> Fancy To Do! ✨
 		</div>
+		<br>
+		<div class="name">
+			<%= name %>
+		</div>
+		<br>
 		<div class="buttons">
-			<button onclick="window.location.href = '/users/sign-in'" type="button" class="button">Sign In</button>
-			<button onclick="window.location.href = '/users/sign-up'" type="button" class="button">Sign Up</button>
+			<button onclick="window.location.href = '/users/sign-out'" type="button" class="button">Sign Out</button>
 		</div>
 	</div>
 </body>

@@ -1,0 +1,25 @@
+* {
+	color: #1c1c1c;
+}
+
+body {
+	background-color: #fffcf5;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-top: 13%;
+}
+
+p {
+	font-size: 40px;
+	font-weight: 600;
+}
+
+.icon {
+	font-size: 125px;
+	margin-bottom: 5px;
+}
