@@ -111,6 +111,8 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 - `Node.js` installed on your machine.
 - A `PostgreSQL` database server running whether locally or remotely.
 - An `email account` to send emails from.
+- An `Azure Blob Storage` account to store files.
+- An `OpenWeatherMap API` key to get weather information.
 - A `.env` file containing these environment variables.
 
 ```js
@@ -121,6 +123,12 @@ JWT_SECRET_KEY // Secret key (string) to sign the jwt token
 
 GMAIL_USER // Email address to send emails from
 GMAIL_PASS // Password of the email address
+
+WEATHER_API_KEY // OpenWeatherMap API key
+
+STORAGE_ACCOUNT_NAME // Azure Blob Storage account name
+STORAGE_CONTAINER_NAME // Azure Blob Storage container name
+ACCOUNT_CONNECTION_STRING // Azure Blob Storage connection string
 ```
 
 ## 📦 Installation
