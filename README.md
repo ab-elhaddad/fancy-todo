@@ -106,6 +106,12 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 - **Multer** (File Upload)
 - **Azure Blob Storage** (File Storage)
 
+## 🐘 Database Schema
+
+<p align="center">
+	<img src="./assets/UML.jpeg" alt="Database Schema" width="1000"/>
+</p>
+
 ## 🔧 Pre-requisites
 
 - `Node.js` installed on your machine.
