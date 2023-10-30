@@ -115,8 +115,8 @@ export const confirm = async (req: Request, res: Response, next: NextFunction) =
 		const { token } = req.params;
 		const id = Number(jwt.verify(token, config.jwtSecretKey));
 		await Users.confirm(id);
-		res.json({ Message: 'Account confirmed :)' });
-		//res.redirect('http://localhost:3000/users/login');
+		//res.json({ Message: 'Account confirmed :)' });
+		res.redirect('users/sign-in');
 	} catch (err) {
 		console.error('Error in confirm function in users.controller.');
 		res.locals.err = err;
