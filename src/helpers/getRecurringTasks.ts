@@ -32,7 +32,6 @@ export const getDailyTasks = (task: Task): Task[] => {
 	const endDate = new Date(end_date as Date | string);
 
 	const days = Math.ceil((endDate.getTime() - startDate.getTime()) / millisecondsToDays);
-	console.log(days);
 
 	const tasks: Task[] = [];
 	delete task.t_recurring;
