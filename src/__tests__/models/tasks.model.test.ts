@@ -200,14 +200,17 @@ describe('Tasks model', () => {
 			await Tasks.create(task2);
 			await Tasks.create(task3);
 
-			const actual1 = await Tasks.searchTasks(Number(user.u_id), 'lunch');
-			expect(actual1).toHaveLength(2);
-			expect(actual1.at(0)?.t_title).toEqual(task1.t_title);
-			expect(actual1.at(1)?.t_title).toEqual(task3.t_title);
+			const actual1 = (await Tasks.search(Number(user.u_id), 'lunch'))
+				.map((task) => { return { t_title: task.t_title, t_user_id: task.t_user_id } });
 
-			const actual2 = await Tasks.searchTasks(Number(user.u_id), 'team');
+			expect(actual1).toHaveLength(2);
+			expect(actual1).toContainEqual(task1);
+			expect(actual1).toContainEqual(task3);
+
+			const actual2 = (await Tasks.search(Number(user.u_id), 'team'))
+				.map((task) => { return { t_title: task.t_title, t_user_id: task.t_user_id } });
 			expect(actual2).toHaveLength(1);
-			expect(actual2.at(0)?.t_title).toEqual(task2.t_title);
+			expect(actual2).toContainEqual(task2);
 		});
 
 		it('should return an empty array if no tasks are found', async () => {
@@ -223,7 +226,7 @@ describe('Tasks model', () => {
 			await Tasks.create(task1);
 			await Tasks.create(task2);
 
-			const actual = await Tasks.searchTasks(Number(user.u_id), 'cinema');
+			const actual = await Tasks.search(Number(user.u_id), 'cinema');
 
 			expect(actual).toHaveLength(0);
 		});
@@ -241,11 +244,12 @@ describe('Tasks model', () => {
 			await Tasks.create(task1);
 			await Tasks.create(task2);
 
-			const actual = await Tasks.searchTasks(Number(user.u_id), '');
+			const actual = (await Tasks.search(Number(user.u_id), ''))
+				.map((task) => { return { t_title: task.t_title, t_user_id: task.t_user_id } });
 
 			expect(actual).toHaveLength(2);
-			expect(actual.at(0)?.t_title).toEqual(task1.t_title);
-			expect(actual.at(1)?.t_title).toEqual(task2.t_title);
+			expect(actual).toContainEqual(task1);
+			expect(actual).toContainEqual(task2);
 		});
 	});
 });
