@@ -36,7 +36,7 @@ describe('Subtasks', () => {
 		await prisma.subtask.deleteMany({});
 	});
 
-	describe('createSubtask', () => {
+	describe('create', () => {
 		it('should create a new subtask', async () => {
 			const newSubtask: Subtask = {
 				s_task_id: Number(task.t_id),
@@ -47,14 +47,14 @@ describe('Subtasks', () => {
 				...newSubtask,
 				s_status: false
 			};
-			const actualCreatedSubtask = await Subtasks.createSubtask(newSubtask);
+			const actualCreatedSubtask = await Subtasks.create(newSubtask);
 			expect(actualCreatedSubtask).toMatchObject(returnedSubtask);
 			expect(actualCreatedSubtask.s_id).toBeDefined();
 			expect(actualCreatedSubtask.s_created_at).toBeDefined();
 		});
 	});
 
-	describe('deleteSubtask', () => {
+	describe('delete', () => {
 		it('should delete an existing subtask', async () => {
 			const subtask: Subtask = await prisma.subtask.create({
 				data: {
@@ -62,11 +62,36 @@ describe('Subtasks', () => {
 					s_title: 'Subtask 2'
 				}
 			});
-			await Subtasks.deleteSubtask(subtask);
+			await Subtasks.delete(subtask);
 			const deletedSubtask = await prisma.subtask.findUnique({
 				where: { s_id: subtask.s_id }
 			});
 			expect(deletedSubtask).toBeNull();
+		});
+	});
+
+	describe('update', () => {
+		it('should update an existing subtask', async () => {
+			const subtask: Subtask = await prisma.subtask.create({
+				data: {
+					s_task_id: Number(task.t_id),
+					s_title: 'Subtask 2'
+				}
+			});
+
+			const updatedSubtask: Subtask = {
+				...subtask,
+				s_title: 'Updated Subtask Title',
+				s_status: true
+			};
+
+			await Subtasks.update(updatedSubtask);
+
+			const actualUpdatedSubtask = await prisma.subtask.findUnique({
+				where: { s_id: subtask.s_id }
+			});
+
+			expect(actualUpdatedSubtask).toMatchObject(updatedSubtask);
 		});
 	});
 
