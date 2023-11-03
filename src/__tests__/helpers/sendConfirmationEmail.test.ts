@@ -1,5 +1,5 @@
-import { config } from '../../../configuration/config';
-import sendConfirmationEmail from '../../../helpers/sendConfirmationEmail';
+import { config } from '../../configuration/config';
+import sendEmail from '../../helpers/sendEmail';
 import nodemailerMock from 'nodemailer';
 
 // Mock the nodemailer createTransport function
@@ -25,7 +25,7 @@ describe('sendConfirmationEmail', () => {
 		const userEmail = 'test@example.com';
 
 		// Call the function
-		await sendConfirmationEmail(userID, userEmail);
+		await sendEmail.confirmation(userID, userEmail);
 
 		// Check that the createTransport function was called with the correct arguments
 		expect(nodemailerMock.createTransport).toHaveBeenCalledWith({
