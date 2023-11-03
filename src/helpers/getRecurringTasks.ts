@@ -23,7 +23,7 @@ export default getRecurringTasks;
 
 const millisecondsToDays = 1000 * 60 * 60 * 24;
 
-const getDailyTasks = (task: Task): Task[] => {
+export const getDailyTasks = (task: Task): Task[] => {
 	const { t_recurring } = task;
 	// @ts-ignore
 	const { end_date } = t_recurring;
@@ -46,7 +46,7 @@ const getDailyTasks = (task: Task): Task[] => {
 	return tasks;
 };
 
-const getWeeklyTasks = (task: Task): Task[] => {
+export const getWeeklyTasks = (task: Task): Task[] => {
 	const { t_recurring } = task;
 	// @ts-ignore
 	const { end_date } = t_recurring;
@@ -72,7 +72,7 @@ const getWeeklyTasks = (task: Task): Task[] => {
 	return tasks;
 };
 
-const getMonthlyTasks = (task: Task): Task[] => {
+export const getMonthlyTasks = (task: Task): Task[] => {
 	const { t_recurring } = task;
 	// @ts-ignore
 	const { end_date } = t_recurring;
