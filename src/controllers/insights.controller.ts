@@ -7,7 +7,7 @@ export const getTasksInsights = async (req: Request, res: Response, next: NextFu
 		const tasksInsights = await insights.getTasksInitiatedByMe(userID);
 		res.json({ message: 'Tasks insights retrieved successfully.', insights: tasksInsights });
 	} catch (err) {
-		res.locals.error = err;
+		res.locals.err = err;
 		next();
 	}
 };
