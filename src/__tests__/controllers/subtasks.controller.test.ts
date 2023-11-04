@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import request from 'supertest';
 import { app, server } from '../../index';
 import { Request, Response, NextFunction } from 'express';
@@ -39,17 +40,17 @@ describe('Subtasks Controller', () => {
 			};
 
 			// Mock the create function to return s subtask object
-			jest.mocked(Subtasks).createSubtask.mockImplementation((subtask: Subtask) => Promise.resolve({ ...subtask, s_id: 1, s_status: false }));
+			jest.mocked(Subtasks).create.mockImplementation((subtask: Subtask) => Promise.resolve({ ...subtask, s_id: 1, s_status: false }));
 
-			const response = await request(app).post('/subtasks/create').send(sentSubtask).expect(200);
+			const response = await request(app).post('/subtasks').send(sentSubtask).expect(200);
 
 			expect(response.body.message).toEqual('Sub task created succesfully.');
 			expect(response.body.subtask.s_title).toEqual(sentSubtask.s_title);
 			expect(response.body.subtask.s_status).toEqual(false);
 			expect(response.body.subtask.s_task_id).toEqual(sentSubtask.s_task_id);
 			expect(response.body.subtask.s_id).toEqual(1);
-			expect(Subtasks.createSubtask).toHaveBeenCalledTimes(1);
-			expect(Subtasks.createSubtask).toHaveBeenCalledWith(sentSubtask);
+			expect(Subtasks.create).toHaveBeenCalledTimes(1);
+			expect(Subtasks.create).toHaveBeenCalledWith(sentSubtask);
 		});
 
 		it('should return an error if the subtask could not be created', async () => {
@@ -58,13 +59,13 @@ describe('Subtasks Controller', () => {
 				s_task_id: 1
 			};
 
-			jest.mocked(Subtasks).createSubtask.mockImplementation(
+			jest.mocked(Subtasks).create.mockImplementation(
 				(
-					subtask: Subtask // eslint-disable-line @typescript-eslint/no-unused-vars
+					subtask: Subtask
 				) => Promise.reject({ message: 'Could not create subtask', stausCode: 500 })
 			);
 
-			const response = await request(app).post('/subtasks/create').send(sentSubtask).expect(500);
+			const response = await request(app).post('/subtasks').send(sentSubtask).expect(500);
 
 			expect(response.body.message).toEqual('Could not create subtask');
 		});
@@ -78,13 +79,14 @@ describe('Subtasks Controller', () => {
 				s_task_id: 1
 			};
 
-			jest.mocked(Subtasks).deleteSubtask.mockImplementation((subtask: Subtask) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Subtasks).delete.mockImplementation((subtask: Subtask) => Promise.resolve());
 
-			const response = await request(app).delete('/subtasks/delete').send(subtask).expect(200);
+			const response = await request(app).delete('/subtasks').send(subtask);
 
+			expect(response.status).toEqual(200);
 			expect(response.body.message).toEqual('Subtask deleted successfully');
-			expect(Subtasks.deleteSubtask).toHaveBeenCalledTimes(1);
-			expect(Subtasks.deleteSubtask).toHaveBeenCalledWith(subtask);
+			expect(Subtasks.delete).toHaveBeenCalledTimes(1);
+			expect(Subtasks.delete).toHaveBeenCalledWith(subtask);
 		});
 
 		it('should return an error if the subtask could not be deleted', async () => {
@@ -94,15 +96,53 @@ describe('Subtasks Controller', () => {
 				s_task_id: 1
 			};
 
-			jest.mocked(Subtasks).deleteSubtask.mockImplementation(
+			jest.mocked(Subtasks).delete.mockImplementation(
 				(
-					subtask: Subtask // eslint-disable-line @typescript-eslint/no-unused-vars
+					subtask: Subtask
 				) => Promise.reject({ message: 'Could not delete subtask', statusCode: 500 })
 			);
 
-			const response = await request(app).delete('/subtasks/delete').send(subtask).expect(500);
+			const response = await request(app).delete('/subtasks').send(subtask);
 
+			expect(response.status).toEqual(500);
 			expect(response.body.message).toEqual('Could not delete subtask');
+		});
+	});
+
+	describe('updateSubtask', () => {
+		it('should update an existing subtask and return a success message', async () => {
+			const subtask: Subtask = {
+				s_id: 1,
+				s_title: 'Test Subtask',
+				s_task_id: 1
+			};
+
+			jest.mocked(Subtasks).update.mockImplementation((subtask: Subtask) => Promise.resolve());
+
+			const response = await request(app).put('/subtasks').send(subtask).expect(200);
+
+			expect(response.body.message).toEqual('Subtask updated successfully');
+			expect(Subtasks.update).toHaveBeenCalledTimes(1);
+			expect(Subtasks.update).toHaveBeenCalledWith(subtask);
+		});
+
+		it('should return an error if the subtask could not be updated', async () => {
+			const subtask: Subtask = {
+				s_id: 1,
+				s_title: 'Test Subtask',
+				s_task_id: 1
+			};
+
+			jest.mocked(Subtasks).update.mockImplementation(
+				(
+					subtask: Subtask
+				) => Promise.reject({ message: 'Could not update subtask', statusCode: 500 })
+			);
+
+			const response = await request(app).put('/subtasks').send(subtask);
+
+			expect(response.status).toEqual(500);
+			expect(response.body.message).toEqual('Could not update subtask');
 		});
 	});
 
@@ -114,7 +154,7 @@ describe('Subtasks Controller', () => {
 				s_task_id: 1
 			};
 
-			jest.mocked(Subtasks).revStatus.mockImplementation((id: number) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Subtasks).revStatus.mockImplementation((id: number) => Promise.resolve());
 
 			const response = await request(app).put('/subtasks/rev-status').send(subtask).expect(200);
 
@@ -132,7 +172,7 @@ describe('Subtasks Controller', () => {
 
 			jest.mocked(Subtasks).revStatus.mockImplementation(
 				(
-					id: number // eslint-disable-line @typescript-eslint/no-unused-vars
+					id: number
 				) => Promise.reject({ message: 'Could not reverse subtask', statusCode: 500 })
 			);
 
