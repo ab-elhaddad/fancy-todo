@@ -36,7 +36,7 @@ class Weather {
 			throw { status: 400, message: 'Invalid request.' };
 	}
 
-	private static upcomingWithCity = async (city: string) => {
+	static upcomingWithCity = async (city: string) => {
 		const result = (
 			await axios.get(
 				`https://api.openweathermap.org/data/2.5/forecast?
@@ -50,7 +50,7 @@ class Weather {
 		return weather;
 	}
 
-	private static upcomingWithLatAndLon = async (lat: number, lon: number) => {
+	static upcomingWithLatAndLon = async (lat: number, lon: number) => {
 		const result = (
 			await axios.get(
 				`https://api.openweathermap.org/data/2.5/forecast?
@@ -68,7 +68,7 @@ class Weather {
 	/**
 	 * Filter the weather data to get only the data we need.
 	 */
-	private static filterWeatherData = (result: any[]) => {
+	static filterWeatherData = (result: any[]) => {
 		const weather = [];
 		for (let i = 0; i < result.length; i += 7) {
 			weather.push({
