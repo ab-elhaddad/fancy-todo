@@ -43,7 +43,7 @@ describe('sendConfirmationEmail', () => {
 			from: 'Fancy To-Do',
 			to: userEmail,
 			subject: 'Email confirmation',
-			html: expect.stringContaining(`http://localhost:3000/confirm/`)
+			html: expect.stringContaining(`${config.baseUrl}/confirm/`)
 		});
 	});
 });

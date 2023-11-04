@@ -11,7 +11,7 @@ class sendEmail {
 	static async confirmation(userID: number, userEmail: string) {
 		// Genertes a token based only on the id.
 		const token = jwt.sign(String(userID), config.jwtSecretKey);
-		const url = `http://localhost:3000/confirm/${token}`;
+		const url = `${config.baseUrl}/confirm/${token}`;
 
 		await transporter.sendMail({
 			from: 'Fancy To-Do',
@@ -27,7 +27,7 @@ class sendEmail {
 			id: userID
 		};
 		const token = jwt.sign(payload, config.jwtSecretKey, { expiresIn: '1h' });
-		const url = `http://localhost:3000/users/reset-password/${token}`;
+		const url = `${config.baseUrl}/users/reset-password/${token}`;
 
 		await transporter.sendMail({
 			from: 'Fancy To-Do',

@@ -11,6 +11,7 @@ export const config = {
 	db: String(process.env.DATABASE_URL),
 	testDb: String(process.env.TEST_DATABASE_URL),
 	weatherApiKey: String(process.env.WEATHER_API_KEY),
+	baseUrl: String(process.env.BASE_URL),
 	storage: {
 		accountName: String(process.env.STORAGE_ACCOUNT_NAME),
 		containerName: String(process.env.STORAGE_CONTAINER_NAME),
