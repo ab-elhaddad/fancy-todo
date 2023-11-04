@@ -135,7 +135,7 @@ describe('Tasks Controller', () => {
 			};
 
 			// Mock the delete function to return an id
-			jest.mocked(Tasks).delete.mockImplementation((t_id: number) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Tasks).delete.mockImplementation((t_id: number) => Promise.resolve());
 
 			const response = await request(app).delete('/tasks').send(task);
 
@@ -295,7 +295,7 @@ describe('Tasks Controller', () => {
 			];
 
 			// Mock the getDueToday function to return an id
-			jest.mocked(Tasks).getDueToday.mockImplementation((u_id: number) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Tasks).getDueToday.mockImplementation((u_id: number) => Promise.resolve(tasks));
 
 			const response = await request(app).get('/tasks/get-due-today');
 
@@ -326,7 +326,7 @@ describe('Tasks Controller', () => {
 			};
 
 			// Mock the revStatus function to return an id
-			jest.mocked(Tasks).revStatus.mockImplementation((t_id: number) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Tasks).revStatus.mockImplementation((t_id: number) => Promise.resolve());
 
 			const response = await request(app).put('/tasks/rev-status').send(task);
 
@@ -359,7 +359,7 @@ describe('Tasks Controller', () => {
 			};
 
 			// Mock the addToMyDay function to return an id
-			jest.mocked(Tasks).addToMyDay.mockImplementation((t_id: number) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Tasks).addToMyDay.mockImplementation((t_id: number) => Promise.resolve());
 
 			const response = await request(app).put('/tasks/add-to-my-day').send(task);
 
@@ -407,7 +407,7 @@ describe('Tasks Controller', () => {
 			];
 
 			// Mock the search function to return an id
-			jest.mocked(Tasks).search.mockImplementation((u_id: number, search: string, sort?: string) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Tasks).search.mockImplementation((u_id: number, search: string, sort?: string) => Promise.resolve(tasks));
 
 			const response = await request(app).get('/tasks/search').query({ search: 'Task' });
 
