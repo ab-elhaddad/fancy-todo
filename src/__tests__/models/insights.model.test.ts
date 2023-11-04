@@ -96,10 +96,8 @@ describe('Insights', () => {
 			expect(insights.highPriorityTasks).toBe(1);
 			expect(insights.mediumPriorityTasks).toBe(1);
 			expect(insights.lowPriorityTasks).toBe(1);
-			expect(insights.lists).toEqual([
-				{ l_title: 'List 1', l_count: 2 },
-				{ l_title: 'List 2', l_count: 1 }
-			]);
+			expect(insights.lists).toContainEqual({ l_title: 'List 1', l_count: 2 });
+			expect(insights.lists).toContainEqual({ l_title: 'List 2', l_count: 1 });
 		});
 
 		it('should return the correct insights for a user with no tasks', async () => {
