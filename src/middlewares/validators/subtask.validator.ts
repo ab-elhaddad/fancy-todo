@@ -19,7 +19,8 @@ class subtasksValidator {
 			s_id: joi.number().required(),
 			s_task_id: joi.number().required(),
 			s_status: joi.number().optional(),
-			s_created_at: joi.date().optional()
+			s_created_at: joi.date().optional(),
+			s_title: joi.string().optional()
 		});
 
 		const { error } = schema.validate(req.body);
