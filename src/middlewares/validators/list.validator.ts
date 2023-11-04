@@ -5,8 +5,7 @@ import joi from 'joi';
 class listsValidator {
 	static create = express.Router().use((req: Request, res: Response, next: NextFunction) => {
 		const schema = joi.object({
-			l_title: joi.string().required(),
-			l_user_id: joi.number().required()
+			l_title: joi.string().required()
 		});
 
 		const { error } = schema.validate(req.body);
@@ -17,7 +16,7 @@ class listsValidator {
 	static delete = express.Router().use((req: Request, res: Response, next: NextFunction) => {
 		const schema = joi.object({
 			l_id: joi.number().required(),
-			l_user_id: joi.number().required(),
+			l_user_id: joi.number().optional(),
 			l_title: joi.string().optional(),
 			l_created_at: joi.date().optional()
 		});
