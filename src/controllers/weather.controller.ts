@@ -17,7 +17,7 @@ export const getWeather = async (req: Request, res: Response, next: NextFunction
 			weather: weather
 		});
 	} catch (err) {
-		res.locals.error = err;
+		res.locals.err = err;
 		next();
 	}
 };
