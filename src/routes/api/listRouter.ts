@@ -51,14 +51,14 @@ const listRouter = (app: Application) => {
 	app.get('/lists/:token',
 		viewsharedList,
 		errorHandler); // No authentication required (public)
-	app.post('/lists/add-task',
+	app.post('/lists/tasks',
 		authenticate,
 		checkUserOfTask,
 		checkUserOfList,
 		Validator.lists.addTask,
 		addTask,
 		errorHandler);
-	app.delete('/lists/remove-task',
+	app.delete('/lists/tasks',
 		authenticate,
 		checkUserOfList,
 		Validator.lists.removeTask,
