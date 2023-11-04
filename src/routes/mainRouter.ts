@@ -6,6 +6,7 @@ import listRouter from './api/listRouter';
 import insightsRouter from './api/insightsRouter';
 import jwt from 'jsonwebtoken';
 import cookie from 'cookie';
+import weatherRouter from './api/weatherRoute';
 
 const mainRouter = (app: Application) => {
 	app.get('/', (req: Request, res: Response) => {
@@ -30,6 +31,7 @@ const mainRouter = (app: Application) => {
 	subtaskRouter(app);
 	listRouter(app);
 	insightsRouter(app);
+	weatherRouter(app);
 };
 
 export default mainRouter;
