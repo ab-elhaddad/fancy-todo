@@ -256,7 +256,6 @@ describe('Lists Controller', () => {
 			const response = await request(app)
 				.post('/lists/tasks')
 				.send({ l_id: listId, t_id: taskId });
-			console.error(response.body);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task added to list successfully');
