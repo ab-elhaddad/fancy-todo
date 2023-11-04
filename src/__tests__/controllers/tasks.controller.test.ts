@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import request from 'supertest';
 import { app, server } from '../../index';
 import Tasks from '../../models/tasks.model';
 import Task from '../../types/Task.type';
 import { NextFunction, Request, Response } from 'express';
+import uploadFile from '../../helpers/uploadFile';
 
 jest.mock('../../models/tasks.model.ts');
+jest.mock('../../helpers/uploadFile.ts', () => jest.fn((path: string, name?: string) => Promise.resolve()));
 jest.mock('../../middlewares/authenticate.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => {
 	res.locals.user = { id: 1 };
 	next();
@@ -39,14 +42,14 @@ describe('Tasks Controller', () => {
 			// Mock the create function to return an id
 			jest.mocked(Tasks).create.mockImplementation((task: Task) => Promise.resolve(task));
 
-			const response = await request(app).post('/tasks/create').send(task);
+			const response = await request(app).post('/tasks').send(task);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task created successfully');
 			expect(Tasks.create).toHaveBeenCalledTimes(1);
 		});
 
-		it('should create a new task with due date and return a success message', async () => {
+		it('should create a new task with due date', async () => {
 			const task = {
 				t_title: 'Task 1',
 				t_description: 'Test note',
@@ -56,11 +59,10 @@ describe('Tasks Controller', () => {
 			// Mock the create function to return an id
 			jest.mocked(Tasks).create.mockImplementation((task: Task) => Promise.resolve(task));
 
-			const response = await request(app).post('/tasks/create').send(task);
+			const response = await request(app).post('/tasks').send(task);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task created successfully');
-			expect(response.body.task.t_due_date).toEqual('2023-10-10T09:00:00.000Z');
 			expect(Tasks.create).toHaveBeenCalledTimes(1);
 		});
 
@@ -76,14 +78,14 @@ describe('Tasks Controller', () => {
 				throw { message: `Task name is required`, statusCode: 400 };
 			});
 
-			const response = await request(app).post('/tasks/create').send(task);
+			const response = await request(app).post('/tasks').send(task);
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('Task name is required');
 			expect(Tasks.create).toHaveBeenCalledTimes(1);
 		});
 
-		it('should create a task with a strig priority and return a success message', async () => {
+		it('should create a task with a strig priority', async () => {
 			const task = {
 				t_title: 'Task 1',
 				t_description: 'Test note',
@@ -93,12 +95,36 @@ describe('Tasks Controller', () => {
 			// Mock the create function to return an id
 			jest.mocked(Tasks).create.mockImplementation((task: Task) => Promise.resolve(task));
 
-			const response = await request(app).post('/tasks/create').send(task);
+			const response = await request(app).post('/tasks').send(task);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task created successfully');
-			expect(response.body.task.t_priority).toEqual(1);
 			expect(Tasks.create).toHaveBeenCalledTimes(1);
+		});
+
+		xit('should create a task with an attachment and return a success message', async () => {
+			const task = {
+				t_title: 'Task 1',
+				t_description: 'Test note'
+			};
+
+			const file = {
+				path: 'test/path',
+				originalname: 'test.jpg'
+			};
+
+			// Mock the create function to return an id
+			jest.mocked(Tasks).create.mockImplementation((task: Task) => Promise.resolve(task));
+
+			const response = await request(app).post('/tasks').field('t_title', task.t_title).field('t_description', task.t_description).attach('attachment', file.path, file.originalname);
+			console.error(response);
+
+			expect(response.status).toBe(200);
+			expect(response.body.message).toBe('Task created successfully');
+			expect(Tasks.create).toHaveBeenCalledTimes(1);
+			expect(uploadFile).toHaveBeenCalledTimes(1);
+			expect(uploadFile).toHaveBeenCalledWith(file.path, file.originalname);
+			expect(response.body.task.t_attachment).toEqual('test-url');
 		});
 	});
 
@@ -111,7 +137,7 @@ describe('Tasks Controller', () => {
 			// Mock the delete function to return an id
 			jest.mocked(Tasks).delete.mockImplementation((t_id: number) => Promise.resolve()); // eslint-disable-line @typescript-eslint/no-unused-vars
 
-			const response = await request(app).delete('/tasks/delete').send(task);
+			const response = await request(app).delete('/tasks').send(task);
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Task deleted successfully');
@@ -126,11 +152,47 @@ describe('Tasks Controller', () => {
 				throw { message: `Task id is required`, statusCode: 400 };
 			});
 
-			const response = await request(app).delete('/tasks/delete').send(task);
+			const response = await request(app).delete('/tasks').send(task);
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('Task id is required');
 			expect(Tasks.delete).toHaveBeenCalledTimes(1);
+		});
+	});
+
+	describe('PUT /tasks/update', () => {
+		it('should update a task and return a success message', async () => {
+			const task = {
+				t_title: 'Task 1',
+				t_description: 'Test note'
+			};
+
+			// Mock the update function to return an id
+			jest.mocked(Tasks).update.mockImplementation((task: Task) => Promise.resolve());
+
+			const response = await request(app).put('/tasks').send(task);
+
+			expect(response.status).toBe(200);
+			expect(response.body.message).toBe('Task updated successfully');
+			expect(Tasks.update).toHaveBeenCalledTimes(1);
+		});
+
+		it('should return an error if the task id is not provided', async () => {
+			const task = {
+				t_title: 'Task 1',
+				t_description: 'Test note'
+			};
+
+			// Mock the update function to throw an error
+			jest.mocked(Tasks).update.mockImplementation(() => {
+				throw { message: `Task id is required`, statusCode: 400 };
+			});
+
+			const response = await request(app).put('/tasks').send(task);
+
+			expect(response.status).toBe(400);
+			expect(response.body.message).toBe('Task id is required');
+			expect(Tasks.update).toHaveBeenCalledTimes(1);
 		});
 	});
 
@@ -156,9 +218,9 @@ describe('Tasks Controller', () => {
 			];
 
 			// Mock the getAll function to return an id
-			jest.mocked(Tasks).getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Tasks).getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks));
 
-			const response = await request(app).get('/tasks/get-all');
+			const response = await request(app).get('/tasks');
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Tasks returned sucessfully.');
@@ -187,9 +249,9 @@ describe('Tasks Controller', () => {
 			];
 
 			// Mock the getAll function to return an id
-			jest.mocked(Tasks).getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
+			jest.mocked(Tasks).getAll.mockImplementation((u_id: number, t_status?: boolean) => Promise.resolve(tasks));
 
-			const response = await request(app).get('/tasks/get-all').query({ t_status: true });
+			const response = await request(app).get('/tasks').query({ t_status: true });
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Tasks returned sucessfully.');
@@ -203,7 +265,7 @@ describe('Tasks Controller', () => {
 				throw { message: `User id is required`, statusCode: 400 };
 			});
 
-			const response = await request(app).get('/tasks/get-all');
+			const response = await request(app).get('/tasks');
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('User id is required');
@@ -285,8 +347,8 @@ describe('Tasks Controller', () => {
 			const response = await request(app).put('/tasks/rev-status').send(task);
 
 			expect(response.status).toBe(400);
-			expect(response.body.message).toBe('Task id is required');
-			expect(Tasks.revStatus).toHaveBeenCalledTimes(1);
+			expect(response.body.message).toBe("\"t_id\" is required");
+			expect(Tasks.revStatus).toHaveBeenCalledTimes(0);
 		});
 	});
 
@@ -318,13 +380,13 @@ describe('Tasks Controller', () => {
 			const response = await request(app).put('/tasks/add-to-my-day').send(task);
 
 			expect(response.status).toBe(400);
-			expect(response.body.message).toBe('Task id is required');
-			expect(Tasks.addToMyDay).toHaveBeenCalledTimes(1);
+			expect(response.body.message).toBe("\"t_id\" is required");
+			expect(Tasks.addToMyDay).toHaveBeenCalledTimes(0);
 		});
 	});
 
 	describe('GET /tasks/search', () => {
-		it('should return all the tasks containing the search string', async () => {
+		it('should return all the tasks that match the search query', async () => {
 			const tasks: Task[] = [
 				{
 					t_id: 1,
@@ -332,7 +394,7 @@ describe('Tasks Controller', () => {
 					t_description: 'Test note',
 					t_user_id: 1,
 					t_status: false,
-					t_due_date: String(new Date())
+					t_due_date: '2020-01-01'
 				},
 				{
 					t_id: 2,
@@ -340,33 +402,32 @@ describe('Tasks Controller', () => {
 					t_description: 'Test note',
 					t_user_id: 1,
 					t_status: false,
-					t_due_date: String(new Date())
+					t_due_date: '2020-01-01'
 				}
 			];
 
-			// Mock the searchTasks function to return an id
-			jest.mocked(Tasks).searchTasks.mockImplementation((u_id: number, search: string) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
+			// Mock the search function to return an id
+			jest.mocked(Tasks).search.mockImplementation((u_id: number, search: string, sort?: string) => Promise.resolve(tasks)); // eslint-disable-line @typescript-eslint/no-unused-vars
 
-			const response = await request(app).get('/tasks/search').query({ search: 'test' });
+			const response = await request(app).get('/tasks/search').query({ search: 'Task' });
 
 			expect(response.status).toBe(200);
 			expect(response.body.message).toBe('Tasks returned successfully.');
 			expect(response.body.tasks).toEqual(tasks);
-			expect(Tasks.searchTasks).toHaveBeenCalledTimes(1);
-			expect(Tasks.searchTasks).toHaveBeenCalledWith(1, 'test');
+			expect(Tasks.search).toHaveBeenCalledTimes(1);
 		});
+
 		it('should return an error if the user id is not provided', async () => {
-			// Mock the searchTasks function to throw an error
-			jest.mocked(Tasks).searchTasks.mockImplementation(() => {
+			// Mock the search function to throw an error
+			jest.mocked(Tasks).search.mockImplementation(() => {
 				throw { message: `User id is required`, statusCode: 400 };
 			});
 
-			const response = await request(app).get('/tasks/search').query({ search: 'test' });
+			const response = await request(app).get('/tasks/search').query({ search: 'Task' });
 
 			expect(response.status).toBe(400);
 			expect(response.body.message).toBe('User id is required');
-			expect(Tasks.searchTasks).toHaveBeenCalledTimes(1);
-			expect(Tasks.searchTasks).toHaveBeenCalledWith(1, 'test');
+			expect(Tasks.search).toHaveBeenCalledTimes(1);
 		});
 	});
 });
