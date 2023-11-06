@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient({
@@ -8,11 +9,11 @@ const prisma = new PrismaClient({
 	}
 });
 
-beforeAll(async () => { // eslint-disable-line no-undef
+beforeAll(async () => {
 	await prisma.$connect();
 });
 
-afterAll(async () => { // eslint-disable-line no-undef
+afterAll(async () => {
 	await prisma.$disconnect();
 });
 
