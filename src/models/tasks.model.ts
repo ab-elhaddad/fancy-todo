@@ -1,7 +1,6 @@
 import Task from '../types/Task.type';
 import getDates from '../helpers/getDates';
 import prisma from '../lib/database';
-import Subtask from '../types/Subtask.type';
 
 class Tasks {
   /** Creates a new task assigned to the passed user id.
@@ -67,45 +66,6 @@ class Tasks {
     });
 
     return tasks;
-  }
-
-  static async getAll_SQLVersion(u_id: number): Promise<Task[]> {
-    const mp = new Map<Partial<Task>, Partial<Subtask>[]>();
-    type joinResult = Task & Subtask & { [key: string]: any }; // eslint-disable-line @typescript-eslint/no-explicit-any
-    const tasks: joinResult[] = await prisma.$queryRaw`
-		SELECT *
-		FROM public."Task"
-		LEFT JOIN public."Subtask"
-		ON public."Task".t_id = public."Subtask"."s_task_id"
-		WHERE public."Task"."t_user_id" = ${u_id};
-		`;
-
-    tasks.forEach((el: joinResult) => {
-      const task: Partial<Task> = {},
-        subtask: Partial<Subtask> = {};
-      for (const key in el) {
-        if (key.startsWith('s_')) subtask[key] = el[key];
-        else task[key] = el[key];
-      }
-      let found = false;
-      mp.forEach((v, k) => {
-        if (k.t_id === task.t_id) {
-          found = true;
-          return;
-        }
-      });
-      if (!found) mp.set(task, []);
-
-      mp.get(task)?.push(subtask);
-    });
-    console.log(mp);
-    const returnTasks: any = []; // eslint-disable-line @typescript-eslint/no-explicit-any
-    mp.forEach((v, k) => {
-      const el = k;
-      el.t_subtasks = v;
-      returnTasks.push(el);
-    });
-    return returnTasks;
   }
 
   /** Gets all the tasks assigned to the passed user id and has due date today. */
