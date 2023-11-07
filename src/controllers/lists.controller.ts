@@ -33,7 +33,7 @@ export const getLists = async (req: Request, res: Response, next: NextFunction) 
 export const getList = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { l_id } = req.params;
-    const { page = 1, limit = 10, sort, t_status } = req.query;
+    const { page, limit, sort, t_status } = req.query;
     const list = await Lists.get(Number(l_id), {
       page: Number(page),
       limit: Number(limit),
