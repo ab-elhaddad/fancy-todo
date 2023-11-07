@@ -49,6 +49,7 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 - 2.16. Sort Tasks by Priority
 - 2.17. Sort Tasks by Due Date
 - 2.18. Sort Tasks by Creation Date
+- 2.19. Tasks Pagination (Limit, Page)
 
 <br>
 
