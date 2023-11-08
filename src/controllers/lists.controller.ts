@@ -21,7 +21,10 @@ export const createList = async (req: Request, res: Response, next: NextFunction
 export const getLists = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { page, limit } = req.query;
-    const lists = await Lists.getAll(res.locals.user.id, { page: Number(page), limit: Number(limit) });
+    const lists = await Lists.getAll(res.locals.user.id, {
+      page: page as number | undefined,
+      limit: limit as number | undefined
+    });
 
     res.json({ message: 'Lists fetched successfully', lists });
   } catch (err) {
@@ -35,8 +38,8 @@ export const getList = async (req: Request, res: Response, next: NextFunction) =
     const { l_id } = req.params;
     const { page, limit, sort, t_status } = req.query;
     const list = await Lists.get(Number(l_id), {
-      page: Number(page),
-      limit: Number(limit),
+      page: page as number | undefined,
+      limit: limit as number | undefined,
       sort: sort as 'due' | 'created' | 'priority',
       t_status: t_status ? // If t_status is passed
         t_status === 'true' : // Convert it to boolean

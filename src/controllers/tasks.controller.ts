@@ -61,9 +61,9 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
     const { t_status, page, limit, sort } = req.query;
 
     const userTasks = await Tasks.getAll(u_id, {
-      limit: Number(limit),
-      page: Number(page),
-      sort: sort as 'due' | 'created' | 'priority',
+      limit: limit as number | undefined,
+      page: page as number | undefined,
+      sort: sort as 'due' | 'created' | 'priority' | undefined,
       t_status: t_status ? // If t_status is passed
         (t_status === 'true') : // Convert it to boolean
         undefined // Else undefined
@@ -80,9 +80,9 @@ export const getDueToday = async (req: Request, res: Response, next: NextFunctio
     const { id: u_id } = res.locals.user;
     const { t_status, page, limit, sort } = req.query;
     const dueTodayTasks = await Tasks.getDueToday(u_id, {
-      limit: Number(limit),
-      page: Number(page),
-      sort: sort as 'due' | 'created' | 'priority',
+      limit: limit as number | undefined,
+      page: page as number | undefined,
+      sort: sort as 'due' | 'created' | 'priority' | undefined,
       t_status: t_status ? // If t_status is passed
         (t_status === 'true') : // Convert it to boolean
         undefined // Else undefined
@@ -127,9 +127,9 @@ export const searchTasks = async (req: Request, res: Response, next: NextFunctio
     const { t_status, sort, page, limit } = req.body;
 
     const tasks = await Tasks.search(u_id, String(search), {
-      sort: sort as 'due' | 'created' | 'priority',
-      page: Number(page),
-      limit: Number(limit),
+      sort: sort as 'due' | 'created' | 'priority' | undefined,
+      page: page as number | undefined,
+      limit: limit as number | undefined,
       t_status: t_status ? // If t_status is passed
         (t_status === 'true') : // Convert it to boolean
         undefined // Else undefined
