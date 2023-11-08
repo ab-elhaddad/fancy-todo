@@ -113,6 +113,14 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 	<img src="./assets/UML.jpeg" alt="Database Schema" width="1000"/>
 </p>
 
+## 🧐 Testing
+
+#### Unit, Integration, and Functional Tests.<br> With more than 90% code coverage and 130+ tests 🎉
+
+<p align="center">
+	<img src="./assets/Code Coverage.png" alt="Code Coverage" width="1000"/>
+</p>
+
 ## 🔧 Pre-requisites
 
 - `Node.js` installed on your machine.
