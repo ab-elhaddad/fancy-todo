@@ -68,7 +68,7 @@ const listRouter = (app: Application) => {
     )
     .all(errorHandler);
 
-  app.route('/lists/:token')
+  app.route('/lists/shared/:token')
     .get(viewsharedList) // No authentication required (public)
     .all(errorHandler);
 };

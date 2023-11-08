@@ -6,9 +6,9 @@ import { config } from './../configuration/config';
  * @returns URL to share a list.
  */
 const shareList = (l_id: number): string => {
-	const token = jwt.sign(String(l_id), config.jwtSecretKey);
-	const url = `${config.baseUrl}/lists/${token}`;
-	return url;
+  const token = jwt.sign(String(l_id), config.jwtSecretKey);
+  const url = `${config.baseUrl}/lists/shared/${token}`;
+  return url;
 };
 
 export default shareList;

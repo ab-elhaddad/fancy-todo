@@ -6,7 +6,7 @@ jest.mock('jsonwebtoken');
 
 describe('generateListURL', () => {
   const mockToken = 'mockToken';
-  const mockUrl = 'http://localhost:3000/lists/mockToken';
+  const mockUrl = 'http://localhost:3000/lists/shared/mockToken';
   const mockListId = 1;
 
   beforeAll(() => {
