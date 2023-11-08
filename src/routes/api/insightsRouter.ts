@@ -4,7 +4,10 @@ import { getTasksInsights } from '../../controllers/insights.controller';
 import errorHandler from '../../middlewares/errorHandler.middleware';
 
 const insightsRouter = (app: Application) => {
-	app.get('/insights/tasks', authenticate, getTasksInsights, errorHandler);
+  app.route('/insights/tasks')
+    .all(authenticate)
+    .get(getTasksInsights)
+    .all(errorHandler);
 };
 
 export default insightsRouter;

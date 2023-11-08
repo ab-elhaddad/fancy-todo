@@ -7,50 +7,59 @@ import checkUserOfTask from '../../middlewares/security/checkUserOfTask.middlewa
 import storeAttachment from '../../middlewares/storeAttachment';
 
 const taskRouter = (app: Application) => {
-	app.post('/tasks',
-		storeAttachment,
-		Validator.tasks.create,
-		authenticate,
-		create,
-		errorHandler);
-	app.delete('/tasks',
-		Validator.tasks.delete,
-		authenticate,
-		checkUserOfTask,
-		deleteTask,
-		errorHandler);
-	app.put('/tasks',
-		authenticate,
-		checkUserOfTask,
-		Validator.tasks.update,
-		updateTask,
-		errorHandler);
-	app.get('/tasks',
-		authenticate,
-		Validator.tasks.getAll,
-		getAll,
-		errorHandler);
-	app.get('/tasks/get-due-today',
-		authenticate,
-		getDueToday,
-		errorHandler);
-	app.put('/tasks/rev-status',
-		authenticate,
-		checkUserOfTask,
-		Validator.tasks.revStatus,
-		revStatus,
-		errorHandler);
-	app.put('/tasks/add-to-my-day',
-		authenticate,
-		checkUserOfTask,
-		Validator.tasks.addToMyDay,
-		addToMyDay,
-		errorHandler);
-	app.get('/tasks/search',
-		authenticate,
-		Validator.tasks.search,
-		searchTasks,
-		errorHandler);
+  app.route('/tasks')
+    .all(authenticate)
+    .post(
+      storeAttachment,
+      Validator.tasks.create,
+      create,
+    )
+    .delete(
+      Validator.tasks.delete,
+      checkUserOfTask,
+      deleteTask
+    )
+    .put(
+      checkUserOfTask,
+      Validator.tasks.update,
+      updateTask
+    )
+    .get(
+      Validator.tasks.getAll,
+      getAll
+    )
+    .all(errorHandler);
+
+  app.route('/tasks/get-due-today')
+    .all(authenticate)
+    .get(getDueToday)
+    .all(errorHandler);
+
+  app.route('/tasks/rev-status')
+    .all(authenticate)
+    .put(
+      checkUserOfTask,
+      Validator.tasks.revStatus,
+      revStatus
+    )
+    .all(errorHandler);
+
+  app.route('/tasks/add-to-my-day')
+    .all(authenticate)
+    .put(
+      checkUserOfTask,
+      Validator.tasks.addToMyDay,
+      addToMyDay
+    )
+    .all(errorHandler);
+
+  app.route('/tasks/search')
+    .all(authenticate)
+    .get(
+      Validator.tasks.search,
+      searchTasks
+    )
+    .all(errorHandler);
 };
 
 export default taskRouter;

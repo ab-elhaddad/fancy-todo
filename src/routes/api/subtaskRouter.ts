@@ -6,28 +6,32 @@ import checkUserOfTask from '../../middlewares/security/checkUserOfTask.middlewa
 import Validator from '../../middlewares/validators/validator';
 
 const subtaskRouter = (app: Application) => {
-	app.post('/subtasks',
-		authenticate,
-		Validator.subtasks.create,
-		createSubtask,
-		errorHandler);
-	app.delete('/subtasks',
-		authenticate,
-		checkUserOfTask,
-		Validator.subtasks.delete,
-		deleteSubtask,
-		errorHandler);
-	app.put('/subtasks',
-		authenticate,
-		Validator.subtasks.update,
-		updateSubtask,
-		errorHandler);
-	app.put('/subtasks/rev-status',
-		authenticate,
-		checkUserOfTask,
-		Validator.subtasks.revStatus,
-		revStatus,
-		errorHandler);
+  app.route('/subtasks')
+    .all(authenticate)
+    .post(
+      Validator.subtasks.create,
+      createSubtask,
+    )
+    .delete(
+      Validator.subtasks.delete,
+      checkUserOfTask,
+      deleteSubtask
+    )
+    .put(
+      checkUserOfTask,
+      Validator.subtasks.update,
+      updateSubtask
+    )
+    .all(errorHandler);
+
+  app.route('/subtasks/rev-status')
+    .all(authenticate)
+    .put(
+      checkUserOfTask,
+      Validator.subtasks.revStatus,
+      revStatus
+    )
+    .all(errorHandler);
 };
 
 export default subtaskRouter;
