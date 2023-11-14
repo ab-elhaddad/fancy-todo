@@ -1,0 +1,31 @@
+# ignore git stuff
+.github
+.gitignore
+LICENSE
+
+# ignore docker stuff
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+# ignore README
+assets
+*.md
+
+# ignore auto-generated files
+coverage
+build
+
+# ignore node_modules
+node_modules
+
+# ignore sensitive files
+.env
+.todo
+
+# ignore Lint and Code formatting files
+.editorconfig
+.eslintignore
+.eslint.json
+.prettierignore
+.prettierc.json

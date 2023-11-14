@@ -6,6 +6,7 @@
 	"scripts": {
 		"start": "ts-node src/index.ts",
 		"dev": "set DEBUG=http,error & npx nodemon src/index.ts",
+		"dev:docker": "npx nodemon -L src/index.ts",
 		"prettier:check": "npx prettier . --check ",
 		"prettier": "npx prettier . --write",
 		"lint": "npx eslint .",

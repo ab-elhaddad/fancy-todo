@@ -1,0 +1,25 @@
+version: '3'
+services:
+  node-app:
+    container_name: fancy-todo_node-app
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src:ro
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+  postgres:
+    container_name: fancy-todo_pg-db
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    volumes:
+      - pg-db:/var/lib/postgresql/data
+
+volumes:
+  pg-db:
