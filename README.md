@@ -9,6 +9,18 @@
 
 ## A To Do backend server with fancy Features! ✨
 
+## 👀 Overview
+
+<p align="center">
+	<img src="./assets/index.jpg" alt="Home page" width="1000"/>
+</p>
+<p align="center">
+	<img src="./assets/sign_up.jpg" alt="Home page" width="1000"/>
+</p>
+<p align="center">
+	<img src="./assets/sign_in.jpg" alt="Home page" width="1000"/>
+</p>
+
 ## 🔍 Description
 
 This is a To Do app backend server built with Node.js and Express.js. It uses PostgreSQL as a database and Prisma as an ORM. It also uses JWT for authentication and authorization. It has a lot of fancy features like weather forecast, email notifications, and more!
@@ -16,6 +28,8 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 ## 📝 Features
 
 ### 1. User Authentication
+
+#### All the user authentication functionalities are provided with client side using `ejs`.
 
 - 1.1. Registration
 - 1.2. Login
@@ -72,6 +86,7 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 ### 3. Insights
 
 - 3.1. Display Some Statistics About The User's Tasks
+
   - 3.1.1 Number of Total Tasks
   - 3.1.2. Number of Done Tasks
   - 3.1.3. Number of Undone Tasks
@@ -124,27 +139,11 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 ## 🔧 Pre-requisites
 
 - `Node.js` installed on your machine.
-- A `PostgreSQL` database server running whether locally or remotely.
+- A `PostgreSQL` database server running whether locally or remotely. _If you gonna use Docker you won't need it._
 - An `email account` to send emails from.
 - An `Azure Blob Storage` account to store files.
 - An `OpenWeatherMap API` key to get weather information.
-- A `.env` file containing these environment variables.
-
-```js
-DATABASE_URL // PostgreSQL database url
-
-SALT_ROUNDS // Number of rounds to hash the password
-JWT_SECRET_KEY // Secret key (string) to sign the jwt token
-
-GMAIL_USER // Email address to send emails from
-GMAIL_PASS // Password of the email address
-
-WEATHER_API_KEY // OpenWeatherMap API key
-
-STORAGE_ACCOUNT_NAME // Azure Blob Storage account name
-STORAGE_CONTAINER_NAME // Azure Blob Storage container name
-ACCOUNT_CONNECTION_STRING // Azure Blob Storage connection string
-```
+- A `.env` file containing the environment variables specified in the `.env.example` file.
 
 ## 📦 Installation
 
@@ -154,20 +153,32 @@ ACCOUNT_CONNECTION_STRING // Azure Blob Storage connection string
 git clone https://github.com/ab-elhaddad/Fancy-ToDo.git
 ```
 
+### You have **two** options whether run the project _locally_ on your host machine or using _Docker_...
+
+#### 📌 Locally :-
+
 - Install dependencies
 
-```bash
-npm install
-```
+  ```bash
+  npm install
+  ```
 
 - Generate Prisma Client
 
-```bash
-npx prisma generate
-```
+  ```bash
+  npx prisma generate
+  ```
 
 - Run the server
 
-```bash
-npm start
-```
+  ```bash
+  npm start
+  ```
+
+#### 🐳 Docker:-
+
+- Run Docker container
+
+  ```bash
+  docker-compose up -d
+  ```
