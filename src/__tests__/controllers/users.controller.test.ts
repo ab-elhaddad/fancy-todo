@@ -9,28 +9,36 @@ import sendEmail from '../../helpers/sendEmail';
 import User from '../../types/User.type';
 
 jest.mock('../../models/users.model');
+jest.mock('../../helpers/sendEmail.ts', () => {
+  return {
+    confirmation: jest.fn((userID: number, userEmail: string) => Promise.resolve()),
+    resetPassword: jest.fn((userID: number, userEmail: string) => Promise.resolve())
+  };
+});
+
+// Mock the errorHandler middleware to not print the error in the console
 jest.mock(
-  '../../helpers/sendEmail.ts', () => {
-    return {
-      confirmation: jest.fn((userID: number, userEmail: string) => Promise.resolve()),
-      resetPassword: jest.fn((userID: number, userEmail: string) => Promise.resolve())
-    }
+  '../../middlewares/errorHandler.middleware.ts',
+  () => (req: Request, res: Response) => {
+    const { err } = res.locals;
+    return res
+      .status(err.statusCode || 500)
+      .json({ message: err.message || err.msg || 'Internal Server Error!' });
   }
 );
 
-// Mock the errorHandler middleware to not print the error in the console
-jest.mock('../../middlewares/errorHandler.middleware.ts', () => (req: Request, res: Response) => {
-  const { err } = res.locals;
-  return res.status(err.statusCode || 500).json({ message: err.message || err.msg || 'Internal Server Error!' });
-});
-
 // Mock authentication middleware
-jest.mock('../../middlewares/authenticate.middleware.ts', () => (req: Request, res: Response, next: () => void) => {
-  res.locals.user = {
-    id: 1, email: 'testuser@example.com', name: 'Test User'
-  };
-  next();
-});
+jest.mock(
+  '../../middlewares/authenticate.middleware.ts',
+  () => (req: Request, res: Response, next: () => void) => {
+    res.locals.user = {
+      id: 1,
+      email: 'testuser@example.com',
+      name: 'Test User'
+    };
+    next();
+  }
+);
 
 describe('Users Controller', () => {
   afterAll(() => {
@@ -108,7 +116,11 @@ describe('Users Controller', () => {
       };
 
       // Mock the signIn function to return an id
-      jest.mocked(Users).signIn.mockImplementation(() => Promise.resolve({ u_id: 1, u_name: 'Test User' }));
+      jest
+        .mocked(Users)
+        .signIn.mockImplementation(() =>
+          Promise.resolve({ u_id: 1, u_name: 'Test User' })
+        );
 
       const response = await request(app).post('/users/sign-in').send(user);
 
@@ -148,7 +160,7 @@ describe('Users Controller', () => {
       const response = await request(app).get(`/confirm/${token}`);
 
       expect(response.status).toBe(302);
-      expect(response.headers.location).toBe('users/sign-in');
+      expect(response.headers.location).toBe('../users/sign-in');
       //expect(response.body.Message).toBe('Account confirmed :)');
       expect(Users.confirm).toHaveBeenCalledTimes(1);
       expect(Users.confirm).toHaveBeenCalledWith(1);
@@ -217,7 +229,10 @@ describe('Users Controller', () => {
 
   describe('GET /users/reset-password/:token', () => {
     it('should render the reset-password page', async () => {
-      const token = jwt.sign({ id: 1, email: 'testuser@example.com', name: 'Test User' }, config.jwtSecretKey);
+      const token = jwt.sign(
+        { id: 1, email: 'testuser@example.com', name: 'Test User' },
+        config.jwtSecretKey
+      );
 
       const response = await request(app).get(`/users/reset-password/${token}`);
 
@@ -229,13 +244,18 @@ describe('Users Controller', () => {
 
   describe('POST /users/reset-password/:token', () => {
     it('should update the user password and render a success message', async () => {
-      const token = jwt.sign({ id: 1, email: 'testuser@example.com', name: 'Test User' }, config.jwtSecretKey);
+      const token = jwt.sign(
+        { id: 1, email: 'testuser@example.com', name: 'Test User' },
+        config.jwtSecretKey
+      );
       const password = 'newpassword';
 
       // Mock the updatePassword function
       jest.mocked(Users).updatePassword.mockImplementation(() => Promise.resolve());
 
-      const response = await request(app).post(`/users/reset-password/${token}`).send({ password });
+      const response = await request(app)
+        .post(`/users/reset-password/${token}`)
+        .send({ password });
 
       expect(response.status).toBe(200);
       expect(response.text).toContain('Password changed successfully');
@@ -248,7 +268,9 @@ describe('Users Controller', () => {
       const token = 'invalidtoken';
       const password = 'newpassword';
 
-      const response = await request(app).post(`/users/reset-password/${token}`).send({ password });
+      const response = await request(app)
+        .post(`/users/reset-password/${token}`)
+        .send({ password });
 
       expect(response.status).toBe(500);
       expect(response.body.message).toBe('jwt malformed');
@@ -272,7 +294,10 @@ describe('Users Controller', () => {
 
       expect(response.status).toBe(200);
       expect(response.body.message).toBe('User retrieved successfully.');
-      expect(response.body.user).toEqual({ u_name: user.u_name, u_email: user.u_email });
+      expect(response.body.user).toEqual({
+        u_name: user.u_name,
+        u_email: user.u_email
+      });
       expect(Users.getById).toHaveBeenCalledTimes(1);
     });
 
