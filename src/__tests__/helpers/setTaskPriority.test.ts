@@ -27,6 +27,8 @@ describe('setTaskPriority', () => {
 
   it('should not modify task priority if t_priority is not "low", "medium", or "high"', () => {
     const task = { t_priority: 'urgent' };
-    expect(() => setTaskPriority(task as Task)).toThrowError('Invalid priority. Must be "low", "medium", or "high"');
+    expect(() => setTaskPriority(task as Task)).toThrowError(
+      'Invalid priority. Must be "low", "medium", or "high"'
+    );
   });
 });

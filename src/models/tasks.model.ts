@@ -41,12 +41,15 @@ class Tasks {
    * @param t_status Determines the status of returned tasks. *If not passed all tasks are returned.*
    * @returns Tasks assigned by the user.
    */
-  static async getAll(u_id: number, options?: {
-    t_status?: boolean,
-    sort?: 'due' | 'created' | 'priority',
-    limit?: number,
-    page?: number
-  }): Promise<Task[]> {
+  static async getAll(
+    u_id: number,
+    options?: {
+      t_status?: boolean;
+      sort?: 'due' | 'created' | 'priority';
+      limit?: number;
+      page?: number;
+    }
+  ): Promise<Task[]> {
     const { t_status, sort, limit = 10, page = 1 } = options || {};
     const tasks: Task[] = await prisma.task.findMany({
       where: {
@@ -69,12 +72,15 @@ class Tasks {
   }
 
   /** Gets all the tasks assigned to the passed user id and has due date today. */
-  static async getDueToday(u_id: number, options?: {
-    t_status?: boolean,
-    sort?: 'due' | 'created' | 'priority',
-    limit?: number,
-    page?: number
-  }): Promise<Task[]> {
+  static async getDueToday(
+    u_id: number,
+    options?: {
+      t_status?: boolean;
+      sort?: 'due' | 'created' | 'priority';
+      limit?: number;
+      page?: number;
+    }
+  ): Promise<Task[]> {
     const { t_status, sort, limit = 10, page = 1 } = options || {};
     const { startDate, endDate } = getDates();
     const tasks: Task[] = await prisma.task.findMany({
@@ -117,12 +123,16 @@ class Tasks {
     });
   }
 
-  static async search(u_id: number, search: string, options?: {
-    t_status?: boolean,
-    sort?: 'due' | 'created' | 'priority',
-    limit?: number,
-    page?: number
-  }): Promise<Task[]> {
+  static async search(
+    u_id: number,
+    search: string,
+    options?: {
+      t_status?: boolean;
+      sort?: 'due' | 'created' | 'priority';
+      limit?: number;
+      page?: number;
+    }
+  ): Promise<Task[]> {
     const { t_status, sort, limit = 10, page = 1 } = options || {};
     const tasks: Task[] = await prisma.task.findMany({
       where: {

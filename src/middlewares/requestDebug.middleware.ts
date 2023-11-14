@@ -7,8 +7,8 @@ import { debug } from '../lib/debug';
 const requestDebug = express.Router();
 
 requestDebug.use((req: Request, res: Response, next: NextFunction) => {
-	debug(`Request: ${req.method} ${req.url}`);
-	next();
+  debug(`Request: ${req.method} ${req.url}`);
+  next();
 });
 
 export default requestDebug;

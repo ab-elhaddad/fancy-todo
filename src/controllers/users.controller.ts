@@ -36,9 +36,15 @@ export const signIn = {
     try {
       const { u_email, u_password } = req.body;
       const { u_id, u_name } = await Users.signIn(u_email, u_password);
-      res.cookie('token', jwt.sign({ id: u_id, email: u_email, name: u_name }, config.jwtSecretKey), {
-        httpOnly: true,
-      }).redirect('/welcome');
+      res
+        .cookie(
+          'token',
+          jwt.sign({ id: u_id, email: u_email, name: u_name }, config.jwtSecretKey),
+          {
+            httpOnly: true
+          }
+        )
+        .redirect('/welcome');
     } catch (err) {
       res.locals.err = err;
       next();
@@ -99,7 +105,10 @@ export const resetPassword = {
       const { token } = req.params;
       const { password } = req.body;
 
-      const { id } = jwt.verify(token, config.jwtSecretKey) as { id: number; email: string };
+      const { id } = jwt.verify(token, config.jwtSecretKey) as {
+        id: number;
+        email: string;
+      };
       const hashedPassword = bcrypt.hashSync(password, config.saltRounds);
 
       await Users.updatePassword(id, hashedPassword);
@@ -118,7 +127,7 @@ export const confirm = async (req: Request, res: Response, next: NextFunction) =
     const id = Number(jwt.verify(token, config.jwtSecretKey));
     await Users.confirm(id);
     //res.json({ Message: 'Account confirmed :)' });
-    res.redirect('users/sign-in');
+    res.redirect('../users/sign-in');
   } catch (err) {
     console.error('Error in confirm function in users.controller.');
     res.locals.err = err;
@@ -131,7 +140,10 @@ export const profile = async (req: Request, res: Response, next: NextFunction) =
     const { id } = res.locals.user;
     const user: User = await Users.getById(id);
 
-    res.json({ message: 'User retrieved successfully.', user: { u_name: user.u_name, u_email: user.u_email } });
+    res.json({
+      message: 'User retrieved successfully.',
+      user: { u_name: user.u_name, u_email: user.u_email }
+    });
   } catch (err) {
     res.locals.err = err;
     next();

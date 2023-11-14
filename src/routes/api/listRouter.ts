@@ -17,58 +17,36 @@ import checkUserOfTask from '../../middlewares/security/checkUserOfTask.middlewa
 import Validator from '../../middlewares/validators/validator';
 
 const listRouter = (app: Application) => {
-  app.route('/lists')
+  app
+    .route('/lists')
     .all(authenticate)
-    .post(
-      Validator.lists.create,
-      createList,
-    )
-    .delete(
-      Validator.lists.delete,
-      checkUserOfList,
-      deleteList
-    )
-    .put(
-      checkUserOfList,
-      Validator.lists.update,
-      updateList
-    )
+    .post(Validator.lists.create, createList)
+    .delete(Validator.lists.delete, checkUserOfList, deleteList)
+    .put(checkUserOfList, Validator.lists.update, updateList)
     .get(getLists)
     .all(errorHandler);
 
-
-  app.route('/lists/tasks')
+  app
+    .route('/lists/tasks')
     .all(authenticate)
-    .post(
-      checkUserOfTask,
-      checkUserOfList,
-      Validator.lists.addTask,
-      addTask,
-    )
-    .delete(
-      checkUserOfList,
-      Validator.lists.removeTask,
-      removeTask
-    )
+    .post(checkUserOfTask, checkUserOfList, Validator.lists.addTask, addTask)
+    .delete(checkUserOfList, Validator.lists.removeTask, removeTask)
     .all(errorHandler);
 
-  app.route('/lists/:l_id')
+  app
+    .route('/lists/:l_id')
     .all(authenticate)
-    .get(
-      checkUserOfList,
-      getList
-    )
+    .get(checkUserOfList, getList)
     .all(errorHandler);
 
-  app.route('/lists/share/:l_id')
+  app
+    .route('/lists/share/:l_id')
     .all(authenticate)
-    .get(
-      checkUserOfList,
-      shareList
-    )
+    .get(checkUserOfList, shareList)
     .all(errorHandler);
 
-  app.route('/lists/shared/:token')
+  app
+    .route('/lists/shared/:token')
     .get(viewsharedList) // No authentication required (public)
     .all(errorHandler);
 };

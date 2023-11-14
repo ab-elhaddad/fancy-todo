@@ -10,16 +10,13 @@ import weatherRouter from './api/weatherRoute';
 const mainRouter = (app: Application) => {
   app.get('/', (req: Request, res: Response) => {
     const token = req.cookies?.token;
-    if (token)
-      res.redirect('/welcome');
-    else
-      res.render('index');
+    if (token) res.redirect('/welcome');
+    else res.render('index');
   });
 
   app.get('/welcome', (req: Request, res: Response) => {
     const token = req.cookies?.token;
-    if (!token)
-      res.redirect('/');
+    if (!token) res.redirect('/');
     else {
       const user = jwt?.decode(token) as jwt.JwtPayload;
       res.render('welcome', { name: user.name });

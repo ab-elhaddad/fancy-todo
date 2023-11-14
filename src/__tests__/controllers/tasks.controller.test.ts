@@ -7,20 +7,33 @@ import { NextFunction, Request, Response } from 'express';
 import uploadFile from '../../helpers/uploadFile';
 
 jest.mock('../../models/tasks.model.ts');
-jest.mock('../../helpers/uploadFile.ts', () => jest.fn((path: string, name?: string) => Promise.resolve()));
-jest.mock('../../middlewares/authenticate.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => {
-  res.locals.user = { id: 1 };
-  next();
-});
-jest.mock('../../middlewares/security/checkUserOfTask.middleware.ts', () => (req: Request, res: Response, next: NextFunction) => {
-  next();
-});
+jest.mock('../../helpers/uploadFile.ts', () =>
+  jest.fn((path: string, name?: string) => Promise.resolve())
+);
+jest.mock(
+  '../../middlewares/authenticate.middleware.ts',
+  () => (req: Request, res: Response, next: NextFunction) => {
+    res.locals.user = { id: 1 };
+    next();
+  }
+);
+jest.mock(
+  '../../middlewares/security/checkUserOfTask.middleware.ts',
+  () => (req: Request, res: Response, next: NextFunction) => {
+    next();
+  }
+);
 
 // Mock the errorHandler middleware to not print the error in the console
-jest.mock('../../middlewares/errorHandler.middleware.ts', () => (req: Request, res: Response) => {
-  const { err } = res.locals;
-  return res.status(err.statusCode || 500).json({ message: err.message || err.msg || 'Internal Server Error!' });
-});
+jest.mock(
+  '../../middlewares/errorHandler.middleware.ts',
+  () => (req: Request, res: Response) => {
+    const { err } = res.locals;
+    return res
+      .status(err.statusCode || 500)
+      .json({ message: err.message || err.msg || 'Internal Server Error!' });
+  }
+);
 
 describe('Tasks Controller', () => {
   afterAll(() => {
@@ -116,7 +129,11 @@ describe('Tasks Controller', () => {
       // Mock the create function to return an id
       jest.mocked(Tasks).create.mockImplementation((task: Task) => Promise.resolve(task));
 
-      const response = await request(app).post('/tasks').field('t_title', task.t_title).field('t_description', task.t_description).attach('attachment', file.path, file.originalname);
+      const response = await request(app)
+        .post('/tasks')
+        .field('t_title', task.t_title)
+        .field('t_description', task.t_description)
+        .attach('attachment', file.path, file.originalname);
       console.error(response);
 
       expect(response.status).toBe(200);
@@ -218,7 +235,11 @@ describe('Tasks Controller', () => {
       ];
 
       // Mock the getAll function to return an id
-      jest.mocked(Tasks).getAll.mockImplementation((u_id: number, options?: { t_status?: boolean }) => Promise.resolve(tasks));
+      jest
+        .mocked(Tasks)
+        .getAll.mockImplementation((u_id: number, options?: { t_status?: boolean }) =>
+          Promise.resolve(tasks)
+        );
 
       const response = await request(app).get('/tasks');
 
@@ -249,7 +270,11 @@ describe('Tasks Controller', () => {
       ];
 
       // Mock the getAll function to return an id
-      jest.mocked(Tasks).getAll.mockImplementation((u_id: number, options?: { t_status?: boolean }) => Promise.resolve(tasks));
+      jest
+        .mocked(Tasks)
+        .getAll.mockImplementation((u_id: number, options?: { t_status?: boolean }) =>
+          Promise.resolve(tasks)
+        );
 
       const response = await request(app).get('/tasks').query({ t_status: true });
 
@@ -295,7 +320,9 @@ describe('Tasks Controller', () => {
       ];
 
       // Mock the getDueToday function to return an id
-      jest.mocked(Tasks).getDueToday.mockImplementation((u_id: number) => Promise.resolve(tasks));
+      jest
+        .mocked(Tasks)
+        .getDueToday.mockImplementation((u_id: number) => Promise.resolve(tasks));
 
       const response = await request(app).get('/tasks/get-due-today');
 
@@ -326,7 +353,9 @@ describe('Tasks Controller', () => {
       };
 
       // Mock the revStatus function to return an id
-      jest.mocked(Tasks).revStatus.mockImplementation((t_id: number) => Promise.resolve());
+      jest
+        .mocked(Tasks)
+        .revStatus.mockImplementation((t_id: number) => Promise.resolve());
 
       const response = await request(app).put('/tasks/rev-status').send(task);
 
@@ -347,7 +376,7 @@ describe('Tasks Controller', () => {
       const response = await request(app).put('/tasks/rev-status').send(task);
 
       expect(response.status).toBe(400);
-      expect(response.body.message).toBe("\"t_id\" is required");
+      expect(response.body.message).toBe('"t_id" is required');
       expect(Tasks.revStatus).toHaveBeenCalledTimes(0);
     });
   });
@@ -359,7 +388,9 @@ describe('Tasks Controller', () => {
       };
 
       // Mock the addToMyDay function to return an id
-      jest.mocked(Tasks).addToMyDay.mockImplementation((t_id: number) => Promise.resolve());
+      jest
+        .mocked(Tasks)
+        .addToMyDay.mockImplementation((t_id: number) => Promise.resolve());
 
       const response = await request(app).put('/tasks/add-to-my-day').send(task);
 
@@ -380,7 +411,7 @@ describe('Tasks Controller', () => {
       const response = await request(app).put('/tasks/add-to-my-day').send(task);
 
       expect(response.status).toBe(400);
-      expect(response.body.message).toBe("\"t_id\" is required");
+      expect(response.body.message).toBe('"t_id" is required');
       expect(Tasks.addToMyDay).toHaveBeenCalledTimes(0);
     });
   });
@@ -407,7 +438,12 @@ describe('Tasks Controller', () => {
       ];
 
       // Mock the search function to return an id
-      jest.mocked(Tasks).search.mockImplementation((u_id: number, search: string, options?: { t_status?: boolean }) => Promise.resolve(tasks));
+      jest
+        .mocked(Tasks)
+        .search.mockImplementation(
+          (u_id: number, search: string, options?: { t_status?: boolean }) =>
+            Promise.resolve(tasks)
+        );
 
       const response = await request(app).get('/tasks/search').query({ search: 'Task' });
 

@@ -1,5 +1,14 @@
 import { Application } from 'express';
-import { addToMyDay, create, deleteTask, getAll, getDueToday, revStatus, searchTasks, updateTask } from '../../controllers/tasks.controller';
+import {
+  addToMyDay,
+  create,
+  deleteTask,
+  getAll,
+  getDueToday,
+  revStatus,
+  searchTasks,
+  updateTask
+} from '../../controllers/tasks.controller';
 import authenticate from '../../middlewares/authenticate.middleware';
 import Validator from '../../middlewares/validators/validator';
 import errorHandler from '../../middlewares/errorHandler.middleware';
@@ -7,58 +16,33 @@ import checkUserOfTask from '../../middlewares/security/checkUserOfTask.middlewa
 import storeAttachment from '../../middlewares/storeAttachment';
 
 const taskRouter = (app: Application) => {
-  app.route('/tasks')
+  app
+    .route('/tasks')
     .all(authenticate)
-    .post(
-      storeAttachment,
-      Validator.tasks.create,
-      create,
-    )
-    .delete(
-      Validator.tasks.delete,
-      checkUserOfTask,
-      deleteTask
-    )
-    .put(
-      checkUserOfTask,
-      Validator.tasks.update,
-      updateTask
-    )
-    .get(
-      Validator.tasks.getAll,
-      getAll
-    )
+    .post(storeAttachment, Validator.tasks.create, create)
+    .delete(Validator.tasks.delete, checkUserOfTask, deleteTask)
+    .put(checkUserOfTask, Validator.tasks.update, updateTask)
+    .get(Validator.tasks.getAll, getAll)
     .all(errorHandler);
 
-  app.route('/tasks/get-due-today')
+  app.route('/tasks/get-due-today').all(authenticate).get(getDueToday).all(errorHandler);
+
+  app
+    .route('/tasks/rev-status')
     .all(authenticate)
-    .get(getDueToday)
+    .put(checkUserOfTask, Validator.tasks.revStatus, revStatus)
     .all(errorHandler);
 
-  app.route('/tasks/rev-status')
+  app
+    .route('/tasks/add-to-my-day')
     .all(authenticate)
-    .put(
-      checkUserOfTask,
-      Validator.tasks.revStatus,
-      revStatus
-    )
+    .put(checkUserOfTask, Validator.tasks.addToMyDay, addToMyDay)
     .all(errorHandler);
 
-  app.route('/tasks/add-to-my-day')
+  app
+    .route('/tasks/search')
     .all(authenticate)
-    .put(
-      checkUserOfTask,
-      Validator.tasks.addToMyDay,
-      addToMyDay
-    )
-    .all(errorHandler);
-
-  app.route('/tasks/search')
-    .all(authenticate)
-    .get(
-      Validator.tasks.search,
-      searchTasks
-    )
+    .get(Validator.tasks.search, searchTasks)
     .all(errorHandler);
 };
 

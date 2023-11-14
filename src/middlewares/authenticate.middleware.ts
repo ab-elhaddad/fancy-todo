@@ -10,7 +10,8 @@ authenticate.use(async (req: Request, res: Response, next: NextFunction) => {
   try {
     const token = req.headers.authorization?.split(' ')[1] || req.cookies.token;
 
-    if (token === undefined) return res.status(401).json({ message: 'You have to enter a token!' }); // Unauthorized
+    if (token === undefined)
+      return res.status(401).json({ message: 'You have to enter a token!' }); // Unauthorized
 
     try {
       // verifying that the token's schema is valid

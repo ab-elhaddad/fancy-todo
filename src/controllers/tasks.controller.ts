@@ -64,9 +64,9 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
       limit: limit as number | undefined,
       page: page as number | undefined,
       sort: sort as 'due' | 'created' | 'priority' | undefined,
-      t_status: t_status ? // If t_status is passed
-        (t_status === 'true') : // Convert it to boolean
-        undefined // Else undefined
+      t_status: t_status // If t_status is passed
+        ? t_status === 'true' // Convert it to boolean
+        : undefined // Else undefined
     });
     res.json({ message: 'Tasks returned sucessfully.', tasks: userTasks });
   } catch (err) {
@@ -83,9 +83,9 @@ export const getDueToday = async (req: Request, res: Response, next: NextFunctio
       limit: limit as number | undefined,
       page: page as number | undefined,
       sort: sort as 'due' | 'created' | 'priority' | undefined,
-      t_status: t_status ? // If t_status is passed
-        (t_status === 'true') : // Convert it to boolean
-        undefined // Else undefined
+      t_status: t_status // If t_status is passed
+        ? t_status === 'true' // Convert it to boolean
+        : undefined // Else undefined
     });
     res.json({
       message: 'Tasks returned successfully.',
@@ -130,9 +130,9 @@ export const searchTasks = async (req: Request, res: Response, next: NextFunctio
       sort: sort as 'due' | 'created' | 'priority' | undefined,
       page: page as number | undefined,
       limit: limit as number | undefined,
-      t_status: t_status ? // If t_status is passed
-        (t_status === 'true') : // Convert it to boolean
-        undefined // Else undefined
+      t_status: t_status // If t_status is passed
+        ? t_status === 'true' // Convert it to boolean
+        : undefined // Else undefined
     });
     res.json({ message: 'Tasks returned successfully.', tasks });
   } catch (err) {

@@ -13,10 +13,13 @@ class Lists {
    * @param l_id Id of the user to return their lists.
    * @returns An array of Lists.
    */
-  static async getAll(l_user_id: number, options?: {
-    page?: number,
-    limit?: number,
-  }): Promise<List[]> {
+  static async getAll(
+    l_user_id: number,
+    options?: {
+      page?: number;
+      limit?: number;
+    }
+  ): Promise<List[]> {
     const { page = 1, limit = 10 } = options || {};
     const lists: List[] = await prisma.list.findMany({
       where: {
@@ -39,16 +42,19 @@ class Lists {
    * @param l_id The list Id.
    * @returns A single list which has the passed id.
    */
-  static async get(l_id: number, options?: {
-    page?: number,
-    limit?: number,
-    sort?: 'due' | 'created' | 'priority',
-    t_status?: boolean
-  }): Promise<List | null> {
+  static async get(
+    l_id: number,
+    options?: {
+      page?: number;
+      limit?: number;
+      sort?: 'due' | 'created' | 'priority';
+      t_status?: boolean;
+    }
+  ): Promise<List | null> {
     const { page = 1, limit = 10, sort, t_status } = options || {};
     const list: List | null = await prisma.list.findFirst({
       where: {
-        l_id: l_id,
+        l_id: l_id
       },
       include: {
         Task_List: {

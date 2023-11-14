@@ -1,45 +1,45 @@
 * {
-	color: #1c1c1c;
+  color: #1c1c1c;
 }
 
 body {
-	background-color: #fffcf5;
+  background-color: #fffcf5;
 }
 
 .container {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	flex-direction: column;
-	margin-top: 13%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 13%;
 }
 
 .header {
-	font-size: 80px;
-	font-weight: 600;
+  font-size: 80px;
+  font-weight: 600;
 }
 
 .header .small_header {
-	font-size: 40px;
-	font-weight: 600;
+  font-size: 40px;
+  font-weight: 600;
 }
 
 .button {
-	background-color: #3b3b3b;
-	color: #fffcf5;
-	height: 40px;
-	width: 200px;
-	font-size: larger;
-	font-weight: 600;
-	margin-top: 40px;
-	border: none;
-	border-radius: 10px;
-	transition: 0.6s;
+  background-color: #3b3b3b;
+  color: #fffcf5;
+  height: 40px;
+  width: 200px;
+  font-size: larger;
+  font-weight: 600;
+  margin-top: 40px;
+  border: none;
+  border-radius: 10px;
+  transition: 0.6s;
 }
 
 .button:hover {
-	background-color: #1c1c1c;
-	color: #ffe002;
-	cursor: pointer;
-	letter-spacing: 4px;
+  background-color: #1c1c1c;
+  color: #ffe002;
+  cursor: pointer;
+  letter-spacing: 4px;
 }

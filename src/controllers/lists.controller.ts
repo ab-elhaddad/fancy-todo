@@ -41,9 +41,9 @@ export const getList = async (req: Request, res: Response, next: NextFunction) =
       page: page as number | undefined,
       limit: limit as number | undefined,
       sort: sort as 'due' | 'created' | 'priority',
-      t_status: t_status ? // If t_status is passed
-        t_status === 'true' : // Convert it to boolean
-        undefined // Else undefined
+      t_status: t_status // If t_status is passed
+        ? t_status === 'true' // Convert it to boolean
+        : undefined // Else undefined
     });
 
     res.json({ message: 'List fetched successfully', list });
