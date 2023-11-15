@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import prisma from '../../lib/database';
 import Lists from '../../models/lists.model';
 import List from '../../types/List.type';
@@ -175,7 +176,7 @@ describe('Lists', () => {
 				SELECT * FROM public."Task_List"
 				WHERE tl_list_id = ${createdList.l_id}
 				AND tl_task_id = ${createdTask.t_id}`) as any[]
-      )[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
+      )[0];
 
       expect(taskList).toBeDefined();
       expect(taskList?.tl_list_id).toBe(createdList.l_id);
@@ -213,7 +214,7 @@ describe('Lists', () => {
 				SELECT * FROM public."Task_List"
 				WHERE tl_list_id = ${createdList.l_id}
 				AND tl_task_id = ${createdTask.t_id}`) as any[]
-      )[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
+      )[0];
 
       expect(taskList).toBeUndefined();
     });
