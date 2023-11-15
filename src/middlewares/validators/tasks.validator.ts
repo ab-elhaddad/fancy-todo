@@ -17,18 +17,18 @@ class tasksValidator {
             req.body.t_recurring?.type === 'monthly'
               ? joi.number()
               : req.body.t_recurring?.type === 'weekly'
-              ? joi
-                  .string()
-                  .valid(
-                    'Sunday',
-                    'Monday',
-                    'Tuesday',
-                    'Wednesday',
-                    'Thursday',
-                    'Friday',
-                    'Saturday'
-                  )
-              : joi.forbidden(),
+                ? joi
+                    .string()
+                    .valid(
+                      'Sunday',
+                      'Monday',
+                      'Tuesday',
+                      'Wednesday',
+                      'Thursday',
+                      'Friday',
+                      'Saturday'
+                    )
+                : joi.forbidden(),
           end_date: [joi.date(), joi.string()]
         })
       });
