@@ -1,10 +1,3 @@
-<p align="center">
-  <br>
-  <img width="800" src="https://github.com/ab-elhaddad/Fancy-ToDo/assets/113056556/bfeb7458-2791-418d-bdad-c9b238885ac6">
-  <br>
-  <br>
-</p>
-
 # Fancy To Do App
 
 ## An Express application to create tasks, add subtasks, and group tasks in lists. You can think of it as a To Do list but with so many fancy features. ✨
