@@ -7,7 +7,7 @@
 
 # Fancy To Do App
 
-## A To Do backend server with fancy Features! ✨
+## An Express application to create tasks, add subtasks, and group tasks in lists. You can think of it as a To Do list but with so many fancy features. ✨
 
 ## 👀 Overview
 
@@ -23,7 +23,11 @@
 
 ## 🔍 Description
 
-This is a To Do app backend server built with Node.js and Express.js. It uses PostgreSQL as a database and Prisma as an ORM. It also uses JWT for authentication and authorization. It has a lot of fancy features like weather forecast, email notifications, and more!
+A backend application to create tasks with due dates, priorities and attach files to them and group them in lists. You can also add subtasks to tasks and mark them as done or undone. You can also share lists with a public link. You can also see some statistics about your tasks and the weather forecast in the upcoming 5 days. It is built with Node.js and Express.js. It uses PostgreSQL as a database and Prisma as an ORM. It also uses JWT for authentication and authorization. Azure Blob Storage is used to store files. It has a lot of fancy features like creating recurring tasks, email notification, and more. It also has a lot of testing with more than 130 tests and 90% code coverage. It also has CI/CD with GitHub Actions. 🎉
+
+## 📜 API Documentation
+
+- You can find the Postman collection [here](https://www.postman.com/orbital-module-technologist-63068748/workspace/fancy-to-do-apis).
 
 ## 📝 Features
 
@@ -41,6 +45,8 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 - 1.8. Email Confirmation (Send a confirmation email to the user's email address)
 
 ### 2. Task Management
+
+#### Task
 
 - 2.1. Create Task
 - 2.2. Create Recurring Task (Daily, Weekly, Monthly), Specify:
@@ -65,14 +71,14 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 - 2.18. Sort Tasks by Creation Date
 - 2.19. Tasks Pagination (Limit, Page)
 
-<br>
+#### Subtask
 
 - 2.19. Add Subtasks to Task
 - 2.20. Delete Subtask
 - 2.21. Update Subtask Completion Status (Done, Undone)
 - 2.22. Update Subtask
 
-<br>
+#### List
 
 - 2.23. Create List to Group Tasks
 - 2.24. Add Task to List
@@ -94,7 +100,7 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
   - 3.1.5. Number of Tasks by Priority (High, Medium, Low)
   - 3.1.6. Lists Title and Number of Tasks in Each List
 
-- 3.2. Display some information about the weather
+- 3.2. Display information about the weather in the upcoming 5 days
   - 3.2.1. Current Temperature
   - 3.2.2. Weather Main Title
   - 3.2.3. Weather Description
@@ -121,6 +127,8 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 - **OpenWeatherMap API** (Weather API)
 - **Multer** (File Upload)
 - **Azure Blob Storage** (File Storage)
+- **Docker** (Containerization Platform)
+- **Docker Compose** (Container Orchestration)
 
 ## 🐘 Database Schema
 
@@ -128,9 +136,15 @@ This is a To Do app backend server built with Node.js and Express.js. It uses Po
 	<img src="./assets/UML.jpeg" alt="Database Schema" width="1000"/>
 </p>
 
+## ♻️ Request Life Cycle
+
+<p align="center">
+	<img src="./assets/req_lc.jpeg" alt="Request Life Cycle" width="1000"/>
+</p>
+
 ## 🧐 Testing
 
-#### Unit, Integration, and Functional Tests.<br> With more than 90% code coverage and 130+ tests 🎉
+### Unit, Integration, and Functional Tests.<br> With more than 90% code coverage and 130+ tests 🎉
 
 <p align="center">
 	<img src="./assets/Code Coverage.png" alt="Code Coverage" width="1000"/>
