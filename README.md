@@ -1,6 +1,6 @@
 # Fancy To Do App
 
-## An Express application to create tasks, add subtasks, and group tasks in lists. You can think of it as a To Do list but with so many fancy features. ✨
+### An Express application to create tasks, add subtasks, and group tasks in lists. You can think of it as a To Do list but with so many fancy features. ✨
 
 ## 👀 Overview
 
