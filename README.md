@@ -1,6 +1,6 @@
 # Fancy To Do App
 
-### An Express application to create tasks, add subtasks, and group tasks in lists. You can think of it as a To Do list but with so many fancy features. ✨
+### An Express application to create tasks, add subtasks, and group tasks in lists. You can think of it as a feature-rich to-do application. ✨
 
 ## 👀 Overview
 
@@ -165,6 +165,14 @@ git clone https://github.com/ab-elhaddad/Fancy-ToDo.git
 #### 📌 Locally :-
 
 - Install dependencies
+
+  But first install node-gyp dependencies. You can find more information [here](https://github.com/nodejs/node-gyp).
+
+  ```bash
+  npm i -g node-gyp
+  ```
+
+- Install packages
 
   ```bash
   npm install
